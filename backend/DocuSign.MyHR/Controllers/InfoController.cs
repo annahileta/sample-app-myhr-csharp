@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DocuSign.MyHR.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class InfoController : ControllerBase
     {
         [HttpGet]
-        [Route("Ping")]
+        [Route("ping")]
         public string Ping()
         {
             return "OK";
