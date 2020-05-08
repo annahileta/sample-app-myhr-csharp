@@ -34,10 +34,10 @@ namespace DocuSign.MyHR
             services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)));
             services
                 .AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+                       {
+                           o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                           o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                       })
                 .AddJwtBearer(cfg =>
                   {
                       cfg.RequireHttpsMetadata = false;

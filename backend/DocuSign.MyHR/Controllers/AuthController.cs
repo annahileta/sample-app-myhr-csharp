@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,20 +16,31 @@ namespace DocuSign.MyHR.Controllers
             _authenticationService = authenticationService; 
         }
 
-        [HttpPost]
-        public IActionResult Login(string authType = "CodeGrant", string callbackUrl = "/ds/callback", string returnUrl = "/")
+        [HttpGet]
+        public IActionResult Login(
+            [Required(AllowEmptyStrings = false)]string authType, 
+            [Required(AllowEmptyStrings = false)]string callbackUrl, 
+            string returnUrl ="/")
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (authType == "CodeGrant")
             {
                 return LocalRedirect(_authenticationService.GetAuthorizationUrl(callbackUrl));
             }
 
-            _authenticationService.AuthenticateFromJwt();
-            
-            return LocalRedirect(returnUrl);
-        }
+            if (authType == "JWT")
+            {
+                _authenticationService.AuthenticateFromJwt();
 
-        [AllowAnonymous]
+                return LocalRedirect(returnUrl);
+            }
+
+            return BadRequest("Authentication type is not supported"); 
+        }
+         
         [HttpPost]
         [Route("/api/auth/token")]
         public IActionResult GetToken(string code)
@@ -44,9 +56,8 @@ namespace DocuSign.MyHR.Controllers
             }
             catch (Exception ex)
             {
-                BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
-            return BadRequest();
         }
     }
 }

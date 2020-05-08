@@ -15,8 +15,8 @@ namespace DocuSign.MyHR.Controllers
         }
 
         [HttpGet]
-        [Route("user")]
-        public string GetUser()
+        [Route("info")]
+        public string GetUserInfo()
         {
             return JsonConvert.SerializeObject(Context.User);
         }
