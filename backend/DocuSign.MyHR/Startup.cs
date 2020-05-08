@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using DocuSign.MyHR.Repositories;
+using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
