@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using DocuSign.MyHR.DocuSign.eSignature;
-using DocuSign.MyHR.Repositories;
 using DocuSign.MyHR.Security;
-using DocuSign.MyHR.Services; 
+using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +28,6 @@ namespace DocuSign.MyHR
             services.AddMemoryCache();
             services.AddSingleton<Context, Context>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -37,10 +35,10 @@ namespace DocuSign.MyHR
                 configuration.RootPath = "ClientApp/dist";
             });
             services.ConfigureDS(Configuration);
-           
-            services.AddMvc(
-                    options => options.Filters.Add(typeof(ContextFilter)))
+
+            services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           
             services.ConfigureApplicationCookie(options =>
             {
                 options.Events.OnRedirectToLogin = context =>
@@ -66,16 +64,16 @@ namespace DocuSign.MyHR
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-          
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
-            app.UseRouting(); 
+            app.UseRouting();
             app.ConfigureDS();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -84,7 +82,7 @@ namespace DocuSign.MyHR
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-            }); 
+            });
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -96,7 +94,7 @@ namespace DocuSign.MyHR
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
-            }); 
+            });
         }
     }
 }

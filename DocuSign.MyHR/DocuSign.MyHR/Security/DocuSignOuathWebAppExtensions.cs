@@ -1,30 +1,25 @@
-
-// TODO: add following lines to your Startup.cs:
-// 1. ConfigureMVCForDS to 'ConfigureServices' method, for example: services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).ConfigureMVCForDS();
-// 2. ConfigureDS to 'ConfigureServices' method, for example: services.ConfigureDS(Configuration);
-// 3. app.ConfigureDS(); to 'Configure' method, for example: app.ConfigureDS();
-
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DocuSign.MyHR.DocuSign.eSignature
-{
-
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Authentication.Cookies;
-    using Microsoft.AspNetCore.Authentication.OAuth;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json.Linq;
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
-
-    public static class DocuSignWebAppExtensions
+{  
+    public static class DocuSignOuathWebAppExtensions
     {
         public static void ConfigureDS(this IApplicationBuilder applicationBuilder)
         {
@@ -34,12 +29,6 @@ namespace DocuSign.MyHR.DocuSign.eSignature
 
         public static void ConfigureDS(this IServiceCollection services, IConfiguration Configuration)
         {
-            DsConfiguration config = new DsConfiguration();
-
-            Configuration.Bind("DocuSign", config);
-            services.AddSingleton(config);
-            services.AddScoped<IRequestItemsService, RequestItemsService>();
-
             services.AddMemoryCache();
             services.AddSession();
             services.AddHttpContextAccessor();
@@ -61,15 +50,15 @@ namespace DocuSign.MyHR.DocuSign.eSignature
                 options.AuthorizationEndpoint = Configuration["DocuSign:AuthorizationEndpoint"];
                 options.TokenEndpoint = Configuration["DocuSign:TokenEndpoint"];
                 options.UserInformationEndpoint = Configuration["DocuSign:UserInformationEndpoint"];
+
                 options.Scope.Add("signature");
                 options.SaveTokens = true;
+
                 options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub");
                 options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
                 options.ClaimActions.MapJsonKey("accounts", "accounts");
                 options.ClaimActions.MapCustomJson("account_id", obj => ExtractDefaultAccountValue(obj, "account_id"));
-                options.ClaimActions.MapJsonKey("access_token", "access_token");
-                options.ClaimActions.MapJsonKey("refresh_token", "refresh_token");
-                options.ClaimActions.MapJsonKey("expires_in", "expires_in");
+
                 options.Events = new OAuthEvents
                 {
                     OnCreatingTicket = async context =>
@@ -81,10 +70,6 @@ namespace DocuSign.MyHR.DocuSign.eSignature
                         var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
                         response.EnsureSuccessStatusCode();
                         var user = JObject.Parse(await response.Content.ReadAsStringAsync());
-
-                        user.Add("access_token", context.AccessToken);
-                        user.Add("refresh_token", context.RefreshToken);
-                        user.Add("expires_in", DateTime.Now.Add(context.ExpiresIn.Value).ToString());
 
                         using (JsonDocument payload = JsonDocument.Parse(user.ToString()))
                         {
@@ -107,7 +92,7 @@ namespace DocuSign.MyHR.DocuSign.eSignature
                         else
                         {
                             context.Response.Redirect(context.RedirectUri);
-                        } 
+                        }
 
                         return Task.CompletedTask;
                     }
@@ -116,7 +101,78 @@ namespace DocuSign.MyHR.DocuSign.eSignature
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
             {
                 config.Cookie.Name = "UserLoginCookie";
-                config.LoginPath = "/Account/Login?authType=JWT";
+                config.LoginPath = "/Account/Login";
+                config.SlidingExpiration = true;
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                config.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin =  context =>
+                    {
+                        if (context.Request.Path.StartsWithSegments("/api"))
+                        {
+                            context.Response.Headers["Location"] = context.RedirectUri;
+                            context.Response.StatusCode = 401;
+                        }
+                        else
+                        {
+                            context.Response.Redirect(context.RedirectUri);
+                        }
+
+                        return Task.CompletedTask;
+                    },
+                    // Check access token expiration and refresh if expired
+                    OnValidatePrincipal = context =>
+                    {
+                        if (context.Properties.Items.ContainsKey(".Token.expires_at"))
+                        {
+                            var expire = DateTime.Parse(context.Properties.Items[".Token.expires_at"]);
+                            if (expire < DateTime.Now)
+                            {
+                                var authProperties = context.Properties;
+                                var options = context.HttpContext.RequestServices
+                                    .GetRequiredService<IOptionsMonitor<OAuthOptions>>()
+                                    .Get("DocuSign");
+
+                                var pairs = new Dictionary<string, string>()
+                                {
+                                    {"client_id", Configuration["DocuSign:IntegrationKey"]},
+                                    {"client_secret", Configuration["DocuSign:SecretKey"]},
+                                    {"grant_type", "refresh_token"},
+                                    {"refresh_token", authProperties.GetTokenValue("refresh_token")}
+                                };
+
+                                // Request new access token
+                                var content = new FormUrlEncodedContent(pairs);
+                                var refreshResponse = options.Backchannel.PostAsync(options.TokenEndpoint, content,
+                                    context.HttpContext.RequestAborted).Result;
+                                refreshResponse.EnsureSuccessStatusCode();
+
+                                var payload = JObject.Parse(refreshResponse.Content.ReadAsStringAsync().Result);
+
+                                // Persist the new acess token
+                                authProperties.UpdateTokenValue("access_token", payload.Value<string>("access_token"));
+                                var refreshToken = payload.Value<string>("refresh_token");
+
+                                if (!string.IsNullOrEmpty(refreshToken))
+                                {
+                                    authProperties.UpdateTokenValue("refresh_token", refreshToken);
+                                }
+                                if (int.TryParse(
+                                    payload.Value<string>("expires_in"),
+                                    NumberStyles.Integer,
+                                    CultureInfo.InvariantCulture, out var seconds))
+                                {
+                                    var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
+                                    authProperties.UpdateTokenValue(
+                                        "expires_at",
+                                        expiresAt.ToString("o", CultureInfo.InvariantCulture));
+                                }
+                                context.ShouldRenew = true;
+                            }
+                        }
+                        return Task.FromResult(0);
+                    }
+                };
             });
             services.AddAuthorization(options =>
             {
@@ -153,69 +209,3 @@ namespace DocuSign.MyHR.DocuSign.eSignature
     }
 }
 
-namespace DocuSign.MyHR.DocuSign.eSignature
-{
-    using System;
-
-    public class Locals
-    {
-        public DsConfiguration DsConfig { get; set; }
-        public User User { get; set; }
-        public Session Session { get; set; }
-        public String Messages { get; set; }
-        public object Json { get; internal set; }
-    }
-
-    public class DsConfiguration
-    {
-        public string AppUrl { get; set; }
-
-        public string SignerEmail { get; set; }
-
-        public string SignerName { get; set; }
-
-        public string GatewayAccountId { get; set; }
-
-        public string GatewayName { get; set; }
-
-        public string GatewayDisplayName { get; set; }
-
-        public bool production = false;
-        public bool debug = true; // Send debugging statements to console
-        public string sessionSecret = "12345"; // Secret for encrypting session cookie content
-        public bool allowSilentAuthentication = true; // a user can be silently authenticated if they have an
-                                                      // active login session on another tab of the same browser
-                                                      // Set if you want a specific DocuSign AccountId, If null, the user's default account will be used.
-        public string targetAccountId = null;
-        public string demoDocPath = "demo_documents";
-        public string docDocx = "World_Wide_Corp_Battle_Plan_Trafalgar.docx";
-        public string tabsDocx = "World_Wide_Corp_salary.docx";
-        public string docPdf = "World_Wide_Corp_lorem.pdf";
-        public string githubExampleUrl = "https://github.com/docusign/eg-03-csharp-auth-code-grant-core/tree/master/eg-03-csharp-auth-code-grant-core/Controllers/";
-        public string documentation = null;
-
-        public static DsConfiguration Instance { get; private set; } = new DsConfiguration();
-    }
-
-    public class Session
-    {
-        public string AccountId { get; set; }
-        public string AccountName { get; set; }
-        public string BasePath { get; set; }
-    }
-
-    public class User
-    {
-        public string Name { get; set; }
-        public string AccessToken { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTime? ExpireIn { get; set; }
-    }
-
-    public interface IRequestItemsService
-    {
-        Session Session { get; set; }
-
-        User User { get; set; }
-    }
-}

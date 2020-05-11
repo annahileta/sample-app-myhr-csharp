@@ -40,7 +40,6 @@ namespace DocuSign.MyHR.Controllers
         public async System.Threading.Tasks.Task<IActionResult> Logout()
         {
             await AuthenticationHttpContextExtensions.SignOutAsync(HttpContext);
-            _authenticationService.Logout(Context.User.Id);
             return LocalRedirect("/");
         }
     }
