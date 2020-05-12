@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './auth.service';
+import { AuthType } from './auth-type.enum';
 
 @Component({
   selector: 'app-auth',
@@ -6,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit {
-  param = { value: 'world' };
-  constructor() {}
+  authType = AuthType;
+  constructor(private authenticationService: AuthenticationService) {}
   ngOnInit(): void {}
+  handleAuth(authType: AuthType) {
+    this.authenticationService.login(authType).subscribe();
+  }
 }
