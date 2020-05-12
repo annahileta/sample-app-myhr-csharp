@@ -1,5 +1,33 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Welcome to MyHR</h1>
+    <p class="lead text-muted">Self-service Human Resources Portal</p>
+  </div>
+</section>
 <div class="container-fluid">
   <div class="jumbotron text-center">
-    <h1 translate>Home</h1>
+    <div class="btn d-flex justify-content-around">
+      <div class="btn-group" role="group">
+        <button
+          class="btn btn-primary"
+          type="submit"
+          (click)="handleAuth(authType.CodeGrant)"
+        >
+          <i class="fas fa-cog fa-spin"></i>
+          <span translate>Login in with DocuSign account</span>
+        </button>
+      </div>
+      <div class="btn-group" role="group">
+        <button
+          class="btn btn-primary"
+          type="submit"
+          (click)="handleAuth(authType.JWT)"
+        >
+          <i class="fas fa-cog fa-spin"></i>
+          <span translate>Login in with test account</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
+<app-info></app-info>
