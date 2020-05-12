@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using DocuSign.MyHR.DocuSign.eSignature;
+using DocuSign.eSign.Api;
+using DocuSign.eSign.Client;
 using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Hosting; 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -26,15 +26,19 @@ namespace DocuSign.MyHR
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();
+            services.AddHttpContextAccessor();
             services.AddSingleton<Context, Context>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IDocuSignApiProvider, DocuSignApiProvider>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.ConfigureDS(Configuration);
+            services.ConfigureDocuSignSSO(Configuration);
 
             services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)))
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -74,7 +78,7 @@ namespace DocuSign.MyHR
             }
 
             app.UseRouting();
-            app.ConfigureDS();
+            app.ConfigureDocuSign();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

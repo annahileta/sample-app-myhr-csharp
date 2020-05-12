@@ -1,12 +1,14 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using DocuSign.MyHR.Domain;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 
 namespace DocuSign.MyHR
 {
     public class Context
     {
-        private readonly IMemoryCache _cache; 
+        private readonly IMemoryCache _cache;
 
         public Context(IMemoryCache cache)
         {
@@ -15,25 +17,16 @@ namespace DocuSign.MyHR
 
         public void Init(ClaimsPrincipal principalUser)
         {
-            User = _cache.Get<User>(GetKey(principalUser.FindFirstValue(ClaimTypes.NameIdentifier), "User"));
-        }
-
-        public void SetUser(ClaimsPrincipal principalUser)
-        {
             var userId = principalUser.FindFirstValue(ClaimTypes.NameIdentifier);
-            User = new User
-            {
-                Id = userId,
-                Name = principalUser.FindFirstValue(ClaimTypes.Name),
-            };
-            _cache.Set(GetKey(userId, "User"), User);
+            User = new User(
+                userId,
+                principalUser.FindFirstValue(ClaimTypes.Name)
+            );
+            Account = principalUser.FindAll("accounts").Select(x => JsonConvert.DeserializeObject<Account>(x.Value))
+                .First(x => x.Id == principalUser.FindFirstValue("account_id")); 
         }
 
         public static User User { get; private set; }
-
-        private string GetKey(string id, string key)
-        {
-            return $"{id}_{key}";
-        }
+        public static Account Account { get; private set; }  
     }
 }

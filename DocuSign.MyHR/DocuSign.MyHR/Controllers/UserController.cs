@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocuSign.MyHR.Domain;
+using DocuSign.MyHR.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -9,16 +11,24 @@ namespace DocuSign.MyHR.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        public UserController()
-        {
+        private readonly IUserService _userService;
 
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
         }
 
         [HttpGet]
-        [Route("info")]
-        public string GetUserInfo()
+        public IActionResult Index()
         {
-            return JsonConvert.SerializeObject(Context.User);
+            return Ok(JsonConvert.SerializeObject(_userService.GetUserDetails(Context.Account.Id, Context.User.Id)));
+        }
+
+        [HttpPut]
+        public IActionResult Index(UserDetails userDetails)
+        {
+             _userService.UpdateUserDetails(Context.Account.Id, Context.User.Id, userDetails);
+             return Ok();
         }
     }
 }

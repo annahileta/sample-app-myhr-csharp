@@ -1,6 +1,3 @@
-using DocuSign.MyHR.Security;
-using DocuSign.MyHR.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -27,8 +24,7 @@ namespace DocuSign.MyHR
             var httpContext = context.HttpContext;
             if (httpContext.User.Identity.IsAuthenticated)
             {
-                _context.SetUser(httpContext.User);
-                _context.Init(httpContext.User);
+                _context.Init(httpContext.User); 
             }
         }
     }

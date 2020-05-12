@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using DocuSign.eSign.Api;
 using DocuSign.eSign.Client;
 using DocuSign.eSign.Client.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
-using IAuthenticationService = DocuSign.MyHR.Security.IAuthenticationService;
 
-namespace DocuSign.MyHR.Services
+namespace DocuSign.MyHR.Security
 {
     public class AuthenticationService : IAuthenticationService
     {

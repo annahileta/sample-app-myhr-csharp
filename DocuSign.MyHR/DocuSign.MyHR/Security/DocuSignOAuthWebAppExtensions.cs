@@ -1,33 +1,33 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace DocuSign.MyHR.DocuSign.eSignature
+namespace DocuSign.MyHR.Security
 {  
-    public static class DocuSignOuathWebAppExtensions
+    public static class DocuSignOAuthWebAppExtensions
     {
-        public static void ConfigureDS(this IApplicationBuilder applicationBuilder)
+        public static void ConfigureDocuSign(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseAuthentication();
             applicationBuilder.UseSession();
         }
 
-        public static void ConfigureDS(this IServiceCollection services, IConfiguration Configuration)
+        public static void ConfigureDocuSignSSO(this IServiceCollection services, IConfiguration Configuration)
         {
             services.AddMemoryCache();
             services.AddSession();
@@ -133,7 +133,7 @@ namespace DocuSign.MyHR.DocuSign.eSignature
                                     .GetRequiredService<IOptionsMonitor<OAuthOptions>>()
                                     .Get("DocuSign");
 
-                                var pairs = new Dictionary<string, string>()
+                                var pairs = new Dictionary<string, string>
                                 {
                                     {"client_id", Configuration["DocuSign:IntegrationKey"]},
                                     {"client_secret", Configuration["DocuSign:SecretKey"]},
