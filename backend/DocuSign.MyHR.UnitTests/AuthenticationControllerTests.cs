@@ -4,6 +4,7 @@ using Moq;
 using Xunit;
 using AutoFixture.Xunit2;
 using DocuSign.MyHR.Controllers;
+using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Mvc;
 

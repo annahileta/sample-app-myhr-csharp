@@ -1,6 +1,8 @@
 using System;
 using System.Text;
+using DocuSign.MyHR.DocuSign.eSignature;
 using DocuSign.MyHR.Repositories;
+using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -31,25 +33,28 @@ namespace DocuSign.MyHR
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddSingleton<Context, Context>();
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)));
-            services
-                .AddAuthentication(o =>
-                       {
-                           o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                           o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                       })
-                .AddJwtBearer(cfg =>
-                  {
-                      cfg.RequireHttpsMetadata = false;
-                      cfg.SaveToken = true; 
-                      cfg.TokenValidationParameters = new TokenValidationParameters()
-                      {
-                          ValidateIssuerSigningKey = true,
-                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecretKey"])),
-                          ValidateIssuer = false,
-                          ValidateAudience = false
-                      };
-                  });
+            services.ConfigureDS(Configuration);
+            services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)))
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1).ConfigureMVCForDS();
+ 
+            //services
+            //    .AddAuthentication(o =>
+            //           {
+            //               o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //               o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //           })
+            //    .AddJwtBearer(cfg =>
+            //      {
+            //          cfg.RequireHttpsMetadata = false;
+            //          cfg.SaveToken = true; 
+            //          cfg.TokenValidationParameters = new TokenValidationParameters()
+            //          {
+            //              ValidateIssuerSigningKey = true,
+            //              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSecretKey"])),
+            //              ValidateIssuer = false,
+            //              ValidateAudience = false
+            //          };
+            //      });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +70,7 @@ namespace DocuSign.MyHR
             app.UseRouting(); 
             app.UseAuthentication();
             app.UseAuthorization();
+            app..ConfigureDS();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
