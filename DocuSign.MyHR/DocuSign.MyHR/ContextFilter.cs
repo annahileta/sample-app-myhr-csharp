@@ -15,8 +15,7 @@ namespace DocuSign.MyHR
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
-        {
-
+        { 
         }
 
         public void OnActionExecuting(ActionExecutingContext context)

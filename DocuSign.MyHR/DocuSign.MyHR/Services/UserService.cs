@@ -14,25 +14,14 @@ namespace DocuSign.MyHR.Services
 
         public UserDetails GetUserDetails(string accountId, string userId)
         {
-            var userInfo = _docuSignApiProvider.UsersApi.GetInformation(accountId, userId);
-            var address = userInfo.HomeAddress;
-            return new UserDetails(
-                userId,
-                userInfo.UserName,
-                new Address(
-                    address.Address1,
-                    address.Address2,
-                    address.City,
-                    address.Country,
-                    address.Fax,
-                    address.Phone,
-                    address.PostalCode,
-                    address.StateOrProvince));
-        }
+            UserInformation userInfo = _docuSignApiProvider.UsersApi.GetInformation(accountId, userId);
 
-        public void UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
+            return GetUserDetails(userInfo);
+        }
+         
+        public UserDetails UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
         {
-            var userInfo = _docuSignApiProvider.UsersApi.UpdateUser(
+            UserInformation updatedUserInfo = _docuSignApiProvider.UsersApi.UpdateUser(
                 accountId, userId, new UserInformation(
                     UserName: userDetails.Name,
                     HomeAddress: new AddressInformation(
@@ -46,6 +35,24 @@ namespace DocuSign.MyHR.Services
                         userDetails.Address.StateOrProvince
                         )));
 
+            return GetUserDetails(updatedUserInfo);
+        }
+
+        private static UserDetails GetUserDetails(UserInformation userInfo)
+        {
+            AddressInformation address = userInfo.HomeAddress;
+            return new UserDetails(
+                userInfo.UserId,
+                userInfo.UserName,
+                new Address(
+                    address.Address1,
+                    address.Address2,
+                    address.City,
+                    address.Country,
+                    address.Fax,
+                    address.Phone,
+                    address.PostalCode,
+                    address.StateOrProvince));
         }
     }
 }
