@@ -1,0 +1,166 @@
+<div class="col-md-6">
+  <form
+    *ngIf="user"
+    #userForm="ngForm"
+    (ngSubmit)="saveUser(userForm.value)"
+    autocomplete="off"
+    novalidate
+  >
+    <div
+      class="form-group"
+      [ngClass]="{
+        error:
+          userForm.controls.name?.invalid && userForm.controls.name?.touched
+      }"
+    >
+      <label for="userName">Name:</label>
+      <em
+        *ngIf="
+          userForm.controls.name?.invalid && userForm.controls.name?.touched
+        "
+        >Required</em
+      >
+      <input
+        [(ngModel)]="user.name"
+        name="name"
+        required
+        id="name"
+        type="text"
+        class="form-control"
+        placeholder="Name"
+      />
+    </div>
+    <div
+      class="form-group"
+      [ngClass]="{
+        error:
+          userForm.controls.date?.invalid && userForm.controls.date?.touched
+      }"
+    >
+      <label for="userDate">Hire Date:</label>
+      <em
+        *ngIf="
+          userForm.controls.date?.invalid && userForm.controls.date?.touched
+        "
+        >Required</em
+      >
+      <input
+        [(ngModel)]="user.date"
+        name="date"
+        required
+        id="userDate"
+        type="text"
+        class="form-control"
+        placeholder="format (mm/dd/yyyy)..."
+      />
+    </div>
+    <div
+      class="form-group"
+      [ngClass]="{
+        error: userForm.controls.id?.invalid && userForm.controls.id?.touched
+      }"
+    >
+      <label for="userId">ID:</label>
+      <em *ngIf="userForm.controls.id?.invalid && userForm.controls.id?.touched"
+        >Required</em
+      >
+      <input
+        [(ngModel)]="user.id"
+        name="id"
+        required
+        id="userPrice"
+        type="text"
+        type="number"
+        class="form-control"
+        placeholder="id"
+      />
+    </div>
+
+    <div ngModelGroup="location" #locationGroup="ngModelGroup" validateLocation>
+      <div class="form-group">
+        <label for="address">Location:</label>
+        <em *ngIf="locationGroup?.invalid && locationGroup?.touched"
+          >You must enter either the full location OR an online Url</em
+        >
+        <input
+          [(ngModel)]="user.location.address"
+          name="address"
+          id="address"
+          type="text"
+          class="form-control"
+          placeholder="Address"
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <input
+            [(ngModel)]="user.location.city"
+            name="city"
+            id="city"
+            type="text"
+            class="form-control"
+            placeholder="City"
+          />
+        </div>
+        <div class="col-md-6">
+          <input
+            [(ngModel)]="user.location.country"
+            name="country"
+            id="country"
+            type="text"
+            class="form-control"
+            placeholder="Country"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="form-group"
+      [ngClass]="{
+        error:
+          userForm.controls.imageUrl?.invalid &&
+          userForm.controls.imageUrl?.touched
+      }"
+    >
+      <label for="imageUrl">Image:</label>
+      <em
+        *ngIf="
+          userForm.controls.imageUrl?.invalid &&
+          userForm.controls.imageUrl?.touched &&
+          userForm.controls.imageUrl?.errors.required
+        "
+        >Required</em
+      >
+      <em
+        *ngIf="
+          userForm.controls.imageUrl?.invalid &&
+          userForm.controls.imageUrl?.touched &&
+          userForm.controls.imageUrl?.errors.pattern
+        "
+        >Must be a png or jpg url</em
+      >
+      <input
+        [(ngModel)]="user.imageUrl"
+        name="imageUrl"
+        required
+        pattern=".*\/.*.(png|jpg)"
+        id="imageUrl"
+        type="text"
+        class="form-control"
+        placeholder="url of image..."
+      />
+      <img
+        [src]="userForm.controls.imageUrl.value"
+        *ngIf="userForm.controls.imageUrl?.valid"
+      />
+    </div>
+
+    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
+      Save
+    </button>
+    <button type="button" class="btn btn-default" (click)="cancel()">
+      Cancel
+    </button>
+  </form>
+</div>
