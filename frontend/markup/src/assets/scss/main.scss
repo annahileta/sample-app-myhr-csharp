@@ -1,0 +1,19 @@
+@import 'libs/all';
+
+@import "core/all";
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import "components/all";
+@import 'pages/all';
+@import 'layouts/all';
+@import 'elements/all';
+
+body {
+  font-family: $nunito;
+}
+
+
+
+
+
+
+

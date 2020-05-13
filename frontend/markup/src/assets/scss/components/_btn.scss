@@ -1,0 +1,48 @@
+.btn {
+    min-width: 144px;
+    //margin-bottom: 30px;
+    box-shadow: $btn-box-shadow;
+
+    &:not(.btn-sm):not(.btn-lg) {
+        letter-spacing: 0.7px;
+        min-width: 146px;
+    }
+
+    &:not(.btn-warning ) {
+        color: $orange;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $white;
+            background-color: $orange;
+        }
+    }
+
+    &.btn-sm {
+        min-width: 90px;
+    }
+
+    &.btn-lg {
+        letter-spacing: 0;
+        min-width: 283px;
+    }
+
+    &.btn-warning {
+        color: $white;
+
+        &:hover,
+        &:active,
+        &:focus {
+
+        }
+    }
+
+    &.btn-white {
+        background-color: $white;
+        color: $warning;
+    }
+
+    &.btn-outline {
+    }
+}
