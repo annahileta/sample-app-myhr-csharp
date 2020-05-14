@@ -1,0 +1,83 @@
+.btn {
+    min-width: 144px;
+    box-shadow: $btn-box-shadow;
+
+    &:not(.btn-sm):not(.btn-lg) {
+        letter-spacing: 0.7px;
+        min-width: 140px;
+        text-transform: uppercase;
+    }
+
+    &:not(.btn-warning ) {
+        color: $orange;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $white;
+            background-color: $orange;
+        }
+    }
+
+    &.btn-sm {
+        min-width: 90px;
+    }
+
+    &.btn-lg {
+        letter-spacing: 0;
+        min-width: 280px;
+        @include media-breakpoint-up(md) {
+            min-width: 290px;
+        }
+    }
+
+    &.btn-warning {
+        color: $white;
+
+        &:hover,
+        &:active,
+        &:focus {
+
+        }
+    }
+
+    &.btn-white {
+        background-color: $white;
+        color: $warning;
+    }
+
+    &.btn-outline {
+    }
+}
+
+
+.buttons-group {
+    .btn {
+        &:not(:last-child) {
+            &:not(.btn-sm):not(.btn-lg) {
+                margin-right: 9px;
+                @include media-breakpoint-up(md) {
+                    margin-right: 15px;
+                }
+            }
+        }
+    }
+
+    .btn-sm {
+        &:not(:last-child) {
+            @include media-breakpoint-up(md) {
+                margin-right: 15px;
+            }
+        }
+    }
+
+    .btn-lg {
+        &:not(:last-child) {
+            margin-bottom: 25px;
+            @include media-breakpoint-up(xl) {
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
