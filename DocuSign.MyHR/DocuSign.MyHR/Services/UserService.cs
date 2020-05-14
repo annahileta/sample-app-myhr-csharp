@@ -44,6 +44,7 @@ namespace DocuSign.MyHR.Services
             return new UserDetails(
                 userInfo.UserId,
                 userInfo.UserName,
+                userInfo.Email,
                 new Address(
                     address.Address1,
                     address.Address2,
