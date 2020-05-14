@@ -6,8 +6,8 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import { Observable, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "./auth.service";
 
@@ -23,18 +23,20 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      tap(
-        () => {},
-        (err: any) => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status !== 401) {
-              return;
-            }
-            debugger;
+      catchError((error: any) => {
+        if (error instanceof HttpErrorResponse) {
+          const authType = this.authenticationService.getAuthType();
+          console.log(authType);
+          if (error.status !== 401) {
+            return;
+          } else if (error.status === 401 && !!authType) {
+            window.location.href = `Account/Login?${authType}`;
+          } else {
             this.router.navigate(["/"]);
           }
         }
-      )
+        return throwError(error);
+      })
     );
   }
 }

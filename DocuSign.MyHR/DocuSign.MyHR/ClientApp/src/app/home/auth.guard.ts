@@ -12,12 +12,12 @@ import { HomeComponent } from "./home.component";
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanLoad {
   constructor(
-    private authService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private router: Router
   ) {}
 
   canLoad() {
-    if (this.authService.isAuthenticated) {
+    if (this.authenticationService.isAuthenticated) {
       return true;
     } else {
       this.router.navigateByUrl("/");

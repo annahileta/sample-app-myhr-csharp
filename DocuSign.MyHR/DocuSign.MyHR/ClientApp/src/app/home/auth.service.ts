@@ -1,19 +1,17 @@
 import { AuthType } from "./auth-type.enum";
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { tap, catchError } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 import { IUser } from "../employee/profile/user.model";
-import { Router } from "@angular/router";
-import { of } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-  public isAuthenticated = false;
   user: IUser;
+  public isAuthenticated = false;
+  public authType: AuthType;
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     @Inject("BASE_URL") private baseUrl: string
   ) {}
 
@@ -36,5 +34,11 @@ export class AuthenticationService {
     );
   }
 
-  logout() {}
+  saveAuthType(authType: AuthType) {
+    sessionStorage.setItem("authType", authType);
+  }
+
+  getAuthType() {
+    return sessionStorage.getItem("authType");
+  }
 }
