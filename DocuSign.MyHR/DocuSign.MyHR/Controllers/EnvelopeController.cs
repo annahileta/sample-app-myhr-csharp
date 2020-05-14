@@ -1,9 +1,11 @@
 ﻿using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocuSign.MyHR.Controllers
 {
+    [Authorize]
     public class EnvelopeController : Controller
     {
         private readonly IEnvelopeService _envelopeService;
@@ -12,9 +14,17 @@ namespace DocuSign.MyHR.Controllers
         {
             _envelopeService = envelopeService;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public IActionResult Index(DocumentType type, string redirectUrl)
         {
-            return Redirect(_envelopeService.CreateEnvelope(DocumentType.I9, Context.Account.Id, Context.User.Id));
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+            return Redirect(_envelopeService.CreateEnvelope(
+                type,
+                Context.Account.Id,
+                Context.User.Id, 
+                redirectUrl,
+                 Url.Action("ping", "info",null, scheme)));
         }
     }
 }

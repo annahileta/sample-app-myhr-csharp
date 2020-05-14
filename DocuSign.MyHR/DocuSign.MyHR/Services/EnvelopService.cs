@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +13,7 @@ namespace DocuSign.MyHR.Services
     {
         private string _signerClientId = "1000";
         private string _i9TemplatePath = "/Templates/I-9_2020.json";
+        private string _w4TemplatePath = "/Templates/W-4_2020.json";
 
         private readonly IDocuSignApiProvider _docuSignApiProvider;
         private readonly IUserService _userService;
@@ -27,7 +26,12 @@ namespace DocuSign.MyHR.Services
             _configuration = configuration;
         }
 
-        public string CreateEnvelope(DocumentType type, string accountId, string userId)
+        public string CreateEnvelope(
+            DocumentType type,
+            string accountId,
+            string userId, 
+            string redirectUrl,
+            string pingAction)
         {
             var userDetails = _userService.GetUserDetails(accountId, userId);
             var rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
@@ -38,29 +42,33 @@ namespace DocuSign.MyHR.Services
                 case DocumentType.I9:
                     envelope = JsonConvert.DeserializeObject<EnvelopeDefinition>(new StreamReader(rootDir +_i9TemplatePath).ReadToEnd());
                     break;
+                case DocumentType.W4:
+                    envelope = JsonConvert.DeserializeObject<EnvelopeDefinition>(new StreamReader(rootDir + _w4TemplatePath).ReadToEnd());
+                    break;
                 default:
                     throw new NotImplementedException(); 
             }
 
-            envelope.TemplateRoles = new List<TemplateRole> 
-            {
-                new TemplateRole
-                {
-                    Email = userDetails.Email,
-                    Name = userDetails.Name,
-                    RoleName = "New Hire",
-                }
-            };
+            var signerNewHire = envelope.Recipients.Signers.First(x => x.RoleName == "New Hire");
+            signerNewHire.Email = userDetails.Email;
+            signerNewHire.Name = userDetails.Name;
+            signerNewHire.ClientUserId = _signerClientId;
+
+            var signerHR = envelope.Recipients.Signers.First(x => x.RoleName == "HR");
+            signerHR.Email = userDetails.Email;
+            signerHR.Name = userDetails.Name;
+            signerHR.ClientUserId = _signerClientId;
+            envelope.Status = "Sent";  
 
             EnvelopeSummary results = _docuSignApiProvider.EnvelopApi.CreateEnvelope(accountId, envelope);
             string envelopeId = results.EnvelopeId;
 
             RecipientViewRequest viewRequest = MakeRecipientViewRequest(
                 userDetails.Email, 
-                userDetails.Name, 
-                "https://localhost:5001", 
+                userDetails.Name,
+                redirectUrl, 
                 _signerClientId,
-                "https://localhost:5001/info/ping");
+                pingAction);
              
             ViewUrl results1 = _docuSignApiProvider.EnvelopApi.CreateRecipientView(accountId, envelopeId, viewRequest);
 
@@ -69,16 +77,14 @@ namespace DocuSign.MyHR.Services
 
         private static RecipientViewRequest MakeRecipientViewRequest(string signerEmail, string signerName, string returnUrl, string signerClientId, string pingUrl = null)
         {
-
-            RecipientViewRequest viewRequest = new RecipientViewRequest();
-
-            viewRequest.ReturnUrl = returnUrl + "?state=123";
-
-            viewRequest.AuthenticationMethod = "none";
-             
-            viewRequest.Email = signerEmail;
-            viewRequest.UserName = signerName;
-            viewRequest.ClientUserId = signerClientId;
+            RecipientViewRequest viewRequest = new RecipientViewRequest
+            {
+                ReturnUrl = returnUrl,
+                AuthenticationMethod = "none",
+                Email = signerEmail,
+                UserName = signerName,
+                ClientUserId = signerClientId
+            };
 
             if (pingUrl != null)
             {
@@ -89,6 +95,4 @@ namespace DocuSign.MyHR.Services
             return viewRequest;
         }
     }
-
-
 }
