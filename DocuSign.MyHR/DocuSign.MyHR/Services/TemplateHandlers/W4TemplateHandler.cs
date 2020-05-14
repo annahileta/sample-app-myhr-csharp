@@ -4,12 +4,12 @@ using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using Newtonsoft.Json;
 
-namespace DocuSign.MyHR.Services.TemplateHandlers
+namespace DocuSign.MyHR.Services
 {
-    public class I9TemplateHandler
+    public class W4TemplateHandler
     {
         private string _signerClientId = "1000";
-        private string _templatePath = "../Templates/I-9_2020.json";
+        private string _templatePath = "/Templates/W-4_2020.json";
 
         public EnvelopeDefinition CreateEnvelop(UserDetails userDetails)
         {
