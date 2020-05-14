@@ -1,36 +1,36 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { IUser } from "./profile/user.model";
-import { Subject, BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class EmployeeService {
   user: IUser;
+  userDetails: {
+    accountId: string;
+    userId: string;
+  };
 
   user$ = new BehaviorSubject<IUser>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject("BASE_URL") private baseUrl: string
+  ) {}
 
   saveUser(user: IUser) {
-    //this.http.post<any>(`${environment.apiUrl}/save`, user);
-    console.log(user);
+    this.http.put<any>(this.baseUrl + "api/user", user);
     this.user = user;
     this.user$.next(this.user);
   }
 
   getUser() {
-    this.user = {
-      name: "UserName",
-      id: 12345,
-      date: new Date().toUTCString(),
-      imageUrl: "http://localhost:4200/employee/1.png",
-      location: {
-        address: "Street1",
-        city: "City1",
-        country: "Country",
+    this.http.get<any>(this.baseUrl + "api/user").subscribe(
+      (result) => {
+        this.user = result;
+        this.user$.next({ ...this.user });
       },
-      isAdmin: true,
-    };
-    this.user$.next({ ...this.user });
+      (error) => console.error(error)
+    );
   }
 }
