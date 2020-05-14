@@ -27,10 +27,11 @@ namespace DocuSign.MyHR
         {
             services.AddMemoryCache();
             services.AddHttpContextAccessor();
-            services.AddSingleton<Context, Context>();
+            services.AddScoped<Context, Context>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IDocuSignApiProvider, DocuSignApiProvider>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEnvelopeService, EnvelopeService>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
