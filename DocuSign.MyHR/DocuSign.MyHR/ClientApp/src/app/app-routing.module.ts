@@ -18,11 +18,6 @@ const routes: Routes = [
     path: "about",
     component: AboutComponent,
   },
-  {
-    path: "fetch-data",
-    loadChildren: () =>
-      import("./fetch-data/fetch-data.module").then((m) => m.FetchDataModule),
-  },
 ];
 
 @NgModule({
