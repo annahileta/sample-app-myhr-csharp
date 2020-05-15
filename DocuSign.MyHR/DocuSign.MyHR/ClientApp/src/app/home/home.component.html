@@ -6,39 +6,39 @@
     <div class="row">
       <div class="col-md-6">
         <div class="hero-info">
-          <h1>Welcome to MyHR</h1>
-          <h4>Self-service Human Resources Portal</h4>
+          <h1 translate>WelcomeHeader</h1>
+          <h4 translate>WelcomeDescription</h4>
           <div
             class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start"
           >
             <button
               class="btn btn-warning btn-lg"
               (click)="handleAuth(authType.CodeGrant)"
+              translate
             >
-              Log in with your DocuSign account
+              LoginWithDocuSignAccountButton
             </button>
             <button
               class="btn btn-white btn-lg"
               (click)="handleAuth(authType.JWT)"
+              translate
             >
-              Log in with a test account
+              LoginWithTestAccountButton
             </button>
           </div>
           <div class="cta-section">
-            <span class="cta-title"
-              >Note: This sample app is written in C#</span
-            >
+            <span class="cta-title" translate>Note</span>
             <div class="cta-row">
               <div class="img-holder">
                 <img src="assets/img/download.svg" alt="download icon" />
               </div>
-              <a href="#">Get the Visual Studio Ectension</a>
+              <a href="#" translate>VSExtentionLink</a>
             </div>
             <div class="cta-row">
               <div class="img-holder">
                 <img src="assets/img/download.svg" alt="download icon" />
               </div>
-              <a href="#">Get the Visual Studio Code. Extension</a>
+              <a href="#" translate>VSCodeExtentionLink</a>
             </div>
           </div>
         </div>

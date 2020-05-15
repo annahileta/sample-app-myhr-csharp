@@ -1,7 +1,21 @@
 {
-  "APP_NAME": "MyHR",
+  "Title": "MyHR",
+  "Logout": "Log Out",
+  "GitHubSource": "GitHub Source",
   "About": "About",
-  "Home": "Auth page",
-  "Login": "Login",
-  "Logout": "Logout"
+  "Copyright": "© 2020 DocuSign Inc.",
+  "WelcomeHeader": "Welcome to MyHR",
+  "WelcomeDescription": "Self-service Human Resources Portal",
+  "LoginWithDocuSignAccountButton": "Log in with your DocuSign account",
+  "LoginWithTestAccountButton": "Log in with a test account",
+  "Note": "Note: This sample app is written in C#",
+  "VSExtentionLink": "Get the Visual Studio Ectension",
+  "VSCodeExtentionLink": "Get the Visual Studio Code. Extension",
+  "InfoHeader": {
+    "Part1": "DocuSign:",
+    "Part2": "It’s time to agree better"
+  },
+  "InfoDescription": "DocuSign helps organizations connect and automate how they prepare, sign, act on and manage agreements.",
+  "SandBoxButton": "Create Sandbox",
+  "LearnMoreButton": "Learn More"
 }
