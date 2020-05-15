@@ -41,4 +41,8 @@ export class AuthenticationService {
   getAuthType() {
     return sessionStorage.getItem("authType");
   }
+
+  logout() {
+    sessionStorage.removeItem("authType");
+  }
 }
