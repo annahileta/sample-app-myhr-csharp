@@ -41,6 +41,9 @@ namespace DocuSign.MyHR.Services
                 case DocumentType.W4:
                     envelope = new W4TemplateHandler().CreateEnvelop(userDetails, rootDir);
                     break;
+                case DocumentType.Offer:
+                    envelope = new OfferTemplateHandler().CreateEnvelop(userDetails, additionalUser, rootDir);
+                    break;
                 default:
                     throw new NotImplementedException(); 
             }
