@@ -2,6 +2,8 @@
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services.TemplateHandlers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace DocuSign.MyHR.Services
 {
@@ -10,30 +12,34 @@ namespace DocuSign.MyHR.Services
         private string _signerClientId = "1000"; 
         private readonly IDocuSignApiProvider _docuSignApiProvider;
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
 
-        public EnvelopeService(IDocuSignApiProvider docuSignApiProvider, IUserService userService)
+        public EnvelopeService(IDocuSignApiProvider docuSignApiProvider, IUserService userService, IConfiguration configuration)
         {
             _docuSignApiProvider = docuSignApiProvider;
             _userService = userService;
+            _configuration = configuration;
         }
 
-        public string CreateEnvelope(
-            DocumentType type,
+        public string CreateEnvelope(DocumentType type,
             string accountId,
-            string userId, 
+            string userId,
+            UserDetails additionalUser,
             string redirectUrl,
             string pingAction)
         {
+            var rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
+
             var userDetails = _userService.GetUserDetails(accountId, userId);
            
             EnvelopeDefinition envelope;
             switch (type)
             {
                 case DocumentType.I9:
-                    envelope = new I9TemplateHandler().CreateEnvelop(userDetails);
+                    envelope = new I9TemplateHandler().CreateEnvelop(userDetails, additionalUser, rootDir);
                     break;
                 case DocumentType.W4:
-                    envelope = new W4TemplateHandler().CreateEnvelop(userDetails);
+                    envelope = new W4TemplateHandler().CreateEnvelop(userDetails, rootDir);
                     break;
                 default:
                     throw new NotImplementedException(); 

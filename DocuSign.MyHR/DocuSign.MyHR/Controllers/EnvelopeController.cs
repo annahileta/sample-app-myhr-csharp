@@ -15,16 +15,17 @@ namespace DocuSign.MyHR.Controllers
             _envelopeService = envelopeService;
         }
 
-        [HttpGet]
-        public IActionResult Index(DocumentType type, string redirectUrl)
+        [HttpPost]
+        public IActionResult Index(DocumentType type, UserDetails additionalUser, string redirectUrl)
         {
             string scheme = Url.ActionContext.HttpContext.Request.Scheme;
             return Redirect(_envelopeService.CreateEnvelope(
                 type,
                 Context.Account.Id,
-                Context.User.Id, 
+                Context.User.Id,
+                additionalUser,
                 redirectUrl,
-                 Url.Action("ping", "info",null, scheme)));
+                 Url.Action("ping", "info", null, scheme)));
         }
     }
 }
