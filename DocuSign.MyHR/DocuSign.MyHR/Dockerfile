@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY *.sln ./
+COPY DocuSign.MyHR/*.sln ./
 COPY ["DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj", "DocuSign.MyHR/"]
 COPY ["DocuSign.MyHR/DocuSign.MyHR.UnitTests/DocuSign.MyHR.UnitTests.csproj", "DocuSign.MyHR.UnitTests/"]
 #RUN dotnet restore "DocuSign.MyHR/DocuSign.MyHR.csproj"
