@@ -1,14 +1,15 @@
-using System.Net.Http;
 using System.Threading.Tasks;
 using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting; 
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DocuSign.MyHR
 {
@@ -26,7 +27,7 @@ namespace DocuSign.MyHR
         {
             services.AddMemoryCache();
             services.AddHttpContextAccessor();
-            services.AddScoped<Context, Context>(); 
+            services.AddScoped<Context, Context>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IDocuSignApiProvider, DocuSignApiProvider>();
             services.AddScoped<IUserService, UserService>();
@@ -41,10 +42,10 @@ namespace DocuSign.MyHR
                 configuration.RootPath = "ClientApp/dist";
             });
             services.ConfigureDocuSignSSO(Configuration);
-
             services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)))
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           
+                            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddRazorPages().AddNewtonsoftJson();
+ 
             services.ConfigureApplicationCookie(options =>
             {
                 options.Events.OnRedirectToLogin = context =>
@@ -77,7 +78,6 @@ namespace DocuSign.MyHR
             {
                 app.UseSpaStaticFiles();
             }
-
             app.UseRouting();
             app.ConfigureDocuSign();
             app.UseAuthentication();
@@ -100,6 +100,21 @@ namespace DocuSign.MyHR
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
+
+        public class JsonFormatter : SystemTextJsonInputFormatter
+        {
+            public JsonFormatter(
+                JsonOptions options,
+                ILogger<SystemTextJsonInputFormatter> logger)
+            : base(options, logger)
+            {
+            }
+
+            public override bool CanRead(InputFormatterContext context)
+            {
+                return base.CanRead(context);
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DocuSign.MyHR.Controllers
 {
     [Authorize]
+    [Route("api/[controller]")]
     public class EnvelopeController : Controller
     {
         private readonly IEnvelopeService _envelopeService;
@@ -16,14 +17,15 @@ namespace DocuSign.MyHR.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody] RequestEnvelopeModel model)
+        public IActionResult Index([FromBody]RequestEnvelopeModel model)
         {
             string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+
             return Redirect(_envelopeService.CreateEnvelope(
                 model.Type,
                 Context.Account.Id,
-                Context.User.Id,
-                model.AdditionalUser,
+                Context.User.Id, 
+                model.AdditionalUser, 
                 model.RedirectUrl,
                  Url.Action("ping", "info", null, scheme)));
         }

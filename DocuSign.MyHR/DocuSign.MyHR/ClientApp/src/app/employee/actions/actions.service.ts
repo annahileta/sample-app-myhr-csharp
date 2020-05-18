@@ -10,10 +10,10 @@ export class ActionsService {
   ) {}
 
   sendEnvelop(type: string, user: IUser, redirectUrl: string) {
-    const body: any = {
-      type: type,
-      additionalUser: user,
-      redirectUrl: redirectUrl,
+    const body: any = { 
+        Type: type,
+        AdditionalUser: user,
+        RedirectUrl: redirectUrl, 
     };
     return this.http.post<any>(
       this.baseUrl + "envelope",

@@ -27,8 +27,8 @@ namespace DocuSign.MyHR.Controllers
         [HttpPut]
         public IActionResult Index(UserDetails userDetails)
         {
-             _userService.UpdateUserDetails(Context.Account.Id, Context.User.Id, userDetails);
-             return Ok();
+            _userService.UpdateUserDetails(Context.Account.Id, Context.User.Id, userDetails);
+            return Ok();
         }
     }
 }
