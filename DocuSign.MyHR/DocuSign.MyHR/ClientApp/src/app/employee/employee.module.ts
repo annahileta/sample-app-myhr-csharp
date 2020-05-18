@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { EmployeeComponent } from './employee.component';
-import { EmployeeRoutingModule } from './employee-routing.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { ProfileComponent } from './profile/profile.component';
-import { ActionsComponent } from './actions/actions.component';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { EmployeeComponent } from "./employee.component";
+import { EmployeeRoutingModule } from "./employee-routing.module";
+import { TranslateModule } from "@ngx-translate/core";
+import { ProfileComponent } from "./profile/profile.component";
+import { ActionsComponent } from "./actions/actions.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [EmployeeComponent, ProfileComponent, ActionsComponent],
@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
     EmployeeRoutingModule,
     TranslateModule.forChild(),
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class EmployeeModule {}
