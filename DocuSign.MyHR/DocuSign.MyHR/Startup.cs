@@ -1,6 +1,4 @@
 using System.Threading.Tasks;
-using DocuSign.eSign.Api;
-using DocuSign.eSign.Client;
 using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Builder;
@@ -53,7 +51,6 @@ namespace DocuSign.MyHR
                     return Task.CompletedTask;
                 };
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
