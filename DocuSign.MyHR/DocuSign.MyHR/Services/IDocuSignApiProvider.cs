@@ -1,4 +1,5 @@
-﻿using DocuSign.eSign.Api;
+﻿using System.Net.Http;
+using DocuSign.eSign.Api;
 
 namespace DocuSign.MyHR.Services
 {
@@ -6,5 +7,6 @@ namespace DocuSign.MyHR.Services
     {
         IUsersApi UsersApi { get; }
         IEnvelopesApi EnvelopApi { get; }
+        HttpClient DocuSignHttpClient { get; }
     }
 }
