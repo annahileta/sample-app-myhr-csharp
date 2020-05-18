@@ -17,10 +17,5 @@ export class AppComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.translateService.use(environment.defaultLanguage);
-    this.authenticationService.getUser().subscribe(() => {
-      if (this.authenticationService.isAuthenticated) {
-        this.router.navigate(["/employee"]);
-      }
-    });
   }
 }
