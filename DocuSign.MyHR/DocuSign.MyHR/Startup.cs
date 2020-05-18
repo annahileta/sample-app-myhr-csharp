@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
@@ -25,11 +26,13 @@ namespace DocuSign.MyHR
         {
             services.AddMemoryCache();
             services.AddHttpContextAccessor();
-            services.AddScoped<Context, Context>();
+            services.AddScoped<Context, Context>(); 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IDocuSignApiProvider, DocuSignApiProvider>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEnvelopeService, EnvelopeService>();
+            services.AddHttpClient<DocuSignApiProvider>();
+            services.AddScoped<IClickWrapService, ClickWrapService>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
