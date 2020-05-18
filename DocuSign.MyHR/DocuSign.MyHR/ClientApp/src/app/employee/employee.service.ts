@@ -6,11 +6,6 @@ import { BehaviorSubject } from "rxjs";
 @Injectable({ providedIn: "root" })
 export class EmployeeService {
   user: IUser;
-  userDetails: {
-    accountId: string;
-    userId: string;
-  };
-
   user$ = new BehaviorSubject<IUser>(null);
 
   constructor(

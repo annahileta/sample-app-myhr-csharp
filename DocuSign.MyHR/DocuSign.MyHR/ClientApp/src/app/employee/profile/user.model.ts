@@ -2,6 +2,7 @@ export interface IUser {
   id: number;
   name: string;
   date: string;
+  email: string;
   imageUrl: string;
   address?: {
     address1: string;

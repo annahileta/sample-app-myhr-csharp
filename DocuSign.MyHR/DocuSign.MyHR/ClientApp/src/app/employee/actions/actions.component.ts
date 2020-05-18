@@ -1,4 +1,7 @@
+import { EmployeeService } from "./../employee.service";
 import { Component, OnInit } from "@angular/core";
+import { ActionsService } from "./actions.service";
+import { IUser } from "../profile/user.model";
 
 @Component({
   selector: "app-actions",
@@ -6,8 +9,19 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./actions.component.css"],
 })
 export class ActionsComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private actionServise: ActionsService,
+    private employeeService: EmployeeService
+  ) {}
 
   ngOnInit(): void {}
+
+  sendEnvelope(type: string) {
+    const user: IUser = this.employeeService.user;
+    debugger;
+    this.actionServise
+      .sendEnvelop(type, user, "https://localhost:5001")
+      .subscribe();
+  }
   doAction() {}
 }
