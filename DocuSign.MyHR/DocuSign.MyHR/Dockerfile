@@ -15,6 +15,10 @@ RUN dotnet restore "DocuSign.MyHR.UnitTests/DocuSign.MyHR.UnitTests.csproj"
 RUN dotnet restore "DocuSign.MyHR/DocuSign.MyHR.csproj"
 #RUN dotnet restore
 COPY . .
+
+WORKDIR "/src/DocuSign.MyHR.UnitTests"
+RUN dotnet build "DocuSign.MyHR.UnitTests.csproj" -c Release
+
 WORKDIR "/src/DocuSign.MyHR"
 RUN dotnet build "DocuSign.MyHR.csproj" -c Release -o /app/build
 
