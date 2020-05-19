@@ -4,6 +4,7 @@ import { ActionsService } from "./actions.service";
 import { IUser } from "../profile/user.model";
 import { DocumentType } from "./document-type.enum";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { HttpResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-actions",
@@ -26,11 +27,11 @@ export class ActionsComponent implements OnInit {
   ngOnInit(): void {}
 
   sendEnvelope(type: DocumentType) {
-    const user: IUser = this.employeeService.user;
-
     this.actionServise
-      .sendEnvelop(type, user, "https://localhost:5001")
-      .subscribe();
+      .sendEnvelop(type, null, "https://localhost:5001")
+      .subscribe((payload) => {
+        window.location.href = payload.redirectUrl;
+      });
   }
 
   submit(type: DocumentType) {
@@ -44,9 +45,7 @@ export class ActionsComponent implements OnInit {
   }
 
   createClickWrap(type: string) {
-    this.actionServise
-      .createClickWrap()
-      .subscribe();
+    this.actionServise.createClickWrap().subscribe();
   }
   doAction() {}
 }
