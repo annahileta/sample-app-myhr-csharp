@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using DocumentFormat.OpenXml.Packaging;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using RestSharp.Extensions;
 
 namespace DocuSign.MyHR.Services
 {
@@ -16,7 +17,8 @@ namespace DocuSign.MyHR.Services
     {
         private readonly IDocuSignApiProvider _docuSignApiProvider;
         private readonly IConfiguration _configuration;
-        private string _templatePath = "/Templates/Time Tracking Confirmation.docx";
+        private string _templatePath = "/Templates/Time Tracking Confirmation.dotx";
+        private string _tempPath = "/Templates/Time Tracking Confirmation{0}_tmp.docx";
 
         public ClickWrapService(IDocuSignApiProvider docuSignApiProvider, IConfiguration configuration)
         {
@@ -24,13 +26,25 @@ namespace DocuSign.MyHR.Services
             _configuration = configuration;
         }
 
-        public HttpResponseMessage CreateTimeTrackClickWrap(string accountId, int[] workingLog)
+        public HttpResponseMessage CreateTimeTrackClickWrap(string accountId, string userId, int[] workingLog)
+        { 
+            var createResponse = CreateClickWrap(accountId, userId, workingLog);
+            if (createResponse.StatusCode != HttpStatusCode.Created)
+            {
+                return createResponse;
+            }
+
+            var response = JsonConvert.DeserializeObject<dynamic>(createResponse.Content.ReadAsStringAsync().Result);
+            return ActivateClickWrap(accountId, response.clickwrapId.ToString());
+        }
+
+        private HttpResponseMessage CreateClickWrap(string accountId, string userId, int[] workingLog)
         {
             var rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
 
             var request = new HttpRequestMessage(
                 HttpMethod.Post,
-                $"clickapi/v1/accounts/{accountId}/clickwraps"); 
+                $"clickapi/v1/accounts/{accountId}/clickwraps");
 
             var requestBody = new
             {
@@ -52,7 +66,7 @@ namespace DocuSign.MyHR.Services
                 {
                     new
                     {
-                        documentBase64 = GetDocumentBase64(workingLog, rootDir),
+                        documentBase64 = GetDocumentBase64(workingLog, rootDir, userId),
                         documentName = "Time Tracking Confirmation",
                         fileExtension = "docx",
                         order = 0
@@ -64,39 +78,50 @@ namespace DocuSign.MyHR.Services
             request.Content = new StringContent(
                 JsonConvert.SerializeObject(requestBody),
                 Encoding.UTF8,
-                "application/json"); 
+                "application/json");
 
             return _docuSignApiProvider.DocuSignHttpClient.SendAsync(request).Result;
         }
 
-        private string GetDocumentBase64(int[] workingLog, string rootDir)
+        private HttpResponseMessage ActivateClickWrap(string accountId, string clickwrapId)
         {
-            string docBase64;
-            byte[] byteArray = File.ReadAllBytes(rootDir + _templatePath);
-            using (MemoryStream stream = new MemoryStream())
+           var request = new HttpRequestMessage(
+                HttpMethod.Put,
+                $"clickapi/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/1");
+
+            var requestBody = new
+            {  
+                status = "active"
+            };
+            request.Content = new StringContent(
+                JsonConvert.SerializeObject(requestBody),
+                Encoding.UTF8,
+                "application/json");
+
+            return _docuSignApiProvider.DocuSignHttpClient.SendAsync(request).Result;
+        }
+
+        private string GetDocumentBase64(int[] workingLog, string rootDir, string userId)
+        {
+            var tempDocPath = rootDir + string.Format(_tempPath, userId);
+            using (var doc = WordprocessingDocument.CreateFromTemplate(rootDir + _templatePath, true))
             {
-                stream.Write(byteArray, 0, (int) byteArray.Length);
-                using (WordprocessingDocument doc = WordprocessingDocument.Open(stream, true))
+                var body = doc.MainDocumentPart.Document.Body;
+
+                foreach (var text in body.Descendants<Text>())
                 {
-                    var body = doc.MainDocumentPart.Document.Body;
-
-                    foreach (var text in body.Descendants<Text>())
+                    if (text.Text.Contains("hrs"))
                     {
-                        if (text.Text.Contains("hrs"))
-                        {
-                            text.Text = text.Text.Replace("hrs", workingLog.Sum() + " hrs");
-                        }
+                        text.Text = text.Text.Replace("hrs", workingLog.Sum().ToString());
                     }
-                    doc.Save(); 
-                    using (StreamReader sr = new StreamReader(doc.MainDocumentPart.GetStream()))
-                    {
-                        docBase64 = Convert.ToBase64String(stream.ToArray());
-                    }
-
-                   
                 }
-            }
 
+                doc.SaveAs(tempDocPath).Close(); 
+            }
+             
+            using var memoryStream = new MemoryStream(File.ReadAllBytes(tempDocPath));
+            var docBase64 = Convert.ToBase64String(memoryStream.ReadAsBytes());
+            File.Delete(tempDocPath);
             return docBase64;
         }
     }

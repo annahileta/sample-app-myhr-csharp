@@ -2,8 +2,7 @@
 using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc; 
 
 namespace DocuSign.MyHR.Controllers
 {
@@ -21,15 +20,13 @@ namespace DocuSign.MyHR.Controllers
         [HttpPost]
         public IActionResult Index([FromBody] RequestClickWrapModel model)
         {
-            var response = _clickWrapService.CreateTimeTrackClickWrap(Context.Account.Id, model.WorkLogs);
-            if (response.StatusCode != HttpStatusCode.Created)
+            var response = _clickWrapService.CreateTimeTrackClickWrap(Context.Account.Id, Context.User.Id, model.WorkLogs);
+            if (response.StatusCode != HttpStatusCode.OK)
             {
                 return BadRequest();
-            }
+            } 
 
-            dynamic responseBody = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result);
-             
-            return Ok(responseBody);
+            return Ok(response.Content.ReadAsStringAsync().Result);
         }
     }
 }
