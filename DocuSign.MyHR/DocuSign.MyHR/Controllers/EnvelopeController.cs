@@ -21,13 +21,16 @@ namespace DocuSign.MyHR.Controllers
         {
             string scheme = Url.ActionContext.HttpContext.Request.Scheme;
 
-            return Ok(_envelopeService.CreateEnvelope(
+            return Json(new
+            {
+                redirectUrl = _envelopeService.CreateEnvelope(
                 model.Type,
                 Context.Account.Id,
-                Context.User.Id, 
-                model.AdditionalUser, 
+                Context.User.Id,
+                model.AdditionalUser,
                 model.RedirectUrl,
-                 Url.Action("ping", "info", null, scheme)));
+                 Url.Action("ping", "info", null, scheme))
+            });
         }
     }
 }
