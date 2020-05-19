@@ -26,9 +26,8 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse) {
           const authType = this.authenticationService.getAuthType();
-          console.log(authType);
           if (error.status !== 401) {
-            return;
+            return throwError(error);
           } else if (error.status === 401 && !!authType) {
             window.location.href = `Account/Login?${authType}`;
           } else {

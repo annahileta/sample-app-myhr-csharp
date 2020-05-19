@@ -1,13 +1,9 @@
 import { Injectable } from "@angular/core";
 
-import {
-  Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  CanLoad,
-} from "@angular/router";
+import { Router, CanLoad } from "@angular/router";
 import { AuthenticationService } from "./auth.service";
-import { HomeComponent } from "./home.component";
+import { mapTo, catchError } from "rxjs/operators";
+import { of, Observable } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanLoad {
@@ -16,12 +12,16 @@ export class AuthGuard implements CanLoad {
     private router: Router
   ) {}
 
-  canLoad() {
-    if (this.authenticationService.isAuthenticated) {
-      return true;
-    } else {
-      this.router.navigateByUrl("/");
-      return false;
+  canLoad(): Observable<boolean> | boolean {
+    if (!this.authenticationService.isAuthenticated) {
+      return this.authenticationService.getUser().pipe(
+        mapTo(true),
+        catchError(() => {
+          this.router.navigate(["/"]);
+          return of(false);
+        })
+      );
     }
+    return true;
   }
 }

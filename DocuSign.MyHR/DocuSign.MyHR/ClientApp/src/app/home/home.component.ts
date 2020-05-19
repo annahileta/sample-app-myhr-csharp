@@ -18,7 +18,11 @@ export class HomeComponent {
   ngOnInit(): void {
     if (this.authenticationService.isAuthenticated) {
       this.router.navigate(["/employee"]);
+      return;
     }
+    this.authenticationService.getUser().subscribe(() => {
+      this.router.navigate(["/employee"]);
+    });
   }
 
   handleAuth(authType: AuthType) {

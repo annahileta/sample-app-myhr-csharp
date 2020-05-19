@@ -1,9 +1,12 @@
-﻿using DocuSign.MyHR.Domain;
+﻿using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocuSign.MyHR.Controllers
 {
+    [Authorize]
+    [Route("api/[controller]")]
     public class EnvelopeController : Controller
     {
         private readonly IEnvelopeService _envelopeService;
@@ -12,9 +15,22 @@ namespace DocuSign.MyHR.Controllers
         {
             _envelopeService = envelopeService;
         }
-        public IActionResult Index()
+
+        [HttpPost]
+        public IActionResult Index([FromBody]RequestEnvelopeModel model)
         {
-            return Redirect(_envelopeService.CreateEnvelope(DocumentType.I9, Context.Account.Id, Context.User.Id));
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+
+            return Json(new
+            {
+                redirectUrl = _envelopeService.CreateEnvelope(
+                model.Type,
+                Context.Account.Id,
+                Context.User.Id,
+                model.AdditionalUser,
+                model.RedirectUrl,
+                 Url.Action("ping", "info", null, scheme))
+            });
         }
     }
 }

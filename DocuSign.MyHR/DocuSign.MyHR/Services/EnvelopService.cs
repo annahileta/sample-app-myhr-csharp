@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
+using DocuSign.MyHR.Services.TemplateHandlers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 namespace DocuSign.MyHR.Services
 {
     public class EnvelopeService : IEnvelopeService
     {
-        private string _signerClientId = "1000";
-        private string _i9TemplatePath = "/Templates/I-9_2020.json";
-
+        private string _signerClientId = "1000"; 
         private readonly IDocuSignApiProvider _docuSignApiProvider;
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
@@ -27,58 +21,64 @@ namespace DocuSign.MyHR.Services
             _configuration = configuration;
         }
 
-        public string CreateEnvelope(DocumentType type, string accountId, string userId)
+        public string CreateEnvelope(
+            DocumentType type,
+            string accountId,
+            string userId,
+            UserDetails additionalUser,
+            string redirectUrl,
+            string pingAction)
         {
-            var userDetails = _userService.GetUserDetails(accountId, userId);
-            var rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
-           
-            EnvelopeDefinition envelope;
+            string rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey); 
+            UserDetails userDetails = _userService.GetUserDetails(accountId, userId);
+
+            ITemplateHandler templateHandler;
             switch (type)
             {
                 case DocumentType.I9:
-                    envelope = JsonConvert.DeserializeObject<EnvelopeDefinition>(new StreamReader(rootDir +_i9TemplatePath).ReadToEnd());
+                    templateHandler = new I9TemplateHandler(); 
+                    break;
+                case DocumentType.W4:
+                    templateHandler = new W4TemplateHandler(); 
+                    break;
+                case DocumentType.Offer:
+                    templateHandler = new OfferTemplateHandler(); 
                     break;
                 default:
                     throw new NotImplementedException(); 
             }
 
-            envelope.TemplateRoles = new List<TemplateRole> 
-            {
-                new TemplateRole
-                {
-                    Email = userDetails.Email,
-                    Name = userDetails.Name,
-                    RoleName = "New Hire",
-                }
-            };
+            EnvelopeTemplate envelopeTemplate = templateHandler.CreateTemplate(rootDir);
+            EnvelopeDefinition envelope = templateHandler.CreateEnvelope(userDetails, additionalUser);
+
+            TemplateSummary templateSummary = _docuSignApiProvider.TemplatesApi.CreateTemplate(accountId, envelopeTemplate); 
+            envelope.TemplateId = templateSummary.TemplateId;
 
             EnvelopeSummary results = _docuSignApiProvider.EnvelopApi.CreateEnvelope(accountId, envelope);
             string envelopeId = results.EnvelopeId;
 
-            RecipientViewRequest viewRequest = MakeRecipientViewRequest(
+            RecipientViewRequest viewRequest = CreateRecipientViewRequest(
                 userDetails.Email, 
-                userDetails.Name, 
-                "https://localhost:5001", 
+                userDetails.Name,
+                redirectUrl, 
                 _signerClientId,
-                "https://localhost:5001/info/ping");
+                pingAction);
              
-            ViewUrl results1 = _docuSignApiProvider.EnvelopApi.CreateRecipientView(accountId, envelopeId, viewRequest);
+            ViewUrl recipientView = _docuSignApiProvider.EnvelopApi.CreateRecipientView(accountId, envelopeId, viewRequest);
 
-            return results1.Url;
+            return recipientView.Url;
         } 
 
-        private static RecipientViewRequest MakeRecipientViewRequest(string signerEmail, string signerName, string returnUrl, string signerClientId, string pingUrl = null)
+        private static RecipientViewRequest CreateRecipientViewRequest(string signerEmail, string signerName, string returnUrl, string signerClientId, string pingUrl = null)
         {
-
-            RecipientViewRequest viewRequest = new RecipientViewRequest();
-
-            viewRequest.ReturnUrl = returnUrl + "?state=123";
-
-            viewRequest.AuthenticationMethod = "none";
-             
-            viewRequest.Email = signerEmail;
-            viewRequest.UserName = signerName;
-            viewRequest.ClientUserId = signerClientId;
+            RecipientViewRequest viewRequest = new RecipientViewRequest
+            {
+                ReturnUrl = returnUrl,
+                AuthenticationMethod = "none",
+                Email = signerEmail,
+                UserName = signerName,
+                ClientUserId = signerClientId
+            };
 
             if (pingUrl != null)
             {
@@ -89,6 +89,4 @@ namespace DocuSign.MyHR.Services
             return viewRequest;
         }
     }
-
-
 }

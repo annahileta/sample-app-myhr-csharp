@@ -1,28 +1,54 @@
-<section class="jumbotron text-center">
-  <div class="container">
-    <h1 class="jumbotron-heading">Welcome to MyHR</h1>
-    <p class="lead text-muted">Self-service Human Resources Portal</p>
-  </div>
-</section>
-<div class="container-fluid">
-  <div class="jumbotron text-center">
-    <div class="btn d-flex justify-content-around">
-      <div class="btn-group" role="group">
-        <button
-          class="btn btn-primary"
-          (click)="handleAuth(authType.CodeGrant)"
-        >
-          <i class="fas fa-cog fa-spin"></i>
-          <span translate>Login in with DocuSign account</span>
-        </button>
+<section class="hero-section hero-home">
+  <div class="container-fluid">
+    <div class="img-holder absolute-img">
+      <img src="assets/img/hero-absolute-image.png" alt="dots" />
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="hero-info">
+          <h1 translate>WelcomeHeader</h1>
+          <h4 translate>WelcomeDescription</h4>
+          <div
+            class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start"
+          >
+            <button
+              class="btn btn-warning btn-lg"
+              (click)="handleAuth(authType.CodeGrant)"
+              translate
+            >
+              LoginWithDocuSignAccountButton
+            </button>
+            <button
+              class="btn btn-white btn-lg"
+              (click)="handleAuth(authType.JWT)"
+              translate
+            >
+              LoginWithTestAccountButton
+            </button>
+          </div>
+          <div class="cta-section">
+            <span class="cta-title" translate>Note</span>
+            <div class="cta-row">
+              <div class="img-holder">
+                <img src="assets/img/download.svg" alt="download icon" />
+              </div>
+              <a href="#" translate>VSExtentionLink</a>
+            </div>
+            <div class="cta-row">
+              <div class="img-holder">
+                <img src="assets/img/download.svg" alt="download icon" />
+              </div>
+              <a href="#" translate>VSCodeExtentionLink</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="btn-group" role="group">
-        <button class="btn btn-primary" (click)="handleAuth(authType.JWT)">
-          <i class="fas fa-cog fa-spin"></i>
-          <span translate>Login in with test account</span>
-        </button>
+      <div class="col-md-6">
+        <div class="main-image">
+          <img src="assets/img/hero.png" alt="" />
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 <app-info></app-info>

@@ -15,7 +15,7 @@ namespace DocuSign.MyHR.Controllers
         }
 
         [HttpGet]
-        public async System.Threading.Tasks.Task<IActionResult> Login(string authType = "CodeGrant", string returnUrl = "/")
+        public async System.Threading.Tasks.Task<IActionResult> Login(string authType = "CodeGrant", string returnUrl = "/employee")
         {
             if (authType == "CodeGrant")
             {
