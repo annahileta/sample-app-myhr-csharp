@@ -1,4 +1,5 @@
-﻿using DocuSign.MyHR.Models;
+﻿using System.Net;
+using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 namespace DocuSign.MyHR.Controllers
 {
     [Authorize]
+    [Route("api/[controller]")]
     public class ClickWrapController : Controller
     {
         private readonly IClickWrapService _clickWrapService;
@@ -16,12 +18,17 @@ namespace DocuSign.MyHR.Controllers
             _clickWrapService = clickWrapService;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Index([FromBody] RequestClickWrapModel model)
         {
             var response = _clickWrapService.CreateTimeTrackClickWrap(Context.Account.Id, model.WorkLogs);
-            var responseBody = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result);
+            if (response.StatusCode != HttpStatusCode.Created)
+            {
+                return BadRequest();
+            }
 
+            dynamic responseBody = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result);
+             
             return Ok(responseBody);
         }
     }

@@ -8,5 +8,6 @@ namespace DocuSign.MyHR.Services
         IUsersApi UsersApi { get; }
         IEnvelopesApi EnvelopApi { get; }
         HttpClient DocuSignHttpClient { get; }
+        ITemplatesApi TemplatesApi { get; }
     }
 }

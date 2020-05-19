@@ -16,7 +16,22 @@ export class ActionsService {
         RedirectUrl: redirectUrl, 
     };
     return this.http.post<any>(
-      this.baseUrl + "envelope",
+      this.baseUrl + "api/envelope",
+      JSON.stringify(body),
+      {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+        }),
+      }
+    );
+  }
+
+  createClickWrap() {
+    const body: any = {
+      WorkLogs: [8, 7, 1, 6, 6, 50],
+    };
+    return this.http.post<any>(
+      this.baseUrl + "api/clickwrap",
       JSON.stringify(body),
       {
         headers: new HttpHeaders({

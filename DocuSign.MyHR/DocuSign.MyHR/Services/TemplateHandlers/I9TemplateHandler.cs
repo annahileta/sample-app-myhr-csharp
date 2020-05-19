@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
@@ -9,23 +10,34 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     public class I9TemplateHandler
     {
         private string _signerClientId = "1000";
-        private string _templatePath = "../Templates/I-9_2020.json";
+        private string _templatePath = "/Templates/I-9_2020.json";
 
-        public EnvelopeDefinition CreateEnvelop(UserDetails userDetails, UserDetails additionalUser, string rootDir)
+        public EnvelopeTemplate CreateTemplate(string rootDir)
         {
-            var envelope = JsonConvert.DeserializeObject<EnvelopeDefinition>(new StreamReader(rootDir + _templatePath).ReadToEnd());
-              
-            var signerNewHire = envelope.Recipients.Signers.First(x => x.RoleName == "New Hire");
-            signerNewHire.Email = additionalUser.Email;
-            signerNewHire.Name = additionalUser.Name;
-            signerNewHire.ClientUserId = _signerClientId;
+            return JsonConvert.DeserializeObject<EnvelopeTemplate>(new StreamReader(rootDir + _templatePath).ReadToEnd());
+        }
 
-            var signerHR = envelope.Recipients.Signers.First(x => x.RoleName == "HR");
-            signerHR.Email = userDetails.Email;
-            signerHR.Name = userDetails.Name;
-            envelope.Status = "Sent";
+        public EnvelopeDefinition CreateEnvelope(UserDetails userDetails, UserDetails additionalUser)
+        {
+            EnvelopeDefinition env = new EnvelopeDefinition();
 
-            return envelope;
+            TemplateRole roleHr = new TemplateRole
+            {
+                Email = userDetails.Email,
+                Name = userDetails.Name,
+                ClientUserId = _signerClientId,
+                RoleName = "HR"
+            };
+            TemplateRole roleNewHire = new TemplateRole
+            {
+                Email = additionalUser.Email,
+                Name = additionalUser.Name,
+                RoleName = "New Hire"
+            };
+
+            env.TemplateRoles = new List<TemplateRole> { roleHr, roleNewHire };
+            env.Status = "sent";
+            return env;
         }
     }
 }

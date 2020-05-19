@@ -21,7 +21,7 @@ namespace DocuSign.MyHR.Controllers
         {
             string scheme = Url.ActionContext.HttpContext.Request.Scheme;
 
-            return Redirect(_envelopeService.CreateEnvelope(
+            return Ok(_envelopeService.CreateEnvelope(
                 model.Type,
                 Context.Account.Id,
                 Context.User.Id, 

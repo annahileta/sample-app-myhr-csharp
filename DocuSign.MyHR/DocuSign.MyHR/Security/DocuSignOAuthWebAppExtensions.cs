@@ -52,6 +52,7 @@ namespace DocuSign.MyHR.Security
                 options.UserInformationEndpoint = Configuration["DocuSign:UserInformationEndpoint"];
 
                 options.Scope.Add("signature");
+                options.Scope.Add("click.manage"); 
                 options.SaveTokens = true;
 
                 options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub");

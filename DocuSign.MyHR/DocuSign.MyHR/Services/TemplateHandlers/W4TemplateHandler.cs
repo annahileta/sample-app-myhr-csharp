@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+using System.Collections.Generic;
+using System.IO; 
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using Newtonsoft.Json;
@@ -12,23 +12,26 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/W-4_2020.json";
 
-        public EnvelopeDefinition CreateEnvelop(UserDetails userDetails, string rootDir)
+        public EnvelopeTemplate CreateTemplate(string rootDir)
         {
-            var envelope = JsonConvert.DeserializeObject<EnvelopeDefinition>(new StreamReader(rootDir + _templatePath).ReadToEnd());
-              
-            var signerNewHire = envelope.Recipients.Signers.First(x => x.RoleName == "New Hire");
-            signerNewHire.Email = userDetails.Email;
-            signerNewHire.Name = userDetails.Name;
-            signerNewHire.ClientUserId = _signerClientId;
-            signerNewHire.RecipientIdGuid = Guid.NewGuid().ToString();
+            return JsonConvert.DeserializeObject<EnvelopeTemplate>(new StreamReader(rootDir + _templatePath).ReadToEnd());
+        }
 
-            var signerHR = envelope.Recipients.Signers.First(x => x.RoleName == "HR");
-            signerHR.Email = userDetails.Email;
-            signerHR.Name = userDetails.Name;
+        public EnvelopeDefinition CreateEnvelope(UserDetails userDetails)
+        {
+            EnvelopeDefinition env = new EnvelopeDefinition();
 
-            envelope.Status = "Sent";
+            TemplateRole role = new TemplateRole
+            {
+                Email = userDetails.Email,
+                Name = userDetails.Name,
+                RoleName = "New Hire",
+                ClientUserId = _signerClientId
+            };
 
-            return envelope;
+            env.TemplateRoles = new List<TemplateRole> { role };
+            env.Status = "sent";
+            return env;
         }
     }
 }

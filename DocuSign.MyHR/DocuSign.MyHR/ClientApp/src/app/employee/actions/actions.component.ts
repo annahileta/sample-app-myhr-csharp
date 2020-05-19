@@ -18,9 +18,13 @@ export class ActionsComponent implements OnInit {
 
   sendEnvelope(type: string) {
     const user: IUser = this.employeeService.user;
-    debugger;
     this.actionServise
       .sendEnvelop(type, user, "https://localhost:5001")
+      .subscribe();
+  }
+  createClickWrap(type: string) {
+    this.actionServise
+      .createClickWrap()
       .subscribe();
   }
   doAction() {}

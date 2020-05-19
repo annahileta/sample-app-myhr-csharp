@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,38 +30,17 @@ namespace DocuSign.MyHR.Services
 
             var request = new HttpRequestMessage(
                 HttpMethod.Post,
-                $"/v1/accounts/{accountId}/clickwraps");
-
-            request.Headers.Add("Accept", "application/vnd.github.v3+json");
-            request.Headers.Add("User-Agent", "MyHR");
-            string docBase64;
-            byte[] byteArray = File.ReadAllBytes(rootDir + _templatePath);
-            using (MemoryStream stream = new MemoryStream())
-            {
-                stream.Write(byteArray, 0, (int)byteArray.Length);
-                using (WordprocessingDocument doc = WordprocessingDocument.Open(stream, true))
-                {
-                    var body = doc.MainDocumentPart.Document.Body;
-
-                    foreach (var text in body.Descendants<Text>())
-                    {
-                        if (text.Text.Contains("{hrs}"))
-                        {
-                            text.Text = text.Text.Replace("{hrs}", workingLog.Sum().ToString());
-                        }
-                    }
-                    docBase64 = Convert.ToBase64String(stream.ToArray());
-                }
-            }
+                $"clickapi/v1/accounts/{accountId}/clickwraps"); 
 
             var requestBody = new
             {
                 displaySettings = new
                 {
-                    consentButtonText = "string",
+                    consentButtonText = "I Confirm",
+                    hasDeclineButton = true,
                     displayName = "Time Tracking Confirmation",
                     downloadable = true,
-                    format = "docx",
+                    format = "modal",
                     hasAccep = true,
                     mustRead = true,
                     mustView = true,
@@ -71,19 +52,52 @@ namespace DocuSign.MyHR.Services
                 {
                     new
                     {
-                        documentBase64 = docBase64,
+                        documentBase64 = GetDocumentBase64(workingLog, rootDir),
                         documentName = "Time Tracking Confirmation",
                         fileExtension = "docx",
                         order = 0
                     }
                 },
                 name = "Time Tracking Confirmation",
-                Status = "active"
+                status = "active"
             };
-            request.Content = new StringContent(JsonConvert.SerializeObject(requestBody));
-            JsonConvert.SerializeObject(requestBody);
+            request.Content = new StringContent(
+                JsonConvert.SerializeObject(requestBody),
+                Encoding.UTF8,
+                "application/json"); 
 
             return _docuSignApiProvider.DocuSignHttpClient.SendAsync(request).Result;
+        }
+
+        private string GetDocumentBase64(int[] workingLog, string rootDir)
+        {
+            string docBase64;
+            byte[] byteArray = File.ReadAllBytes(rootDir + _templatePath);
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Write(byteArray, 0, (int) byteArray.Length);
+                using (WordprocessingDocument doc = WordprocessingDocument.Open(stream, true))
+                {
+                    var body = doc.MainDocumentPart.Document.Body;
+
+                    foreach (var text in body.Descendants<Text>())
+                    {
+                        if (text.Text.Contains("hrs"))
+                        {
+                            text.Text = text.Text.Replace("hrs", workingLog.Sum() + " hrs");
+                        }
+                    }
+                    doc.Save(); 
+                    using (StreamReader sr = new StreamReader(doc.MainDocumentPart.GetStream()))
+                    {
+                        docBase64 = Convert.ToBase64String(stream.ToArray());
+                    }
+
+                   
+                }
+            }
+
+            return docBase64;
         }
     }
 }

@@ -21,7 +21,8 @@ namespace DocuSign.MyHR.Services
             _configuration = configuration;
         }
 
-        public string CreateEnvelope(DocumentType type,
+        public string CreateEnvelope(
+            DocumentType type,
             string accountId,
             string userId,
             UserDetails additionalUser,
@@ -31,23 +32,32 @@ namespace DocuSign.MyHR.Services
             var rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
 
             var userDetails = _userService.GetUserDetails(accountId, userId);
-           
+
+            EnvelopeTemplate envelopeTemplate;
             EnvelopeDefinition envelope;
             switch (type)
             {
-                case DocumentType.I9:
-                    envelope = new I9TemplateHandler().CreateEnvelop(userDetails, additionalUser, rootDir);
+                case DocumentType.I9: 
+                    var handlerI9 = new I9TemplateHandler();
+                    envelopeTemplate = handlerI9.CreateTemplate(rootDir);
+                    envelope = handlerI9.CreateEnvelope(userDetails, additionalUser);
                     break;
                 case DocumentType.W4:
-                    envelope = new W4TemplateHandler().CreateEnvelop(userDetails, rootDir);
+                    var handlerW4 = new W4TemplateHandler();
+                    envelopeTemplate = handlerW4.CreateTemplate(rootDir);
+                    envelope = handlerW4.CreateEnvelope(userDetails);
                     break;
                 case DocumentType.Offer:
-                    envelope = new OfferTemplateHandler().CreateEnvelop(userDetails, additionalUser, rootDir);
+                    var handlerOffer = new OfferTemplateHandler();
+                    envelopeTemplate = handlerOffer.CreateTemplate(rootDir);
+                    envelope = handlerOffer.CreateEnvelope(userDetails, additionalUser);
                     break;
                 default:
                     throw new NotImplementedException(); 
             }
-             
+
+            var templateSummary = _docuSignApiProvider.TemplatesApi.CreateTemplate(accountId, envelopeTemplate); 
+            envelope.TemplateId = templateSummary.TemplateId;
             EnvelopeSummary results = _docuSignApiProvider.EnvelopApi.CreateEnvelope(accountId, envelope);
             string envelopeId = results.EnvelopeId;
 

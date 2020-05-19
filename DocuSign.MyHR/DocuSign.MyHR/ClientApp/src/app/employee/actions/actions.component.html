@@ -14,7 +14,7 @@
       (click)="sendEnvelope('W4')"
       >Select W-4 tax withholding</a
     >
-    <a class="list-group-item list-group-item-action-link" (click)="doAction()"
+    <a class="list-group-item list-group-item-action-link" (click)="createClickWrap()"
       >Enter a time card</a
     >
     <a class="list-group-item list-group-item-action-link" (click)="doAction()"
@@ -27,7 +27,7 @@
     Manager actions
   </div>
   <ul class="list-group list-group-flush">
-    <a class="list-group-item list-group-item-action" (click)="doAction()"
+    <a class="list-group-item list-group-item-action" (click)="sendEnvelope('Offer')"
       >Send an offer letter to candidate</a
     >
     <a
