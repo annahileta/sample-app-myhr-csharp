@@ -11,6 +11,7 @@ WORKDIR /src
 COPY DocuSign.MyHR/*.sln ./
 COPY ["DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj", "DocuSign.MyHR/"]
 COPY ["DocuSign.MyHR/DocuSign.MyHR.UnitTests/DocuSign.MyHR.UnitTests.csproj", "DocuSign.MyHR.UnitTests/"]
+RUN dotnet restore "DocuSign.MyHR.UnitTests.csproj"
 RUN dotnet restore "DocuSign.MyHR/DocuSign.MyHR.csproj"
 #RUN dotnet restore
 COPY . .
