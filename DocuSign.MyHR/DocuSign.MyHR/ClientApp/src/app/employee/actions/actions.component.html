@@ -11,10 +11,12 @@
     >
     <a
       class="list-group-item list-group-item-action-link"
-      (click)="sendEnvelope('W4')"
+      (click)="sendEnvelope(documentType.W4)"
       >Select W-4 tax withholding</a
     >
-    <a class="list-group-item list-group-item-action-link" (click)="createClickWrap()"
+    <a
+      class="list-group-item list-group-item-action-link"
+      (click)="createClickWrap()"
       >Enter a time card</a
     >
     <a class="list-group-item list-group-item-action-link" (click)="doAction()"
@@ -27,17 +29,18 @@
     Manager actions
   </div>
   <ul class="list-group list-group-flush">
-   
     <a
       class="list-group-item list-group-item-action"
       data-toggle="modal"
-      data-target="#staticBackdrop" (click)="sendEnvelope('Offer')"
+      data-target="#staticBackdrop"
+      (click)="setDocumentType(documentType.Offer)"
       >Send an offer letter to candidate</a
     >
     <a
       class="list-group-item list-group-item-action"
       data-toggle="modal"
       data-target="#staticBackdrop"
+      (click)="setDocumentType(documentType.I9)"
       >Send an I-9 verification Request to candidate using IDV</a
     >
     <!-- Modal -->
@@ -67,7 +70,7 @@
           <form
             [formGroup]="additionalUserForm"
             novalidate
-            (ngSubmit)="submit(ducumentType.I9)"
+            (ngSubmit)="submit()"
           >
             <div class="modal-body">
               <div class="form-group">
