@@ -10,7 +10,7 @@ export class ActionsService {
     @Inject("BASE_URL") private baseUrl: string
   ) {}
 
-  sendEnvelop(type: DocumentType, user: IUser, redirectUrl: string) {
+  sendEnvelope(type: DocumentType, user: IUser, redirectUrl: string) {
     const body: any = {
       Type: type,
       AdditionalUser: user,

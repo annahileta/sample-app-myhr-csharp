@@ -1,7 +1,5 @@
-import { EmployeeService } from "./../employee.service";
 import { Component, OnInit } from "@angular/core";
 import { ActionsService } from "./actions.service";
-import { IUser } from "../profile/user.model";
 import { DocumentType } from "./document-type.enum";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
 
@@ -11,42 +9,41 @@ import { FormControl, Validators, FormGroup } from "@angular/forms";
   styleUrls: ["./actions.component.css"],
 })
 export class ActionsComponent implements OnInit {
-  public ducumentType = DocumentType;
+  public documentType = DocumentType;
+  private type: DocumentType;
+  private redirectUrl: string = window.location.href;
 
   additionalUserForm: FormGroup = new FormGroup({
     Name: new FormControl("", Validators.required),
     Email: new FormControl("", [Validators.required, Validators.email]),
   });
 
-  constructor(
-    private actionServise: ActionsService,
-    private employeeService: EmployeeService
-  ) {}
+  constructor(private actionServise: ActionsService) {}
 
   ngOnInit(): void {}
 
-  sendEnvelope(type: DocumentType) {
-    const user: IUser = this.employeeService.user;
-
-    this.actionServise
-      .sendEnvelop(type, user, "https://localhost:5001")
-      .subscribe();
+  setDocumentType(type: DocumentType) {
+    this.type = type;
   }
 
-  submit(type: DocumentType) {
+  sendEnvelope(type: DocumentType) {
     this.actionServise
-      .sendEnvelop(
-        type,
-        this.additionalUserForm.value,
-        "https://localhost:5001"
-      )
-      .subscribe();
+      .sendEnvelope(type, null, this.redirectUrl)
+      .subscribe((payload) => {
+        window.location.href = payload.redirectUrl;
+      });
+  }
+
+  submit() {
+    this.actionServise
+      .sendEnvelope(this.type, this.additionalUserForm.value, this.redirectUrl)
+      .subscribe((payload) => {
+        window.location.href = payload.redirectUrl;
+      });
   }
 
   createClickWrap(type: string) {
-    this.actionServise
-      .createClickWrap()
-      .subscribe();
+    this.actionServise.createClickWrap().subscribe();
   }
   doAction() {}
 }
