@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace DocuSign.MyHR.Services.TemplateHandlers
 {
-    public class OfferTemplateHandler
+    public class OfferTemplateHandler : ITemplateHandler
     {
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/EmploymentOfferLetter.json";
@@ -17,14 +17,14 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
             return JsonConvert.DeserializeObject<EnvelopeTemplate>(new StreamReader(rootDir + _templatePath).ReadToEnd());
         }
 
-        public EnvelopeDefinition CreateEnvelope(UserDetails userDetails, UserDetails additionalUser)
+        public EnvelopeDefinition CreateEnvelope(UserDetails currentUser, UserDetails additionalUser)
         {
             EnvelopeDefinition env = new EnvelopeDefinition();
 
             TemplateRole roleHr = new TemplateRole
             {
-                Email = userDetails.Email,
-                Name = userDetails.Name,
+                Email = currentUser.Email,
+                Name = currentUser.Name,
                 ClientUserId = _signerClientId,
                 RoleName = "HR Rep"
             };

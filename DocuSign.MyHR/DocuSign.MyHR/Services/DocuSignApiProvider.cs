@@ -27,8 +27,7 @@ namespace DocuSign.MyHR.Services
                 .Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
         });
-
-
+         
         private Lazy<Configuration> _docuSignConfig => new Lazy<Configuration>(() =>
             {
                 var apiClient = new ApiClient(Context.Account.BaseUri + "/restapi");
