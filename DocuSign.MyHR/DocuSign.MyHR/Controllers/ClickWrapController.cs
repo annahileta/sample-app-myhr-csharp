@@ -1,10 +1,8 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using DocuSign.MyHR.Models;
+﻿using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DocuSign.MyHR.Controllers
 {
@@ -24,7 +22,13 @@ namespace DocuSign.MyHR.Controllers
         {
             var response = _clickWrapService.CreateTimeTrackClickWrap(Context.Account.Id, Context.User.Id, model.WorkLogs);
 
-            return Ok(response.Content.ReadAsStringAsync().Result);
+            return Ok(
+                new ResponseClickWrapModel
+                {
+                    ClickWrap = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result),
+                    DocuSignBaseUrl = Context.Account.BaseUri
+                });
+
         }
     }
 }

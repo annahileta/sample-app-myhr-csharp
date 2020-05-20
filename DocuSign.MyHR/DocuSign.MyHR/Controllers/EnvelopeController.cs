@@ -19,10 +19,10 @@ namespace DocuSign.MyHR.Controllers
         [HttpPost]
         public IActionResult Index([FromBody]RequestEnvelopeModel model)
         {
-            string scheme = Url.ActionContext.HttpContext.Request.Scheme; 
-            return Ok(new 
+            string scheme = Url.ActionContext.HttpContext.Request.Scheme;
+            return Ok(new ResponseEnvelopeModel
             {
-                redirectUrl = _envelopeService.CreateEnvelope(
+                RedirectUrl = _envelopeService.CreateEnvelope(
                     model.Type,
                     Context.Account.Id,
                     Context.User.Id,

@@ -35,7 +35,8 @@ namespace DocuSign.MyHR.UnitTests
 
             var result = sut.Index(new RequestClickWrapModel { WorkLogs = new[] { 1, 2, 4 } });
             Assert.True(result is OkObjectResult);
-            Assert.Equal("1", (string)JsonConvert.DeserializeObject<dynamic>(((OkObjectResult)result).Value.ToString()).clickWrapId);
+            var response = (ResponseClickWrapModel)((OkObjectResult)result).Value;
+            Assert.Equal("1", (string) response.ClickWrap.clickWrapId);
         }
 
         private void InitContext(Account account, User user)

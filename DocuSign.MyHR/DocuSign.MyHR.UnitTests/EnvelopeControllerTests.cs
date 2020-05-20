@@ -47,14 +47,13 @@ namespace DocuSign.MyHR.UnitTests
                 Mock.Of<ActionDescriptor>(),
                 new ModelStateDictionary()
             );
-            urlHelperMock.SetupGet( x => x.ActionContext).Returns(actionContext).Verifiable();
+            urlHelperMock.SetupGet(x => x.ActionContext).Returns(actionContext).Verifiable();
             sut.Url = urlHelperMock.Object;
 
             var result = sut.Index(new RequestEnvelopeModel { AdditionalUser = additionalUser, RedirectUrl = "/", Type = DocumentType.I9 });
-            Assert.True(result is OkObjectResult);
-            var okResult = (OkObjectResult) result;
-            var redirectUrl = (string)(okResult).Value.GetType().GetProperty("redirectUrl")?.GetValue(okResult.Value);
-            Assert.Equal("envelopeUrl", redirectUrl);
+            Assert.True(result is OkObjectResult); 
+            var response = (ResponseEnvelopeModel)((OkObjectResult)result).Value;
+            Assert.Equal("envelopeUrl", response.RedirectUrl);
         }
 
         private void InitContext(Account account, User user)
