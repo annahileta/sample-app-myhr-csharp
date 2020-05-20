@@ -42,7 +42,7 @@ export class ActionsComponent implements OnInit {
       });
   }
 
-  createClickWrap(type: string) {
+  createClickWrap() {
     this.actionServise.createClickWrap().subscribe();
   }
   doAction() {}
