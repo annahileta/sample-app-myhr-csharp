@@ -27,9 +27,9 @@ export class ActionsService {
     );
   }
 
-  createClickWrap() {
+  createClickWrap(workTime: number[]) {
     const body: any = {
-      WorkLogs: [8, 7, 1, 6, 6, 50],
+      WorkLogs: workTime,
     };
     return this.http.post<any>(
       this.baseUrl + "api/clickwrap",

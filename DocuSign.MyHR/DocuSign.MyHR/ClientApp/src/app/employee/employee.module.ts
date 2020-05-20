@@ -6,9 +6,15 @@ import { TranslateModule } from "@ngx-translate/core";
 import { ProfileComponent } from "./profile/profile.component";
 import { ActionsComponent } from "./actions/actions.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { TimeCardComponent } from "./actions/timecard/timecard.component";
 
 @NgModule({
-  declarations: [EmployeeComponent, ProfileComponent, ActionsComponent],
+  declarations: [
+    EmployeeComponent,
+    ProfileComponent,
+    ActionsComponent,
+    TimeCardComponent,
+  ],
   imports: [
     CommonModule,
     EmployeeRoutingModule,

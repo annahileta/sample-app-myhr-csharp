@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActionsService } from "./actions.service";
 import { DocumentType } from "./document-type.enum";
 import { FormControl, Validators, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-actions",
@@ -18,7 +19,7 @@ export class ActionsComponent implements OnInit {
     Email: new FormControl("", [Validators.required, Validators.email]),
   });
 
-  constructor(private actionServise: ActionsService) {}
+  constructor(private actionServise: ActionsService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -42,8 +43,8 @@ export class ActionsComponent implements OnInit {
       });
   }
 
-  createClickWrap(type: string) {
-    this.actionServise.createClickWrap().subscribe();
+  sendTimeCard(type: string) {
+    this.router.navigate(["/employee/timecard"]);
   }
   doAction() {}
 }
