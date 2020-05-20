@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using Moq;
 using Xunit;
 using AutoFixture.Xunit2;
 using DocuSign.MyHR.Controllers;
 using DocuSign.MyHR.Domain;
+using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -13,45 +16,28 @@ using Newtonsoft.Json;
 
 namespace DocuSign.MyHR.UnitTests
 {
-    public class UserControllerTests
+    public class ClickWrapControllerTests
     {
         [Theory, AutoData]
         public void Index_Get_ReturnsCorrectResult(
-            Mock<IUserService> userService,
-            UserDetails userDetails,
+            Mock<IClickWrapService> clickWrapService,
             Account account,
             User user)
         {
             InitContext(account, user);
-            userService.Setup(c => c.GetUserDetails(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(userDetails);
+            clickWrapService.Setup(c => c.CreateTimeTrackClickWrap(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int[]>()))
+                .Returns(() => new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(new { clickWrapId = "1" }))
+                });
 
-            var sut = new UserController(userService.Object);
+            var sut = new ClickWrapController(clickWrapService.Object);
 
-            var result = sut.Index();
-            Assert.True(result is OkObjectResult); 
-            Assert.IsType<UserDetails>(((OkObjectResult)result).Value);
-            var receivedUser = (UserDetails) ((OkObjectResult) result).Value;
-            Assert.Equal(userDetails.Address, receivedUser.Address);
-            Assert.Equal(userDetails.Email, receivedUser.Email);
-            Assert.Equal(userDetails.Id, receivedUser.Id);
+            var result = sut.Index(new RequestClickWrapModel { WorkLogs = new[] { 1, 2, 4 } });
+            Assert.True(result is OkObjectResult);
+            Assert.Equal("1", (string)JsonConvert.DeserializeObject<dynamic>(((OkObjectResult)result).Value.ToString()).clickWrapId);
         }
 
-        [Theory, AutoData]
-        public void Index_Put_ReturnsCorrectResult(
-            Mock<IUserService> userService,
-            UserDetails userDetails,
-            Account account,
-            User user)
-        {
-            InitContext(account, user);
-
-            var sut = new UserController(userService.Object);
-
-            var result = sut.Index(userDetails);
-            Assert.True(result is OkResult);
-        }
-         
         private void InitContext(Account account, User user)
         {
             var context = new Context();

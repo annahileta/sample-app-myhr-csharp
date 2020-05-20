@@ -1,8 +1,10 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
 
 namespace DocuSign.MyHR.Controllers
 {
@@ -21,10 +23,6 @@ namespace DocuSign.MyHR.Controllers
         public IActionResult Index([FromBody] RequestClickWrapModel model)
         {
             var response = _clickWrapService.CreateTimeTrackClickWrap(Context.Account.Id, Context.User.Id, model.WorkLogs);
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                return BadRequest();
-            } 
 
             return Ok(response.Content.ReadAsStringAsync().Result);
         }

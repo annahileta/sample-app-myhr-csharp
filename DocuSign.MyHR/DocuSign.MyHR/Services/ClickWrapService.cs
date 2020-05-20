@@ -31,7 +31,8 @@ namespace DocuSign.MyHR.Services
             var createResponse = CreateClickWrap(accountId, userId, workingLog);
             if (createResponse.StatusCode != HttpStatusCode.Created)
             {
-               throw new InvalidOperationException("ClickWrap was not created.");
+               throw new InvalidOperationException($"ClickWrap was not created. " +
+                                                   $"Returned status code {createResponse.StatusCode}, reason {createResponse.ReasonPhrase}");
             }
 
             var response = JsonConvert.DeserializeObject<dynamic>(createResponse.Content.ReadAsStringAsync().Result);
