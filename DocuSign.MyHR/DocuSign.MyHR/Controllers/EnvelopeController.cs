@@ -20,16 +20,15 @@ namespace DocuSign.MyHR.Controllers
         public IActionResult Index([FromBody]RequestEnvelopeModel model)
         {
             string scheme = Url.ActionContext.HttpContext.Request.Scheme;
-
-            return Json(new
+            return Ok(new ResponseEnvelopeModel
             {
-                redirectUrl = _envelopeService.CreateEnvelope(
-                model.Type,
-                Context.Account.Id,
-                Context.User.Id,
-                model.AdditionalUser,
-                model.RedirectUrl,
-                 Url.Action("ping", "info", null, scheme))
+                RedirectUrl = _envelopeService.CreateEnvelope(
+                    model.Type,
+                    Context.Account.Id,
+                    Context.User.Id,
+                    model.AdditionalUser,
+                    model.RedirectUrl,
+                     Url.Action("ping", "info", null, scheme))
             });
         }
     }

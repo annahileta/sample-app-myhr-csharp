@@ -25,7 +25,7 @@ namespace DocuSign.MyHR.UnitTests
             string accountId,
             string userId)
         {
-            SutupApi(docuSignApiProvider, userInformation, accountId, userId);
+            SetupApi(docuSignApiProvider, userInformation, accountId, userId);
             userService.Setup(x => x.GetUserDetails(accountId, userId)).Returns(userInformation);
 
             var inMemorySettings = new Dictionary<string, string>
@@ -43,11 +43,10 @@ namespace DocuSign.MyHR.UnitTests
             Assert.Equal($"accountId={accountId}&templateId=1&userEmail={userInformation.Email}&userName={userInformation.Name}", envelopeUrl);
         } 
 
-        private static void SutupApi(Mock<IDocuSignApiProvider> docuSignApiProvider, UserDetails userInformation, string accountId, string userId)
+        private static void SetupApi(Mock<IDocuSignApiProvider> docuSignApiProvider, UserDetails userInformation, string accountId, string userId)
         { 
             var envelopeApi = new Mock<IEnvelopesApi>();
-            envelopeApi.Setup(x =>
-                    x.CreateEnvelope(accountId, It.IsAny<EnvelopeDefinition>(), It.IsAny<EnvelopesApi.CreateEnvelopeOptions>()))
+            envelopeApi.Setup(x => x.CreateEnvelope(accountId, It.IsAny<EnvelopeDefinition>(), It.IsAny<EnvelopesApi.CreateEnvelopeOptions>()))
                 .Returns((string a, EnvelopeDefinition c, EnvelopesApi.CreateEnvelopeOptions o) =>
                     new EnvelopeSummary(EnvelopeId: "1"));
             envelopeApi.Setup(x => x.CreateRecipientView(accountId, "1", It.IsAny<RecipientViewRequest>()))
@@ -58,7 +57,8 @@ namespace DocuSign.MyHR.UnitTests
              
             var templateApi = new Mock<ITemplatesApi>();
             templateApi.Setup(x => x.CreateTemplate(accountId, It.IsAny<EnvelopeTemplate>()))
-                .Returns((string a, EnvelopeTemplate b) => new TemplateSummary(DocumentName: b.Name, TemplateId: "1"));
+                .Returns((string a, EnvelopeTemplate b) =>
+                    new TemplateSummary(DocumentName: b.Name, TemplateId: "1"));
 
             docuSignApiProvider.SetupGet(c => c.TemplatesApi).Returns(templateApi.Object);
         }
