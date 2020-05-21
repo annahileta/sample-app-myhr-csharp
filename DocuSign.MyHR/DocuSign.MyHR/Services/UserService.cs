@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
+using RestSharp.Extensions;
 
 namespace DocuSign.MyHR.Services
 {
@@ -16,8 +18,10 @@ namespace DocuSign.MyHR.Services
         public UserDetails GetUserDetails(string accountId, string userId)
         {
             UserInformation userInfo = _docuSignApiProvider.UsersApi.GetInformation(accountId, userId);
-
-            return GetUserDetails(userInfo);
+            Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
+            UserDetails userDetails = GetUserDetails(userInfo);
+            userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
+            return userDetails;
         }
          
         public UserDetails UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
@@ -48,8 +52,7 @@ namespace DocuSign.MyHR.Services
                 userInfo.Email,
                 userInfo.FirstName,
                 userInfo.LastName,
-                DateTime.Parse(userInfo.CreatedDateTime), 
-                userInfo.ProfileImageUri,
+                DateTime.Parse(userInfo.CreatedDateTime),
                 userInfo.PermissionProfileId,
                 new Address(
                     address.Address1,

@@ -5,7 +5,7 @@ export interface IUser {
   lastName: string, 
   date: string;
   email: string;
-  profileImageUrl: string;
+  profileImage: string;
   profileId:string,
   address?: {
     address1: string;
