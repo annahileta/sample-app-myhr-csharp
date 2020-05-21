@@ -8,28 +8,28 @@
         </button>
       </div>
       <div class="user-avatar">
-        <div class="user-image">
-          <img src="assets/img/avatar.png" alt="avatar" />
+        <div class="user-image" *ngIf="user.profileImageUrl != null">
+          <img src="{{user.profileImageUrl}}" alt="avatar" />
         </div>
         <div class="user-info">
-          <span>{{user.name}}</span>
-          <span>{{user.name}} </span>
+          <span>{{user.firstName}}</span>
+          <span>{{user.lastName}} </span>
         </div>
       </div>
       <div class="profile-row row">
         <div class="profile-title col-lg-3" translate>Profile.Details.Id</div>
-        <div class="profile-description col-lg-9">122088</div>
+        <div class="profile-description col-lg-9">{{user.profileId}}</div>
       </div>
       <div class="profile-row row">
         <div class="profile-title col-lg-3" translate>Profile.Details.HireDate</div>
-        <div class="profile-description col-lg-9">03/04/20</div>
+        <div class="profile-description col-lg-9">{{user.hireDate}}</div>
       </div>
       <div class="profile-row row">
         <div class="profile-title col-lg-3" translate>Profile.Details.Address</div>
         <div class="profile-description col-lg-9">
-          <span>123 Merry Lane NP00000000</span>
-          <span>East Hanover,</span>
-          <span>New Jersey, 07936</span>
+          <span>{{user.address.address1}}</span>
+          <span>{{user.address.city}}</span>
+          <span>{{user.address.stateOrProvince}}, {{user.address.postalCode}}</span>
         </div>
       </div>
     </div>

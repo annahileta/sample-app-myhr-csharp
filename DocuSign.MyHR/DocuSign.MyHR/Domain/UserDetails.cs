@@ -4,13 +4,14 @@ namespace DocuSign.MyHR.Domain
 {
     public class UserDetails : User
     {
-        public UserDetails()
-        {
+        public UserDetails( ){
+ 
         }
 
-        public UserDetails(string id, string name, string email, string firstName, string lastName, string hireDate, string profileImageUri, Address address) : base(id, name)
+        public UserDetails(string id, string name, string email, string firstName, string lastName, DateTime hireDate, string profileImageUri, string profileId, Address address ) : base(id, name)
         {
             Address = address;
+            ProfileId = profileId;
             FirstName = firstName;
             LastName = lastName;
             HireDate = hireDate;
@@ -21,7 +22,8 @@ namespace DocuSign.MyHR.Domain
         public Address Address { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string HireDate { get; set; }
+        public DateTime HireDate { get; set; }
         public string ProfileImageUri { get; set; }
+        public string ProfileId { get; set; }
     }
 }

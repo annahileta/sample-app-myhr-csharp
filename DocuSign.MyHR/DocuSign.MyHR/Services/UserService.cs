@@ -1,4 +1,5 @@
-﻿using DocuSign.eSign.Model;
+﻿using System;
+using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 
 namespace DocuSign.MyHR.Services
@@ -47,8 +48,9 @@ namespace DocuSign.MyHR.Services
                 userInfo.Email,
                 userInfo.FirstName,
                 userInfo.LastName,
-                userInfo.CreatedDateTime,
+                DateTime.Parse(userInfo.CreatedDateTime), 
                 userInfo.ProfileImageUri,
+                userInfo.PermissionProfileId,
                 new Address(
                     address.Address1,
                     address.Address2,
