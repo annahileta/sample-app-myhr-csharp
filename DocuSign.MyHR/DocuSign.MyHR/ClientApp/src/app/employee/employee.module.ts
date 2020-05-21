@@ -7,6 +7,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { ActionsComponent } from "./actions/actions.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TimeCardComponent } from "./actions/timecard/timecard.component";
+import { ManagerActionsComponent } from './actions/manager-actions/manager-actions.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { TimeCardComponent } from "./actions/timecard/timecard.component";
     ProfileComponent,
     ActionsComponent,
     TimeCardComponent,
+    ManagerActionsComponent,
   ],
   imports: [
     CommonModule,

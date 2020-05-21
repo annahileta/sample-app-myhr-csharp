@@ -5,16 +5,18 @@ import { DocumentType } from "./document-type.enum";
 
 @Injectable({ providedIn: "root" })
 export class ActionsService {
+  redirectUrl: string = window.location.href;
+
   constructor(
     private http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
   ) {}
 
-  sendEnvelope(type: DocumentType, user: IUser, redirectUrl: string) {
+  sendEnvelope(type: DocumentType, user: IUser) {
     const body: any = {
       Type: type,
       AdditionalUser: user,
-      RedirectUrl: redirectUrl,
+      RedirectUrl: this.redirectUrl,
     };
     return this.http.post<any>(
       this.baseUrl + "api/envelope",
@@ -27,9 +29,9 @@ export class ActionsService {
     );
   }
 
-  createClickWrap(workTime: number[]) {
+  createClickWrap(worklogs: number[]) {
     const body: any = {
-      WorkLogs: workTime,
+      WorkLogs: worklogs,
     };
     return this.http.post<any>(
       this.baseUrl + "api/clickwrap",
