@@ -45,6 +45,10 @@ namespace DocuSign.MyHR.Services
                 userInfo.UserId,
                 userInfo.UserName,
                 userInfo.Email,
+                userInfo.FirstName,
+                userInfo.LastName,
+                userInfo.CreatedDateTime,
+                userInfo.ProfileImageUri,
                 new Address(
                     address.Address1,
                     address.Address2,
