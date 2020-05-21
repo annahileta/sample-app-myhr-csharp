@@ -34,17 +34,18 @@ body {
 
 .content {
     flex: 1 0 auto;
+    overflow: hidden;
 }
 
 .container-fluid {
     max-width: 1440px;
 }
 
-//.form-control::-webkit-input-placeholder,
-//.form-control::-moz-placeholder,
-//.form-control:-ms-input-placeholder,
-//.form-control:-moz-placeholder { /* Chrome/Opera/Safari */
-//}
+.form-control::-webkit-input-placeholder,
+.form-control::-moz-placeholder,
+.form-control:-ms-input-placeholder,
+.form-control:-moz-placeholder { /* Chrome/Opera/Safari */
+}
 
 .ovh {
     overflow: hidden;
@@ -54,7 +55,7 @@ h1,
 .h1 {
     letter-spacing: 0;
     line-height: 49px;
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         font-size: 40px;
         letter-spacing: 0;
         line-height: 73px;
@@ -69,28 +70,95 @@ h1,
 h2,
 .h2 {
     letter-spacing: 0;
-    line-height: 31px;
-    @include media-breakpoint-up(md) {
-        font-size: 32px;
+    line-height: 49px;
+    @include media-breakpoint-up(lg) {
+        font-size: 40px;
+        line-height: 96px;
+    }
+
+    &.page-title {
+        text-align: center;
+        margin-bottom: 50px;
+        @include media-breakpoint-up(lg) {
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
+        .sub-title {
+            color: $gray-900;
+            font-size: 24px;
+            font-weight: $font-weight-600;
+            letter-spacing: 0;
+            line-height: 32px;
+            display: block;
+            padding-top: 20px;
+            @include media-breakpoint-up(lg) {
+                font-size: 22px;
+                line-height: 30px;
+                display: inline-block;
+                padding-left: 25px;
+                padding-top: 0;
+            }
+        }
     }
 }
 
 h3,
 .h3 {
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     line-height: 32px;
+    @include media-breakpoint-up(lg) {
+        font-size: 32px;
+        line-height: 35px;
+    }
 }
 
 h4,
 .h4 {
+    letter-spacing: 0.75px;
     line-height: 32px;
-    font-weight: 600;
-    letter-spacing: 0;
+    font-weight: $font-weight-bolder;
+    margin-bottom: 15px;
+    @include media-breakpoint-up(lg) {
+        line-height: 32px;
+        margin-bottom: 20px;
+    }
+
+    .link-with-arrow {
+        color: $gray-900;
+        font-weight: inherit;
+        margin-right: 30px;
+        letter-spacing: inherit;
+        font-size: inherit;
+
+        &:after {
+            content: url(../img/arrow-right-bold.svg);
+            margin-left: 15px;
+        }
+    }
 }
 
 h5,
 .h5 {
     line-height: 22px;
+}
+
+h6,
+.h6 {
+    line-height: 22px;
+}
+
+ul {
+    color: $gray-800;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 33px;
+    padding-left: 20px;
+
+    li {
+
+    }
 }
 
 .overlay {
@@ -104,8 +172,13 @@ h5,
 }
 
 .content-section {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    position: relative;
+    padding-top: 130px;
+    padding-bottom: 75px;
+    @include media-breakpoint-up(lg) {
+        padding-top: 110px;
+        padding-bottom: 50px;
+    }
 }
 
 .absolute-img {
@@ -113,5 +186,191 @@ h5,
     display: none;
     @include media-breakpoint-up(lg) {
         display: block;
+    }
+}
+
+.timecard-absolute-image-one {
+    right: -65px;
+    top: 220px;
+}
+
+.timecard-absolute-image-two {
+    right: 100px;
+    top: 500px;
+}
+
+.link-with-arrow {
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    margin-right: 20px;
+
+
+    &.disabled {
+        color: #B7B7B7 !important;
+
+        &:after {
+            opacity: .3;
+        }
+    }
+
+
+    &:after {
+        transition: transform .3s;
+        content: url("../img/arrow-right.svg");
+        position: absolute;
+        transform: rotate(-90deg);
+        margin-left: 15px;
+
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+
+    &.collapsed {
+        &:after {
+            transform: rotate(90deg);
+        }
+    }
+
+    &.link-with-arrow-orange {
+        text-decoration: underline;
+        color: $warning;
+        font-size: 18px;
+        font-weight: $font-weight-bold;
+        letter-spacing: 0;
+        line-height: 24px;
+        margin-right: 20px;
+
+        &:after {
+            content: url("../img/arrow-right-orange.svg");
+            margin-left: 10px;
+        }
+    }
+}
+
+.edit-icon {
+    height: 40px;
+    width: 40px;
+    background-color: $warning;
+    overflow: hidden;
+    border-radius: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    @include media-breakpoint-up(lg) {
+        height: 33px;
+        width: 33px;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+hr {
+    opacity: .19;
+}
+
+.multi-level-section {
+    @include media-breakpoint-between(lg, xl) {
+        .section-card {
+            padding: 20px 10px 20px 10px;
+
+            .card-header {
+                .card-icon {
+                    margin-right: 5px;
+                }
+
+                .card-actions {
+                    .btn-warning {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.total-time {
+    color: #3C3C3D;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0;
+
+    .total-time-title {
+        font-size: 22px;
+        line-height: 30px;
+        margin-right: 15px;
+    }
+
+    .total-time-hours {
+        font-size: 32px;
+        line-height: 43px;
+    }
+}
+
+.modal {
+    .modal-body {
+        @include media-breakpoint-up(lg) {
+            padding: 45px;
+        }
+    }
+
+    .modal-title {
+        @include media-breakpoint-up(lg) {
+            margin-bottom: 10px;
+        }
+    }
+
+    .modal-subtitle {
+        display: inline-block;
+        color: #686868;
+        font-size: 16px;
+        letter-spacing: 0;
+        line-height: 22px;
+        margin-bottom: 20px;
+        @include media-breakpoint-up(lg) {
+            margin-bottom: 30px;
+        }
+    }
+
+    .close {
+        position: absolute;
+        right: 24px;
+        top: 11px;
+        font-size: 23px;
+        color: #3C3C3D;
+        z-index: 9;
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
+    }
+}
+
+.collapse-inset-wrapper{
+
+    .collapse-inset-body {
+        border-radius: 4px;
+        background-color: rgba(#F6F6F7, .8);
+        padding: 20px;
+        margin-top: 15px;
+
+        .collapse-inset-content {
+            padding-top: 15px;
+        }
+        p {
+            line-height: 21px;
+        }
     }
 }
