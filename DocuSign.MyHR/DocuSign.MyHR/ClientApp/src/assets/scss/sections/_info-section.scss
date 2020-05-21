@@ -12,19 +12,25 @@
     }
     @include media-breakpoint-up(lg) {
         background-size: 650px;
+        background-position: 100% -35px;
     }
+
     .container-fluid {
         position: relative;
     }
-    h2 {
+
+    h3 {
         margin-bottom: 12px;
     }
+
     .buttons-group {
         @include media-breakpoint-up(lg) {
             padding-top: 25px;
         }
     }
+
     .absolute-img {
         top: -75px;
+        left: -150px;
     }
 }

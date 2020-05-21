@@ -1,53 +1,103 @@
 .btn {
-    min-width: 144px;
-    box-shadow: $btn-box-shadow;
+    font-weight: $font-weight-bold;
 
-    &:not(.btn-sm):not(.btn-lg) {
+    &:not(.btn-link) {
+        min-width: 144px;
+        box-shadow: $btn-box-shadow;
+
+        &.btn-sm {
+            min-width: 90px;
+            font-weight: $font-weight-600;
+        }
+
+        &.btn-lg {
+            letter-spacing: 0;
+            min-width: 280px;
+            @include media-breakpoint-up(md) {
+                min-width: 290px;
+            }
+        }
+    }
+
+    &:not(.btn-sm):not(.btn-lg):not(.btn-link) {
         letter-spacing: 0.7px;
         min-width: 140px;
         text-transform: uppercase;
     }
 
-    &:not(.btn-warning ) {
-        color: $orange;
+    &:not(.disabled) {
 
-        &:hover,
-        &:active,
-        &:focus {
+        &.btn-white {
+            background-color: $white;
+            color: $warning;
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: $warning;
+                background-color: $white;
+            }
+        }
+
+        &.btn-outline-warning {
+            &:hover,
+            &:active,
+            &:focus {
+                color: $warning;
+                background-color: $white;
+            }
+
+        }
+
+        &.btn-warning {
             color: $white;
-            background-color: $orange;
+
+            &:hover,
+            &:active,
+            &:focus {
+
+            }
         }
     }
 
-    &.btn-sm {
-        min-width: 90px;
-    }
+    &.disabled {
+        cursor: default;
+        box-shadow: none;
 
-    &.btn-lg {
-        letter-spacing: 0;
-        min-width: 280px;
-        @include media-breakpoint-up(md) {
-            min-width: 290px;
+        &.btn-white {
+            color: $gray-600;
+            border-color: $gray-600;
         }
-    }
 
-    &.btn-warning {
-        color: $white;
-
-        &:hover,
-        &:active,
-        &:focus {
-
+        &.btn-outline-warning {
+            color: $gray-600;
+            border-color: $gray-600;
         }
+
+        &.btn-warning {
+            color: $white;
+            background-color: $gray-600;
+            border-color: $gray-600;
+        }
+
     }
 
-    &.btn-white {
-        background-color: $white;
-        color: $warning;
+    &.btn-link {
+        padding: 0;
     }
 
-    &.btn-outline {
-    }
+    //&:not(.btn-warning):not(.btn-outline-warning) {
+    //    color: $orange;
+    //    &:hover,
+    //    &:active,
+    //    &:focus {
+    //        color: $white;
+    //        background-color: $orange;
+    //        background-color: red!important;
+    //    }
+    //}
+
+
 }
 
 
@@ -56,7 +106,8 @@
         &:not(:last-child) {
             &:not(.btn-sm):not(.btn-lg) {
                 margin-right: 9px;
-                @include media-breakpoint-up(md) {
+                //margin-bottom: 10px;
+                @include media-breakpoint-up(lg) {
                     margin-right: 15px;
                 }
             }
@@ -65,7 +116,7 @@
 
     .btn-sm {
         &:not(:last-child) {
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(lg) {
                 margin-right: 15px;
             }
         }
