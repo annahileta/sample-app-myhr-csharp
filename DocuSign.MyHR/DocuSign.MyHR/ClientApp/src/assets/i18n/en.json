@@ -17,5 +17,7 @@
   },
   "InfoDescription": "DocuSign helps organizations connect and automate how they prepare, sign, act on and manage agreements.",
   "SandBoxButton": "Create Sandbox",
-  "LearnMoreButton": "Learn More"
+  "LearnMoreButton": "Learn More",
+  "EmployeePageHeader": "Welcome to MyHR",
+  "EmployeePageDescription": "Self-service Human Resources Portal"
 }

@@ -1,86 +1,37 @@
-<div class="col-md-6">
-  <form
-    *ngIf="user"
-    #userForm="ngForm"
-    (ngSubmit)="saveUser(userForm.value)"
-    autocomplete="off"
-    novalidate
-  >
-    <div
-      class="form-group"
-      [ngClass]="{
-        error:
-          userForm.controls.name?.invalid && userForm.controls.name?.touched
-      }"
-    >
-      <label for="userName">Name:</label>
-      <em
-        *ngIf="
-          userForm.controls.name?.invalid && userForm.controls.name?.touched
-        "
-        >Required</em
-      >
-      <input
-        [(ngModel)]="user.name"
-        name="name"
-        required
-        id="name"
-        type="text"
-        class="form-control"
-        placeholder="Name"
-      />
+<div class="col-lg-5">
+  <h4>Your Account Details</h4>
+  <div class="user-profile">
+    <div class="static">
+      <div class="edit">
+        <button class="edit-icon">
+          <img src="assets/img/edit.svg" alt="" />
+        </button>
+      </div>
+      <div class="user-avatar">
+        <div class="user-image">
+          <img src="assets/img/avatar.png" alt="avatar" />
+        </div>
+        <div class="user-info">
+          <span>Kevin</span>
+          <span>Dukkonovsky </span>
+        </div>
+      </div>
+      <div class="profile-row row">
+        <div class="profile-title col-lg-3">ID</div>
+        <div class="profile-description col-lg-9">122088</div>
+      </div>
+      <div class="profile-row row">
+        <div class="profile-title col-lg-3">Hire Date</div>
+        <div class="profile-description col-lg-9">03/04/20</div>
+      </div>
+      <div class="profile-row row">
+        <div class="profile-title col-lg-3">Address</div>
+        <div class="profile-description col-lg-9">
+          <span>123 Merry Lane NP00000000</span>
+          <span>East Hanover,</span>
+          <span>New Jersey, 07936</span>
+        </div>
+      </div>
     </div>
-    <div
-      class="form-group"
-      [ngClass]="{
-        error:
-          userForm.controls.date?.invalid && userForm.controls.date?.touched
-      }"
-    >
-      <label for="userDate">Hire Date:</label>
-      <em
-        *ngIf="
-          userForm.controls.date?.invalid && userForm.controls.date?.touched
-        "
-        >Required</em
-      >
-      <input
-        [(ngModel)]="user.date"
-        name="date"
-        required
-        id="userDate"
-        type="text"
-        class="form-control"
-        placeholder="format (mm/dd/yyyy)..."
-      />
-    </div>
-    <div
-      class="form-group"
-      [ngClass]="{
-        error: userForm.controls.id?.invalid && userForm.controls.id?.touched
-      }"
-    >
-      <label for="userId">ID:</label>
-      <em *ngIf="userForm.controls.id?.invalid && userForm.controls.id?.touched"
-        >Required</em
-      >
-      <input
-        [(ngModel)]="user.id"
-        name="id"
-        required
-        id="userPrice"
-        type="text"
-        type="number"
-        class="form-control"
-        placeholder="id"
-      />
-    </div>
-
-    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
-      Save
-    </button>
-    <button type="button" class="btn btn-default" (click)="cancel()">
-      Cancel
-    </button>
-  </form>
+  </div>
 </div>
