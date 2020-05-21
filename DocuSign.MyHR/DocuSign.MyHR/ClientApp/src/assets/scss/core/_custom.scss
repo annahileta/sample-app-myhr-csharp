@@ -7,13 +7,13 @@
 //
 $white:    #fff !default;
 $gray-100: #FDFDFD;
-$gray-200: #FAFAFA ;
+$gray-200: #F6F6F7;
 $gray-300: #f0f0f0;
 $gray-400: #E9E9E9;
 $gray-500: #76717E;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
+$gray-600: #D7D7D7;
+$gray-700: #E7E7E7;
+$gray-800: #3C3C3D;
 $gray-900: #24202A;
 $black:    #000 !default;
 //
@@ -38,7 +38,7 @@ $blue:    #007bff !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
-$red:     #8D0515;
+$red:     #E50000;
 $orange: #FF7B1F;
 $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
@@ -71,7 +71,7 @@ $secondary:     $white;
 $success:       $gray-400;
 $info:          $cyan !default;
 $warning:       $orange;
-$danger:        $orange;
+$danger:        $red;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 
@@ -161,7 +161,7 @@ $theme-colors: map-merge(
 ////
 //// Settings for the `<body>` element.
 //
-$body-bg:                  $gray-100;
+$body-bg:                  $gray-200;
 $body-color:               $gray-900;
 //
 //
@@ -188,13 +188,14 @@ $link-color:                              $gray-500;
 //// Define the minimum dimensions at which your layout will change,
 //// adapting to different screen sizes, for use in media queries.
 //
-//$grid-breakpoints: (
-//        xs: 0,
-//        sm: 576px,
-//        md: 768px,
-//        lg: 992px,
-//        xl: 1200px
-//) !default;
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1024px,
+        xxl:1200px
+);
 //
 //@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
 //@include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");
@@ -291,11 +292,11 @@ $line-height-base:            1.429;//20px
 //
 //
 $h1-font-size:                32px;
-$h2-font-size:               24px;
-$h3-font-size:                32px;
-$h4-font-size:                24;
-$h5-font-size:                1rem;
-//$h6-font-size:                $font-size-base !default;
+$h2-font-size:                32px;
+$h3-font-size:                24px;
+$h4-font-size:                24px;
+$h5-font-size:                18px;
+$h6-font-size:                18px;
 //
 //$headings-margin-bottom:      $spacer / 2 !default;
 $headings-font-family:        $nunito;
@@ -325,7 +326,7 @@ $headings-font-weight:        $font-weight-bolder;
 //$blockquote-small-font-size:  $small-font-size !default;
 //$blockquote-font-size:        $font-size-base * 1.25 !default;
 //
-$hr-border-color:             $gray-400;
+$hr-border-color:             #979797;
 //$hr-border-color:             $gray-500;
 //$hr-border-width:             $border-width !default;
 //
@@ -340,7 +341,7 @@ $hr-border-color:             $gray-400;
 //
 //$mark-bg:                     #fcf8e3 !default;
 //
-//$hr-margin-y:                 $spacer !default;
+$hr-margin-y:                 33px;
 //
 //
 //// Tables
@@ -386,7 +387,7 @@ $hr-border-color:             $gray-400;
 //$input-btn-padding-y:         .375rem !default;
 //$input-btn-padding-x:         .75rem !default;
 $input-btn-font-family:       $nunito;
-//$input-btn-font-size:         $font-size-base !default;
+$input-btn-font-size:         18px;
 //$input-btn-line-height:       $line-height-base !default;
 //
 //$input-btn-focus-width:       .2rem !default;
@@ -418,9 +419,9 @@ $btn-line-height:             14px;
 //
 //
 //
-$btn-padding-y-sm:           5px;
+$btn-padding-y-sm:           2px;
 $btn-padding-x-sm:            18px;
-//$btn-font-size-sm:            $input-btn-font-size-sm !default;
+$btn-font-size-sm:            16px;
 //$btn-line-height-sm:          $input-btn-line-height-sm !default;
 //
 $btn-padding-y-lg:            17px;
@@ -430,14 +431,14 @@ $btn-line-height-lg:          20px;
 //
 $btn-border-width:            2px;
 //
-$btn-font-weight:            $font-weight-bold;
+$btn-font-weight:             $font-weight-600;
 $btn-box-shadow:              0 7px 42px -11px rgba(167,167,226,0.47);
 $btn-focus-width:             0;
 $btn-focus-box-shadow:        $btn-box-shadow;
-//$btn-disabled-opacity:        .65 !default;
+$btn-disabled-opacity:        1;
 $btn-active-box-shadow:       none;
 //
-//$btn-link-disabled-color:     $gray-600 !default;
+$btn-link-disabled-color:     $gray-600 !default;
 //
 //$btn-block-spacing-y:         .5rem !default;
 //
@@ -451,7 +452,7 @@ $btn-border-radius-sm:        24px;
 //
 //// Forms
 //
-$label-margin-bottom:                  0.8125rem;
+$label-margin-bottom:                 7px;
 //
 //$input-padding-y:                       $input-btn-padding-y !default;
 //$input-padding-x:                       $input-btn-padding-x !default;
@@ -471,25 +472,25 @@ $label-margin-bottom:                  0.8125rem;
 //$input-font-size-lg:                    $input-btn-font-size-lg !default;
 //$input-line-height-lg:                  $input-btn-line-height-lg !default;
 //
-//$input-bg:                              $white !default;
-//$input-disabled-bg:                     $gray-200 !default;
+$input-bg:                              $gray-700;
+$input-disabled-bg:                     $gray-700;
 //
-//$input-color:                           $gray-700 !default;
+$input-color:                           $gray-800;
 $input-border-color:                    $gray-400;
 //$input-border-width:                    $input-btn-border-width !default;
-//$input-box-shadow:                      inset 0 1px 1px rgba($black, .075) !default;
+$input-box-shadow:                       0 3px 41px -11px rgba(221,221,245,0.21);;
 //
-$input-border-radius:                   0;
+$input-border-radius:                   8px;
 //$input-border-radius-lg:                $border-radius-lg !default;
 //$input-border-radius-sm:                $border-radius-sm !default;
 //
 //$input-focus-bg:                        $input-bg !default;
-$input-focus-border-color:              $gray-300;
+$input-focus-border-color:             $gray-700;
 //$input-focus-color:                     $input-color !default;
 //$input-focus-width:                     $input-btn-focus-width !default;
-$input-focus-box-shadow:                none!important;
+$input-focus-box-shadow:                $input-box-shadow;
 //
-$input-placeholder-color:               $gray-900;
+$input-placeholder-color:               $gray-800;
 //$input-plaintext-color:                 $body-color !default;
 //
 //$input-height-border:                   $input-border-width * 2 !default;
@@ -514,7 +515,7 @@ $input-height:                          40px;
 //$form-check-inline-input-margin-x:      .3125rem !default;
 //
 //$form-grid-gutter-width:                10px !default;
-$form-group-margin-bottom:              2.5rem;
+$form-group-margin-bottom:              16px;
 //
 //$input-group-addon-color:               $input-color !default;
 //$input-group-addon-bg:                  $gray-200 !default;
@@ -650,7 +651,7 @@ $form-group-margin-bottom:              2.5rem;
 //
 //// Form validation
 //
-//$form-feedback-margin-top:          $form-text-margin-top !default;
+$form-feedback-margin-top:          0;
 //$form-feedback-font-size:           $small-font-size !default;
 //$form-feedback-valid-color:         theme-color("success") !default;
 //$form-feedback-invalid-color:       theme-color("danger") !default;
@@ -737,8 +738,8 @@ $navbar-toggler-border-radius:      0;
 //$navbar-dark-toggler-icon-bg:       str-replace(url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='#{$navbar-dark-color}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"), "#", "%23") !default;
 //$navbar-dark-toggler-border-color:  rgba($white, .1) !default;
 //
-//$navbar-light-color:                rgba($black, .5) !default;
-//$navbar-light-hover-color:          rgba($black, .7) !default;
+$navbar-light-color:                $gray-900;
+$navbar-light-hover-color:          $gray-900;
 //$navbar-light-active-color:         rgba($black, .9) !default;
 //$navbar-light-disabled-color:       rgba($black, .3) !default;
 //$navbar-light-toggler-icon-bg:      str-replace(url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='#{$navbar-light-color}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"), "#", "%23") !default;
@@ -933,29 +934,29 @@ $card-bg:                           transparent;
 //// Modals
 //
 //// Padding applied to the modal body
-//$modal-inner-padding:               1rem !default;
+$modal-inner-padding:               40px 20px 30px;
 //
 //$modal-dialog-margin:               .5rem !default;
 //$modal-dialog-margin-y-sm-up:       1.75rem !default;
 //
-//$modal-title-line-height:           $line-height-base !default;
+$modal-title-line-height:           32px;
 //
 //$modal-content-color:               null !default;
 //$modal-content-bg:                  $white !default;
 //$modal-content-border-color:        rgba($black, .2) !default;
-//$modal-content-border-width:        $border-width !default;
-//$modal-content-border-radius:       $border-radius-lg !default;
-//$modal-content-box-shadow-xs:       0 .25rem .5rem rgba($black, .5) !default;
+$modal-content-border-width:        0;
+$modal-content-border-radius:       8px;
+$modal-content-box-shadow-xs:       $input-box-shadow;
 //$modal-content-box-shadow-sm-up:    0 .5rem 1rem rgba($black, .5) !default;
 //
 //$modal-backdrop-bg:                 $black !default;
 //$modal-backdrop-opacity:            .5 !default;
-//$modal-header-border-color:         $border-color !default;
-//$modal-footer-border-color:         $modal-header-border-color !default;
+$modal-header-border-color:         transparent;
+$modal-footer-border-color:         $modal-header-border-color;
 //$modal-header-border-width:         $modal-content-border-width !default;
 //$modal-footer-border-width:         $modal-header-border-width !default;
-//$modal-header-padding-y:            1rem !default;
-//$modal-header-padding-x:            1rem !default;
+$modal-header-padding-y:            45px 30px;
+$modal-header-padding-x:            45px 50px;
 //$modal-header-padding:              $modal-header-padding-y $modal-header-padding-x !default; // Keep this for backwards compatibility
 //
 //$modal-xl:                          1140px !default;

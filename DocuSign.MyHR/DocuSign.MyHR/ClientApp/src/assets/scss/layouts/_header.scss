@@ -7,12 +7,18 @@
     top: 0;
     background-color: $white;
     @include media-breakpoint-up(lg) {
-        padding-top: 30px;
-        padding-bottom: 30px;
+        padding-top: 25px;
+        padding-bottom: 25px;
     }
 
     &.header-home {
         background-color: transparent;
+    }
+
+    &:not(.header-home) {
+        .container-fluid {
+            max-width: 1140px;
+        }
     }
 
     .navbar-brand {
@@ -127,15 +133,47 @@
             font-size: 14px;
             line-height: 19px;
         }
-        &.active {
 
+        &.active {
+            .nav-link {
+                opacity: 1;
+                @include media-breakpoint-up(lg) {
+                    background-color: #ECEAEA;
+                }
+
+                &:hover,
+                &:active,
+                &:focus {
+                    @include media-breakpoint-up(lg) {
+                        background-color: #ECEAEA;
+                    }
+                }
+            }
         }
     }
 
     .nav-link {
         padding: $nav-link-padding-y $nav-link-padding-x;
+        opacity: 0.7;
         @include media-breakpoint-up(lg) {
-            padding: 0 20px;
+            opacity: 1;
+            padding: 7px 20px;
+            border-radius: 24px;
+            height: 32px;
+        }
+
+        &:hover {
+            background-color: #ECEAEA;
+        }
+
+        .icon {
+            display: none;
+            @include media-breakpoint-up(lg) {
+                display: inline;
+                margin-left: 3px;
+                margin-top: -2px;
+            }
+
         }
     }
 }
