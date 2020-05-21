@@ -21,7 +21,7 @@ namespace DocuSign.MyHR.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok(JsonConvert.SerializeObject(_userService.GetUserDetails(Context.Account.Id, Context.User.Id)));
+            return Ok(_userService.GetUserDetails(Context.Account.Id, Context.User.Id));
         }
 
         [HttpPut]
