@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { IUser } from "./profile/user.model";
+import { HttpClient } from "@angular/common/http"; 
 import { BehaviorSubject } from "rxjs";
+import { IUser } from "./models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class EmployeeService {

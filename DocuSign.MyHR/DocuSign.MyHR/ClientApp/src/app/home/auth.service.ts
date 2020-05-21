@@ -2,7 +2,7 @@ import { AuthType } from "./auth-type.enum";
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { tap } from "rxjs/operators";
-import { IUser } from "../employee/profile/user.model";
+import { IUser } from "../employee/models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {

@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { IUser } from "./user.model";
+import { Component, OnInit, Input } from "@angular/core";
 import { EmployeeService } from "../employee.service";
 import { FormGroup } from "@angular/forms";
 import { Observable } from "rxjs";
+import { IUser } from "../models/user.model";
+import { Output, EventEmitter } from '@angular/core'; 
 
 @Component({
   selector: "app-profile",
@@ -10,12 +11,16 @@ import { Observable } from "rxjs";
   styleUrls: ["./profile.component.css"],
 })
 export class ProfileComponent implements OnInit {
-  user: IUser;
+  @Output() editUserClicked = new EventEmitter<void>();
+  @Input() user: IUser;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService) { }
 
-  ngOnInit() { 
-    this.employeeService.user$.subscribe((user) => (this.user = user));
+  ngOnInit() {
+  }
+
+  editProfile() {
+    this.editUserClicked.next();
   }
 
   saveUser(formValues) {

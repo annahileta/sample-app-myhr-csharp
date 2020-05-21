@@ -7,6 +7,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { ActionsComponent } from "./actions/actions.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ManagerActionsComponent } from "./actions/manager-actions/manager-actions.component";
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ManagerActionsComponent } from "./actions/manager-actions/manager-actio
     ProfileComponent,
     ActionsComponent,
     ManagerActionsComponent,
+    ProfileEditComponent,
   ],
   imports: [
     CommonModule,

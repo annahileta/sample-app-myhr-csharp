@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { IUser } from "../profile/user.model";
 import { DocumentType } from "./document-type.enum";
+import { IUser } from "../models/user.model";
 
 @Injectable({ providedIn: "root" })
 export class ActionsService {
