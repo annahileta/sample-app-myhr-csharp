@@ -94,6 +94,7 @@
           class="btn btn-warning btn-sm"
           data-toggle="modal"
           data-target="#timeCard"
+          (click)="sendTimeCard()"
         >
           Enter
         </button>
@@ -202,9 +203,6 @@
               <input class="form-control" formControlName="{{ i }}" />
             </div>
           </div>
-
-          <div id="ds-clickwrap"></div>
-          <div id="ds-clickwrap-preview"></div>
 
           <button type="submit" class="btn btn-primary">
             Submit

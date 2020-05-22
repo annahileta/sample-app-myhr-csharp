@@ -1,0 +1,133 @@
+<section class="container content-section">
+  <div class="img-holder timecard-absolute-image-one absolute-img">
+    <img src="assets/img/timecard-absolute-image-1.png" alt="dots" />
+  </div>
+  <div class="img-holder timecard-absolute-image-two absolute-img">
+    <img src="assets/img/timecard-absolute-image-2.png" alt="dots" />
+  </div>
+  <h2 class="page-title">Timecard</h2>
+  <div class="row">
+    <div class="col-lg-9">
+      <h4>Fill in the hours worked each day for {{ getWorkWeekDate() }}</h4>
+      <div class="user-profile timecard">
+        <div class="editable">
+          <div class="user-avatar">
+            <div class="user-image">
+              <img src="assets/img/avatar.png" alt="avatar" />
+            </div>
+            <div class="user-info">
+              <span>Kevin</span>
+              <span>Dukkonovsky </span>
+            </div>
+          </div>
+          <form
+            action=""
+            class="was-validated"
+            [formGroup]="timecardForm"
+            novalidate
+            (ngSubmit)="sendTimeCard()"
+          >
+            <div class="timecard-inputs">
+              <div class="form-group">
+                <label for="Monday">Mon</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Monday"
+                  placeholder=""
+                  formControlName="Monday"
+                  required
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+              <div class="form-group">
+                <label for="Tuesday">Tue</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Tuesday"
+                  placeholder=""
+                  formControlName="Tuesday"
+                  required
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+              <div class="form-group">
+                <label for="Wednesday">Wed</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Wednesday"
+                  placeholder=""
+                  formControlName="Wednesday"
+                  required
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+              <div class="form-group">
+                <label for="Thursday">Thu</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Thursday"
+                  placeholder=""
+                  formControlName="Thursday"
+                  required
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+              <div class="form-group">
+                <label for="Friday">Fri</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Friday"
+                  placeholder=""
+                  formControlName="Friday"
+                  required
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+              <div class="form-group weekend">
+                <label for="Saturday">Sat</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Saturday"
+                  placeholder=""
+                  formControlName="Saturday"
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+              <div class="form-group weekend">
+                <label for="Sunday">Sun</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="Sunday"
+                  placeholder=""
+                  formControlName="Sunday"
+                  (change)="updateWorkLogs()"
+                />
+              </div>
+            </div>
+            <div class="total-time text-md-right mt-4">
+              <span class="total-time-title">Total</span>
+              <span class="total-time-hours">{{ total }} h</span>
+            </div>
+            <hr />
+            <div
+              class="d-flex flex-wrap justify-content-center justify-content-md-end align-items-center"
+            >
+              <h6 class="mb-md-0 mr-md-3 text-center text-lg-left">
+                I’m affirm I worked {{ total }} hours this period
+              </h6>
+              <div id="ds-clickwrap"></div>
+              <button class="btn btn-warning">Submit time report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
