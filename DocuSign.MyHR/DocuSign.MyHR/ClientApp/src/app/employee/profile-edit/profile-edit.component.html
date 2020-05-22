@@ -2,7 +2,7 @@
   <h4>Your Account Details</h4>
   <div class="user-profile">
     <div class="editable">
-      <form action="" class="was-validated">
+      <form action="" class="was-validated" #profileForm="ngForm" (ngSubmit)="saveUser(profileForm.value)">
         <div class="user-avatar">
           <div class="user-image">
             <img src="{{'data:image/jpg;base64,' + user.profileImage}}" alt="avatar" />
@@ -10,13 +10,13 @@
           <div>
             <div class="form-group">
               <label for="uname">First Name</label>
-              <input type="text" class="form-control" id="uname" placeholder="" [ngModel]="user.firstName" name="uname" required>
+              <input type="text" class="form-control" id="uname" placeholder="" [ngModel]="user.firstName" name="firstName" required>
               <div class="valid-feedback">Valid.</div>
               <div class="invalid-feedback">Please fill out this field.</div>
             </div>
             <div class="form-group">
               <label for="lname">Last Name</label>
-              <input type="text" class="form-control" id="lname" placeholder="" [ngModel]="user.lastName" name="lname" required>
+              <input type="text" class="form-control" id="lname" placeholder="" [ngModel]="user.lastName" name="lastName" required>
               <div class="valid-feedback">Valid.</div>
               <div class="invalid-feedback">Please fill out this field.</div>
             </div>
@@ -36,40 +36,42 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="address">Address Line</label>
-          <input type="text" class="form-control" id="address" placeholder="" name="address" [ngModel]="user.address.address1" required>
-          <div class="valid-feedback">Valid.</div>
-          <div class="invalid-feedback">Please fill out this field.</div>
-        </div>
-        <div class="form-group">
-          <label for="city">City</label>
-          <input type="text" class="form-control" id="city" placeholder="" name="city" [ngModel]="user.address.city" required>
-          <div class="valid-feedback">Valid.</div>
-          <div class="invalid-feedback">Please fill out this field.</div>
-        </div>
-        <div class="form-group">
-          <label for="state">State/Province/Region</label>
-          <input type="text" class="form-control" id="state" placeholder="" name="state" [ngModel]="user.address.stateOrProvince" required>
-          <div class="valid-feedback">Valid.</div>
-          <div class="invalid-feedback">Please fill out this field.</div>
-        </div>
-        <div class="form-group">
-          <label for="zipcode">ZIP Code</label>
-          <input type="number" class="form-control" id="zipcode" placeholder="" name="zipcode" [ngModel]="user.address.postalCode" required>
-          <div class="valid-feedback">Valid.</div>
-          <div class="invalid-feedback">Please fill out this field.</div>
-        </div>
-        <div class="form-group">
-          <label for="country">Country</label> 
-          <select class="form-control" id="country" name="country"
-                  [(ngModel)]="user.address.country">
-            <option *ngFor="let country of countries" [value]="country.key">{{country.value }}</option>
-          </select>
+        <div ngModelGroup="address" #nameCtrl="ngModelGroup">
+          <div class="form-group">
+            <label for="address">Address Line</label>
+            <input type="text" class="form-control" id="address" placeholder="" name="address1" [ngModel]="user.address.address1" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" placeholder="" name="city" [ngModel]="user.address.city" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+          </div>
+          <div class="form-group">
+            <label for="state">State/Province/Region</label>
+            <input type="text" class="form-control" id="state" placeholder="" name="stateOrProvince" [ngModel]="user.address.stateOrProvince" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+          </div>
+          <div class="form-group">
+            <label for="zipcode">ZIP Code</label>
+            <input type="number" class="form-control" id="zipcode" placeholder="" name="postalCode" [ngModel]="user.address.postalCode" required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <select class="form-control" id="country" name="country"
+                    [(ngModel)]="user.address.country">
+              <option *ngFor="let country of countries" [value]="country.value">{{country.value }}</option>
+            </select>
+          </div>
         </div>
         <div class="buttons-group d-flex flex-wrap justify-content-end mt-1">
-          <button class="btn btn-outline-warning btn-sm">Cancel</button>
-          <button class="btn btn-warning btn-sm">Save</button>
+          <button class="btn btn-outline-warning btn-sm" (click)="cancel()">Cancel</button>
+          <button class="btn btn-warning btn-sm" type="submit">Save</button>
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
-import { AuthenticationService } from "./auth.service";
-import { AuthType } from "./auth-type.enum";
+import { Component } from "@angular/core"; 
 import { Router } from "@angular/router";
+import { AuthType } from "../core/authentication/auth-type.enum";
+import { AuthenticationService } from "../core/authentication/auth.service";
 
 @Component({
   selector: "app-home",
@@ -13,19 +13,13 @@ export class HomeComponent {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    if (this.authenticationService.isAuthenticated) {
-      this.router.navigate(["/employee"]);
-      return;
-    }
-    this.authenticationService.getUser().subscribe(() => {
-      this.router.navigate(["/employee"]);
-    });
+ 
   }
 
-  handleAuth(authType: AuthType) {
+  login(authType: AuthType) {
     this.authenticationService.saveAuthType(authType);
     window.location.href = `Account/Login?${authType}`;
   }

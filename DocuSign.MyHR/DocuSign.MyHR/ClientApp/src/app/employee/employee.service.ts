@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http"; 
+import { HttpClient, HttpHeaders} from "@angular/common/http"; 
 import { BehaviorSubject } from "rxjs";
-import { IUser } from "./models/user.model";
+import { IUser } from "./models/user.model"; 
 
 @Injectable({ providedIn: "root" })
 export class EmployeeService {
@@ -14,9 +14,12 @@ export class EmployeeService {
   ) {}
 
   saveUser(user: IUser) {
-    this.http.put<any>(this.baseUrl + "api/user", user);
-    this.user = user;
-    this.user$.next(this.user);
+    this.http.put<any>(this.baseUrl + "api/user", user).subscribe(
+      () => {
+        this.getUser();
+      },
+      (error) => console.error(error)
+    ); 
   }
 
   getUser() {

@@ -1,27 +1,23 @@
 import { AuthType } from "./auth-type.enum";
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { tap } from "rxjs/operators";
-import { IUser } from "../employee/models/user.model";
+import { tap, map } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
-  user: IUser;
-  public isAuthenticated = false;
+  private isUserAuthenticated: boolean | null;
   public authType: AuthType;
 
   constructor(
     private http: HttpClient,
     @Inject("BASE_URL") private baseUrl: string
-  ) {}
+  ) { }
 
-  getUser() {
-    return this.http.get<any>(this.baseUrl + "api/user").pipe(
-      tap((result) => {
-        this.user = result;
-        this.isAuthenticated = true;
-      })
-    );
+  isAuthenticated() {
+    return this.http.get<boolean>(this.baseUrl + "api/isauthenticated").pipe(
+      tap((result: boolean) => {
+        this.isUserAuthenticated = result;
+      }));
   }
 
   saveAuthType(authType: AuthType) {
@@ -34,5 +30,6 @@ export class AuthenticationService {
 
   logout() {
     sessionStorage.removeItem("authType");
+    this.isUserAuthenticated = false;
   }
 }

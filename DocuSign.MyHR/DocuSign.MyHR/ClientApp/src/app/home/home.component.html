@@ -8,21 +8,15 @@
         <div class="hero-info">
           <h1 translate>WelcomeHeader</h1>
           <h4 translate>WelcomeDescription</h4>
-          <div
-            class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start"
-          >
-            <button
-              class="btn btn-warning btn-lg"
-              (click)="handleAuth(authType.CodeGrant)"
-              translate
-            >
+          <div class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start">
+            <button class="btn btn-warning btn-lg"
+                    (click)="login(authType.CodeGrant)"
+                    translate>
               LoginWithDocuSignAccountButton
             </button>
-            <button
-              class="btn btn-white btn-lg"
-              (click)="handleAuth(authType.JWT)"
-              translate
-            >
+            <button class="btn btn-white btn-lg"
+                    (click)="login(authType.JWT)"
+                    translate>
               LoginWithTestAccountButton
             </button>
           </div>

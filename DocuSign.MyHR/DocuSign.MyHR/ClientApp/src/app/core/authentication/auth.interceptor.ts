@@ -32,6 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
             window.location.href = `Account/Login?${authType}`;
           } else {
             this.router.navigate(["/"]);
+            return throwError(error);
           }
         }
         return throwError(error);

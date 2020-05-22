@@ -8,7 +8,7 @@
       <app-profile (editUserClicked)="editUser()" [user]="user" class="col-lg-5"></app-profile>
     </ng-container>
     <ng-container *ngIf="isEditUser">
-      <app-profile-edit class="col-lg-5" [user]="user"></app-profile-edit>
+      <app-profile-edit (calceled)="cancelEdit()" (saved)="exitSaving($event)" [user]="user" class="col-lg-5"></app-profile-edit>
     </ng-container>
     <app-actions class="col-lg-7"></app-actions>
   </div>

@@ -13,21 +13,21 @@ export class EmployeeComponent implements OnInit {
   isEditUser = false;
   user: IUser;
 
-
   ngOnInit(): void {
-
     this.employeeService.getUser();
     this.employeeService.user$.subscribe((user) => (this.user = user));
-
   }
 
   editUser() {
     this.isEditUser = true;
   }
 
-  closeEditingUserEventHandler(isCloseClicked: boolean) {
-    if (isCloseClicked === true) {
-      this.isEditUser = false;
-    }
+  cancelEdit() {
+    this.isEditUser = false;
+  }
+
+  exitSaving(user: IUser) {
+    this.user = user;
+    this.isEditUser = false; 
   }
 }

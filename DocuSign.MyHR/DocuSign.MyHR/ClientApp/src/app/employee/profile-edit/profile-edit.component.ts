@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IUser } from "../models/user.model";
 import * as i18nIsoCountries from 'i18n-iso-countries';
+import { EmployeeService } from "../employee.service";
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-edit',
@@ -9,12 +11,12 @@ import * as i18nIsoCountries from 'i18n-iso-countries';
 })
 export class ProfileEditComponent implements OnInit {
   @Input() user: IUser;
-
+  @Output() canceled = new EventEmitter<void>();
+  @Output() saved = new EventEmitter<IUser>();
   countries = [] as Array<any>;
-  constructor() { }
+  constructor(private employeeService: EmployeeService) { }
 
-  ngOnInit(): void {
-
+  ngOnInit(): void { 
     i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
      
     var indexedArray = i18nIsoCountries.getNames("en");
@@ -22,8 +24,22 @@ export class ProfileEditComponent implements OnInit {
     for (let key in indexedArray) {
       let value = indexedArray[key];
       this.countries.push({ key: key, value: value });
-    }
-    console.log(this.countries);
+    } 
   }
 
+  saveUser(user: IUser) { 
+    this.employeeService.saveUser(user); 
+    this.employeeService.user$.subscribe((user) => (this.user = user));
+    user.profileImage = this.user.profileImage;
+    user.profileId = this.user.profileId;
+    user.hireDate = this.user.hireDate;
+    debugger;
+    this.saved.next(user);
+    //todo:show message
+  }
+
+  cancel() {
+    this.user = { ...this.employeeService.user };
+    this.canceled.next();
+  }
 }

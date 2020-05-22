@@ -11,7 +11,7 @@ import {
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AboutComponent } from "./about/about.component";
-import { AuthInterceptor } from "./home/auth.interceptor";
+import { AuthInterceptor } from "./core/authentication/auth.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, "../assets/i18n/", ".json");

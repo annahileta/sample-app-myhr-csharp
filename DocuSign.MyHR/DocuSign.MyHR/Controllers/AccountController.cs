@@ -42,5 +42,12 @@ namespace DocuSign.MyHR.Controllers
             await AuthenticationHttpContextExtensions.SignOutAsync(HttpContext);
             return LocalRedirect("/");
         }
+         
+        [HttpGet]
+        [Route("/api/isauthenticated")]
+        public async System.Threading.Tasks.Task<IActionResult> IsAuthenticated()
+        { 
+            return Ok(User.Identity.IsAuthenticated);
+        }
     }
 }

@@ -14,19 +14,10 @@ export class ProfileComponent implements OnInit {
   @Output() editUserClicked = new EventEmitter<void>();
   @Input() user: IUser;
 
-  constructor(private employeeService: EmployeeService) { }
-
   ngOnInit() {
   }
 
   editProfile() {
     this.editUserClicked.next();
-  }
-
-  saveUser(formValues) {
-    this.employeeService.saveUser(formValues);
-  }
-  cancel() {
-    this.user = { ...this.employeeService.user };
-  }
+  }  
 }

@@ -2,7 +2,7 @@ import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { environment } from "src/environments/environment";
-import { AuthenticationService } from "./home/auth.service";
+import { AuthenticationService } from "./core/authentication/auth.service";
 
 @Component({
   selector: "app-root",

@@ -3,7 +3,7 @@ export interface IUser {
   name: string;
   firstName: string,
   lastName: string, 
-  date: string;
+  hireDate: string;
   email: string;
   profileImage: string;
   profileId:string,

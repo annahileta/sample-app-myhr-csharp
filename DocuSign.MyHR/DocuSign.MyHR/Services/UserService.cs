@@ -23,29 +23,28 @@ namespace DocuSign.MyHR.Services
             userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
             return userDetails;
         }
-         
-        public UserDetails UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
-        {
-            UserInformation updatedUserInfo = _docuSignApiProvider.UsersApi.UpdateUser(
-                accountId, userId, new UserInformation(
-                    UserName: userDetails.Name,
-                    HomeAddress: new AddressInformation(
-                        userDetails.Address.Address1,
-                        userDetails.Address.Address2,
-                        userDetails.Address.City,
-                        userDetails.Address.Country,
-                        userDetails.Address.Fax,
-                        userDetails.Address.Phone,
-                        userDetails.Address.PostalCode,
-                        userDetails.Address.StateOrProvince
-                        )));
 
-            return GetUserDetails(updatedUserInfo);
+        public void UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
+        {
+            _docuSignApiProvider.UsersApi.UpdateUser(
+               accountId, userId, new UserInformation(
+                   FirstName: userDetails.FirstName,
+                   LastName: userDetails.LastName,
+                   WorkAddress: new AddressInformation(
+                       userDetails.Address.Address1,
+                       userDetails.Address.Address2,
+                       userDetails.Address.City,
+                       userDetails.Address.Country,
+                       userDetails.Address.Fax,
+                       userDetails.Address.Phone,
+                       userDetails.Address.PostalCode,
+                       userDetails.Address.StateOrProvince
+                       ))); 
         }
 
         private static UserDetails GetUserDetails(UserInformation userInfo)
         {
-            AddressInformation address = userInfo.HomeAddress;
+            AddressInformation address = userInfo.WorkAddress;
             return new UserDetails(
                 userInfo.UserId,
                 userInfo.UserName,
