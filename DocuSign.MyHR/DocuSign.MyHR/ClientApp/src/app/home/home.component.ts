@@ -1,5 +1,4 @@
-import { Component } from "@angular/core"; 
-import { Router } from "@angular/router";
+import { Component } from "@angular/core";
 import { AuthType } from "../core/authentication/auth-type.enum";
 import { AuthenticationService } from "../core/authentication/auth.service";
 
@@ -10,14 +9,9 @@ import { AuthenticationService } from "../core/authentication/auth.service";
 export class HomeComponent {
   authType = AuthType;
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router
-  ) { }
+  constructor(private authenticationService: AuthenticationService) {}
 
-  ngOnInit(): void {
- 
-  }
+  ngOnInit(): void {}
 
   login(authType: AuthType) {
     this.authenticationService.saveAuthType(authType);
