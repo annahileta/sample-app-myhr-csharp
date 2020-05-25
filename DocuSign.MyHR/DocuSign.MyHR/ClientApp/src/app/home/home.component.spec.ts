@@ -1,23 +1,54 @@
+import { AuthenticationService } from "./../core/authentication/auth.service";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { HomeComponent } from "./home.component";
+import { AuthType } from "../core/authentication/auth-type.enum";
+
+class AuthenticationServiceStub {
+  public saveAuthType() {}
+}
 
 describe("HomeComponent", () => {
   let component: HomeComponent;
+  let authenticationService: AuthenticationService;
   let fixture: ComponentFixture<HomeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
+      providers: [
+        { provide: AuthenticationService, useClass: AuthenticationServiceStub },
+      ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+    authenticationService = TestBed.inject(AuthenticationService);
+    spyOn(authenticationService, "saveAuthType").and.stub();
     fixture.detectChanges();
   });
 
   it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  describe("login", () => {
+    it(
+      "should call saveAuthType method from authentication service with appropriate parameter"
+    ),
+      () => {
+        let authType = AuthType.CodeGrant;
+        component.login(authType);
+        expect(authenticationService.saveAuthType).toHaveBeenCalledWith(
+          authType
+        );
+      };
+    it("should set window location to appropriate authentication url"),
+      () => {
+        let authType = AuthType.CodeGrant;
+        component.login(authType);
+        expect(window.location.href).toBe(`Account/Login?${authType}`);
+      };
   });
 });

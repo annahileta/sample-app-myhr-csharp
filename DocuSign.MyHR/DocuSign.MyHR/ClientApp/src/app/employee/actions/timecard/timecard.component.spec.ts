@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { TimecardComponent } from './timecard.component';
+import { TimeCardComponent } from "./timecard.component";
 
-describe('TimecardComponent', () => {
-  let component: TimecardComponent;
-  let fixture: ComponentFixture<TimecardComponent>;
+describe("TimeCardComponent", () => {
+  let component: TimeCardComponent;
+  let fixture: ComponentFixture<TimeCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimecardComponent ]
-    })
-    .compileComponents();
+      declarations: [TimeCardComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TimecardComponent);
+    fixture = TestBed.createComponent(TimeCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
