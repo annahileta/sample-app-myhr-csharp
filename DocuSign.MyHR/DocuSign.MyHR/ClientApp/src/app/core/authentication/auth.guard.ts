@@ -1,5 +1,13 @@
 import { Injectable } from "@angular/core";
-import { Router, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import {
+  Router,
+  CanLoad,
+  Route,
+  UrlSegment,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  CanActivate,
+} from "@angular/router";
 import { AuthenticationService } from "./auth.service";
 import { catchError, map } from "rxjs/operators";
 import { of, Observable } from "rxjs";
@@ -9,10 +17,12 @@ export class AuthGuard implements CanLoad, CanActivate {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {
-  }
+  ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | boolean {
     return this.canNavigatePage(route.url);
   }
 

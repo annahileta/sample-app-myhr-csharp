@@ -4,6 +4,8 @@ import { FormControl, Validators, FormGroup } from "@angular/forms";
 import { DOCUMENT } from "@angular/common";
 import { Renderer2, Inject } from "@angular/core";
 import { getWeek, startOfWeek, endOfWeek, format } from "date-fns";
+import { EmployeeService } from "../../employee.service";
+import { IUser } from "../../models/user.model";
 
 declare const window: Window & { docuSignClick: any };
 
@@ -38,15 +40,21 @@ export class TimeCardComponent implements OnInit {
     Saturday: new FormControl("", Validators.required),
     Sunday: new FormControl("", Validators.required),
   });
+  user: IUser;
+
   constructor(
     private actionServise: ActionsService,
     private renderer2: Renderer2,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private employeeService: EmployeeService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.employeeService.getUser();
+    this.employeeService.user$.subscribe((user) => (this.user = user));
+  }
 
-  getWorkWeekDate() {
+  getWeekInfo() {
     var currentDay = new Date();
 
     const currentWeek = getWeek(currentDay);

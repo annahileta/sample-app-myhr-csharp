@@ -1,15 +1,14 @@
-import { EmployeeService } from './employee.service';
-import { Component, OnInit } from '@angular/core';
+import { EmployeeService } from "./employee.service";
+import { Component, OnInit } from "@angular/core";
 import { IUser } from "./models/user.model";
 
-
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css'],
+  selector: "app-employee",
+  templateUrl: "./employee.component.html",
+  styleUrls: ["./employee.component.css"],
 })
 export class EmployeeComponent implements OnInit {
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService) {}
   isEditUser = false;
   user: IUser;
 
@@ -28,6 +27,6 @@ export class EmployeeComponent implements OnInit {
 
   exitSaving(user: IUser) {
     this.user = user;
-    this.isEditUser = false; 
+    this.isEditUser = false;
   }
 }
