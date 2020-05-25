@@ -1,19 +1,27 @@
 import { Injectable } from "@angular/core";
-import { Router, CanLoad, Route, UrlSegment } from "@angular/router";
+import { Router, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { AuthenticationService } from "./auth.service";
 import { catchError, map } from "rxjs/operators";
 import { of, Observable } from "rxjs";
 
 @Injectable({ providedIn: "root" })
-export class AuthGuard implements CanLoad {
+export class AuthGuard implements CanLoad, CanActivate {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ) {
   }
 
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
+    return this.canNavigatePage(route.url);
+  }
+
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | boolean {
-    if (segments.length == 0) {
+    return this.canNavigatePage(segments);
+  }
+
+  canNavigatePage(urlEgments: UrlSegment[]): Observable<boolean> | boolean {
+    if (urlEgments.length == 0 || urlEgments[0].path == "/") {
       return this.authenticationService.isAuthenticated().pipe(
         map((res: boolean) => {
           if (res) {
@@ -28,7 +36,7 @@ export class AuthGuard implements CanLoad {
         })
       );
     }
-    if (segments[0].path == "employee") {
+    if (urlEgments[0].path == "employee") {
       return this.authenticationService.isAuthenticated().pipe(
         map((res: boolean) => {
           if (!res) {
