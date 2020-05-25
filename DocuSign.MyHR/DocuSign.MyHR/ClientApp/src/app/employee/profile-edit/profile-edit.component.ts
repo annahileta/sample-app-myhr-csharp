@@ -33,12 +33,11 @@ export class ProfileEditComponent implements OnInit {
     user.profileImage = this.user.profileImage;
     user.profileId = this.user.profileId;
     user.hireDate = this.user.hireDate;
-    debugger;
     this.saved.next(user);
     //todo:show message
   }
 
-  cancel() {
+  cancel() { 
     this.user = { ...this.employeeService.user };
     this.canceled.next();
   }

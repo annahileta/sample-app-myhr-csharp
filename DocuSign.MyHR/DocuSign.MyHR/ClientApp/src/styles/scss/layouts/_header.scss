@@ -130,6 +130,7 @@
   .nav-item {
     border: 2px solid transparent;
     position: relative;
+    cursor:pointer;
     @include media-breakpoint-up(lg) {
       font-size: 14px;
       line-height: 19px;

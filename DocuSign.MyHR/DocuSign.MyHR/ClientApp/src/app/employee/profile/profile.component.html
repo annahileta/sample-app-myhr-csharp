@@ -2,7 +2,7 @@
   <h4 translate>Profile.Header</h4>
   <div class="user-profile">
     <div class="static">
-      <div class="edit">
+      <div class="edit" *ngIf="user != null">
         <button class="edit-icon" (click)="editProfile()">
           <img src="assets/img/edit.svg" alt="" />
         </button>
@@ -27,9 +27,9 @@
       <div class="profile-row row">
         <div class="profile-title col-lg-3" translate>Profile.Details.Address</div>
         <div class="profile-description col-lg-9">
-          <span>{{user?.address.address1}}</span>
-          <span>{{user?.address.city}}</span>
-          <span>{{user?.address.stateOrProvince}}, {{user?.address.postalCode}}</span>
+          <span>{{user?.address?.address1}}</span>
+          <span>{{user?.address?.city}}</span>
+          <span *ngIf="user?.address?.stateOrProvince != null || user?.address.postalCode !=null">{{user?.address?.stateOrProvince}}, {{user?.address?.postalCode}}</span>
         </div>
       </div>
     </div>
