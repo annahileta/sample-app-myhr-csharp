@@ -44,7 +44,6 @@
     },
     "Total": "Total",
     "Hours": "{{hours}} h",
-    "SubmitMessage": "I’m affirm I worked {{hours}} hours this period",
     "SubmitButton": "Submit time report"
   }
 }

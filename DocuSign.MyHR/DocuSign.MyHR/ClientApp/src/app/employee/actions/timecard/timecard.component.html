@@ -18,7 +18,7 @@
               <img src="assets/img/avatar.png" alt="avatar" />
             </div>
             <div class="user-info">
-              <span>{{ user?.name }}</span>
+              <span>{{ user?.firstName }}</span>
               <span>{{ user?.lastName }} </span>
             </div>
           </div>
@@ -126,13 +126,6 @@
             <div
               class="d-flex flex-wrap justify-content-center justify-content-md-end align-items-center"
             >
-              <h6
-                class="mb-md-0 mr-md-3 text-center text-lg-left"
-                translate
-                [translateParams]="{ hours: total }"
-              >
-                Timecard.SubmitMessage
-              </h6>
               <div id="ds-clickwrap"></div>
               <button class="btn btn-warning" translate>
                 Timecard.SubmitButton
