@@ -16,9 +16,9 @@ declare const window: Window & { docuSignClick: any };
 export class TimeCardComponent implements OnInit {
   period: Date;
   total = 0;
-  private readonly scriptUrl =
-    "//demo.docusign.net/clickapi/sdk/latest/docusign-click.js";
-  private isLoadedClickWrap: boolean;
+  workWeekDates: string;
+  user: IUser;
+  private readonly scriptUrl = "/clickapi/sdk/latest/docusign-click.js";
 
   workLogs: number[] = [];
   weekDays: string[] = [
@@ -40,23 +40,53 @@ export class TimeCardComponent implements OnInit {
     Saturday: new FormControl("", Validators.required),
     Sunday: new FormControl("", Validators.required),
   });
-  user: IUser;
 
   constructor(
     private actionServise: ActionsService,
     private renderer2: Renderer2,
     @Inject(DOCUMENT) private document: Document,
     private employeeService: EmployeeService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.employeeService.getUser();
     this.employeeService.user$.subscribe((user) => (this.user = user));
+    this.workWeekDates = this.getWorkWeek();
   }
 
-  getWeekInfo() {
-    var currentDay = new Date();
+  updateWorkLogs() {
+    this.workLogs = this.weekDays.map(
+      (day) => +this.timecardForm.controls[day].value
+    );
 
+    this.total = this.workLogs.reduce(
+      (total: number, workLog: number) => total + workLog,
+      0
+    );
+  }
+
+  sendTimeCard() {
+    this.actionServise.createClickWrap(this.workLogs).subscribe((payload) => {
+      const clickwrap = payload.clickWrap;
+      const baseUrl = payload.docuSignBaseUrl;
+      this.loadClickWrap(clickwrap, baseUrl);
+    });
+  }
+
+  private showClickWrap(clickwrap: any, baseUrl: string) {
+    window.docuSignClick.Clickwrap.render(
+      {
+        environment: baseUrl,
+        accountId: clickwrap.accountId,
+        clickwrapId: clickwrap.clickwrapId,
+        clientUserId: clickwrap.accountId,
+      },
+      "#ds-clickwrap"
+    );
+  }
+
+  private getWorkWeek() {
+    var currentDay = new Date();
     const currentWeek = getWeek(currentDay);
     const firstDay = format(
       startOfWeek(currentDay, {
@@ -73,53 +103,19 @@ export class TimeCardComponent implements OnInit {
     return `W${currentWeek} (${firstDay} - ${lastDay})`;
   }
 
-  updateWorkLogs() {
-    this.workLogs = this.weekDays.map(
-      (day) => +this.timecardForm.controls[day].value
-    );
-
-    this.total = this.workLogs.reduce(
-      (total: number, workLog: number) => total + workLog,
-      0
-    );
-  }
-
-  sendTimeCard(type: string) {
-    this.actionServise.createClickWrap(this.workLogs).subscribe((payload) => {
-      const clickwrap = payload.clickWrap;
-      const baseUrl = payload.docuSignBaseUrl;
-      this.loadClickWrap(clickwrap, baseUrl);
-      if (this.isLoadedClickWrap) {
-      }
-    });
-  }
-
-  loadClickWrap(clickwrap: any, baseUrl: string) {
+  private loadClickWrap(clickwrap: any, baseUrl: string) {
     const existingScript = document.getElementById("clickwrapscript");
     if (existingScript) {
       this.showClickWrap(clickwrap, baseUrl);
     } else {
       const textScript = this.renderer2.createElement("script");
-      textScript.src = this.scriptUrl;
+      textScript.src = baseUrl + this.scriptUrl;
       textScript.id = "clickwrapscript";
       this.renderer2.appendChild(this.document.body, textScript);
 
       textScript.onload = () => {
-        this.isLoadedClickWrap = true;
         this.showClickWrap(clickwrap, baseUrl);
       };
     }
-  }
-
-  showClickWrap(clickwrap: any, baseUrl: string) {
-    window.docuSignClick.Clickwrap.render(
-      {
-        environment: baseUrl,
-        accountId: clickwrap.accountId,
-        clickwrapId: clickwrap.clickwrapId,
-        clientUserId: clickwrap.accountId,
-      },
-      "#ds-clickwrap"
-    );
   }
 }
