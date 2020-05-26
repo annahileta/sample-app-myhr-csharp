@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
+import { AuthenticationService } from '../authentication/auth.service';
+
+class AuthenticationServiceStub {
+  public logout() { }
+}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -8,7 +13,10 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      declarations: [HeaderComponent],
+      providers: [ 
+        { provide: AuthenticationService, useClass: AuthenticationServiceStub },
+      ],
     })
     .compileComponents();
   }));

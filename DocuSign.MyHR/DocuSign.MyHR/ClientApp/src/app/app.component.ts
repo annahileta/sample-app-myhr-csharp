@@ -12,8 +12,6 @@ import { AuthenticationService } from "./core/authentication/auth.service";
 export class AppComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
-    private authenticationService: AuthenticationService,
-    private router: Router
   ) {}
   ngOnInit(): void {
     this.translateService.use(environment.defaultLanguage);

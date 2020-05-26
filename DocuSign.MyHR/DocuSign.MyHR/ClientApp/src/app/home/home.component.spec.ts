@@ -4,7 +4,7 @@ import { HomeComponent } from "./home.component";
 import { AuthType } from "../core/authentication/auth-type.enum";
 
 class AuthenticationServiceStub {
-  public saveAuthType() {}
+  public saveAuthType() { }
 }
 
 describe("HomeComponent", () => {
