@@ -28,22 +28,36 @@
       "Id": "ID",
       "Address": "Address",
       "HireDate": "Hire Date"
-    }
-  },
-  "Timecard": {
-    "Header": "Timecard",
-    "Description": "Fill in the hours worked each day for {{weekInfo}}",
-    "Weekdays": {
-      "Mon": "Mon",
-      "Tue": "Tue",
-      "Wed": "Wed",
-      "Thu": "Thu",
-      "Fri": "Fri",
-      "Sat": "Sat",
-      "Sun": "Sun"
     },
-    "Total": "Total",
-    "Hours": "{{hours}} h",
-    "SubmitButton": "Submit time report"
+    "Edit": {
+      "FieldInvalid": "Please fill out this field.",
+      "FirstName": "First Name",
+      "LastName": "Last Name",
+      "Id": "ID",
+      "HireDate": "Hire Date",
+      "AddressLine": "Address Line",
+      "City": "City",
+      "State": "State/Province/Region",
+      "ZipCode": "Zip Code",
+      "Contry": "Contry",
+      "Cancel": "Cancel",
+      "Save": "Save"
+    },
+    "Timecard": {
+      "Header": "Timecard",
+      "Description": "Fill in the hours worked each day for {{weekInfo}}",
+      "Weekdays": {
+        "Mon": "Mon",
+        "Tue": "Tue",
+        "Wed": "Wed",
+        "Thu": "Thu",
+        "Fri": "Fri",
+        "Sat": "Sat",
+        "Sun": "Sun"
+      },
+      "Total": "Total",
+      "Hours": "{{hours}} h",
+      "SubmitButton": "Submit time report"
+    }
   }
 }

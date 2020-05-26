@@ -47,7 +47,7 @@ export class TimeCardComponent implements OnInit {
     private renderer2: Renderer2,
     @Inject(DOCUMENT) private document: Document,
     private employeeService: EmployeeService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.employeeService.getUser();
