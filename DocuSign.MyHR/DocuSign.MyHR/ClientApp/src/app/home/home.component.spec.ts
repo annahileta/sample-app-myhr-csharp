@@ -34,21 +34,13 @@ describe("HomeComponent", () => {
   });
 
   describe("login", () => {
-    it(
-      "should call saveAuthType method from authentication service with appropriate parameter"
-    ),
-      () => {
-        let authType = AuthType.CodeGrant;
-        component.login(authType);
-        expect(authenticationService.saveAuthType).toHaveBeenCalledWith(
-          authType
-        );
-      };
-    it("should set window location to appropriate authentication url"),
-      () => {
-        let authType = AuthType.CodeGrant;
-        component.login(authType);
-        expect(window.location.href).toBe(`Account/Login?${authType}`);
-      };
+    it("should call saveAuthType method from authentication service with appropriate parameter", () => {
+      //arrange
+      let authType = AuthType.CodeGrant;
+      //act
+      component.login(authType);
+      //assert
+      expect(authenticationService.saveAuthType).toHaveBeenCalledWith(authType);
+    });
   });
 });

@@ -8,12 +8,12 @@ import { IUser } from "../../models/user.model";
 import { ReactiveFormsModule, FormBuilder } from "@angular/forms";
 
 class ActionsServiceStub {
-  public createClickWrap() {}
+  public createClickWrap() { }
 }
 
 class EmployeeServiceStub {
   user$: Observable<IUser> = new BehaviorSubject(null);
-  public getUser() {}
+  public getUser() { }
 }
 
 describe("TimeCardComponent", () => {
@@ -21,7 +21,6 @@ describe("TimeCardComponent", () => {
   let fixture: ComponentFixture<TimeCardComponent>;
   let actionsService: ActionsService;
   let employeeService: EmployeeService;
-  let formBuilder: FormBuilder = new FormBuilder();
 
   const response = {
     clickWrap: "",
@@ -36,7 +35,6 @@ describe("TimeCardComponent", () => {
     email: "test@email.com",
     profileImage: "",
     profileId: "testId",
-    isAdmin: false,
   };
   const testWorkLogs = [8, 4, 8, 5, 2, 3, 0];
 
@@ -46,7 +44,7 @@ describe("TimeCardComponent", () => {
       providers: [
         { provide: ActionsService, useClass: ActionsServiceStub },
         { provide: EmployeeService, useClass: EmployeeServiceStub },
-        { provide: FormBuilder, useValue: formBuilder },
+        FormBuilder,
       ],
       imports: [HttpClientTestingModule, ReactiveFormsModule],
     }).compileComponents();
@@ -68,29 +66,37 @@ describe("TimeCardComponent", () => {
 
   describe("ngOnInit", () => {
     it("should call getUser method from employee service", () => {
+      //act
       component.ngOnInit();
       employeeService.user$.next(user);
+      //assert
       expect(employeeService.getUser).toHaveBeenCalled();
     });
     it("should get user from employee service", () => {
       expect(component.user).toEqual(null);
+      //act
       component.ngOnInit();
       employeeService.user$.next(user);
+      //assert
       expect(component.user).toEqual(user);
     });
   });
 
   describe("sendTimeCard", () => {
     it("should call createClickWrap method from actions service with appropriate parameter", () => {
+      //arrange
       component.workLogs = testWorkLogs;
+      //act
       component.sendTimeCard();
+      //assert
       expect(actionsService.createClickWrap).toHaveBeenCalledWith(testWorkLogs);
     });
   });
 
   describe("updateWorkLogs", () => {
+    //arrange
     beforeEach(() => {
-      component.timecardForm = formBuilder.group({
+      component.timecardForm.setValue({
         Monday: "8",
         Tuesday: "4",
         Wednesday: "8",
@@ -101,13 +107,15 @@ describe("TimeCardComponent", () => {
       });
     });
     it("should map logged working hours correctly", () => {
-      expect(component.workLogs).toEqual([]);
+      //act
       component.updateWorkLogs();
+      //assert
       expect(component.workLogs).toEqual(testWorkLogs);
     });
     it("should calculate total working hours correctly", () => {
-      expect(component.total).toEqual(0);
+      //act
       component.updateWorkLogs();
+      //assert
       expect(component.total).toEqual(30);
     });
   });

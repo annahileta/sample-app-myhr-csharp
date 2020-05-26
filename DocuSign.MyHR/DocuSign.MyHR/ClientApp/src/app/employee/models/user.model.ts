@@ -1,12 +1,12 @@
 export interface IUser {
   id: number;
   name: string;
-  firstName: string,
-  lastName: string, 
+  firstName: string;
+  lastName: string;
   hireDate: string;
   email: string;
   profileImage: string;
-  profileId:string,
+  profileId: string;
   address?: {
     address1: string;
     address2: string;
@@ -17,5 +17,4 @@ export interface IUser {
     postalCode: string;
     stateOrProvince: string;
   };
-  isAdmin: boolean;
 }
