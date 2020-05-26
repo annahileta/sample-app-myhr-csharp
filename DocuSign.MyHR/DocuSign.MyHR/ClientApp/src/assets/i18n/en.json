@@ -42,22 +42,22 @@
       "Contry": "Contry",
       "Cancel": "Cancel",
       "Save": "Save"
-    },
-    "Timecard": {
-      "Header": "Timecard",
-      "Description": "Fill in the hours worked each day for {{weekInfo}}",
-      "Weekdays": {
-        "Mon": "Mon",
-        "Tue": "Tue",
-        "Wed": "Wed",
-        "Thu": "Thu",
-        "Fri": "Fri",
-        "Sat": "Sat",
-        "Sun": "Sun"
-      },
-      "Total": "Total",
-      "Hours": "{{hours}} h",
-      "SubmitButton": "Submit time report"
     }
+  },
+  "Timecard": {
+    "Header": "Timecard",
+    "Description": "Fill in the hours worked each day for {{weekInfo}}",
+    "Weekdays": {
+      "Mon": "Mon",
+      "Tue": "Tue",
+      "Wed": "Wed",
+      "Thu": "Thu",
+      "Fri": "Fri",
+      "Sat": "Sat",
+      "Sun": "Sun"
+    },
+    "Total": "Total",
+    "Hours": "{{hours}} h",
+    "SubmitButton": "Submit time report"
   }
 }
