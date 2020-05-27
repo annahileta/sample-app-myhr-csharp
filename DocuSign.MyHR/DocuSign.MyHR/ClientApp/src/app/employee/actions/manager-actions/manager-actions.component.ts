@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { FormControl, Validators, FormGroup } from '@angular/forms'
+import { FormControl, Validators, FormGroup, AbstractControl } from '@angular/forms'
 import { ActionsService } from '../actions.service'
 import { DocumentType } from '../document-type.enum'
 
@@ -34,7 +34,8 @@ export class ManagerActionsComponent implements OnInit {
     this.additionalUserForm.reset()
   }
 
-  isInvalid (control: FormControl) {
-    return control.invalid && control.touched
+  isInvalid (control: AbstractControl) {
+    const form = <FormGroup>control
+    return form.invalid && form.touched
   }
 }

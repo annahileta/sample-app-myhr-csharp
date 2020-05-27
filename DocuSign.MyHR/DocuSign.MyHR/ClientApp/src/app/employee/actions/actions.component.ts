@@ -22,7 +22,7 @@ export class ActionsComponent implements OnInit {
     })
   }
 
-  sendTimeCard (type: string) {
+  sendTimeCard () {
     this.router.navigate(['/employee/timecard'])
   }
 }
