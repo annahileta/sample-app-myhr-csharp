@@ -9,27 +9,21 @@
         <span class="card-description">Direct deposit information</span>
       </div>
       <div class="card-actions">
-        <button class="btn btn-warning btn-sm disabled">Update</button>
-        <button
-          class="btn btn-link link-with-arrow collapsed disabled"
-          data-toggle="collapse"
-          data-target="#collapse-1"
-          aria-expanded="false"
-          aria-controls="collapse-1"
-        >
+        <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.DirectDeposit)">Update</button>
+        <button class="btn btn-link link-with-arrow collapsed"
+                data-toggle="collapse"
+                data-target="#collapse-1"
+                aria-expanded="false"
+                aria-controls="collapse-1">
           View info
         </button>
       </div>
     </div>
-    <div
-      class="card-content collapse"
-      id="collapse-1"
-      aria-labelledby="heading-1"
-    >
+    <div class="card-content collapse"
+         id="collapse-1"
+         aria-labelledby="heading-1">
       <div class="card-body">
-        <span class="card-body-title"
-          >Tрis action demonstrates the following DocuSign API functions:</span
-        >
+        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
         <ul>
           <li>Templates</li>
           <li>Calculatd fields</li>
@@ -47,32 +41,24 @@
         <span class="card-description">W-4 tax withholding</span>
       </div>
       <div class="card-actions">
-        <button
-          class="btn btn-warning btn-sm"
-          (click)="sendEnvelope(documentType.W4)"
-        >
+        <button class="btn btn-warning btn-sm"
+                (click)="sendEnvelope(documentType.W4)">
           Select
         </button>
-        <button
-          class="btn btn-link link-with-arrow collapsed"
-          data-toggle="collapse"
-          data-target="#collapse-2"
-          aria-expanded="false"
-          aria-controls="collapse-2"
-        >
+        <button class="btn btn-link link-with-arrow collapsed"
+                data-toggle="collapse"
+                data-target="#collapse-2"
+                aria-expanded="false"
+                aria-controls="collapse-2">
           View info
         </button>
       </div>
     </div>
-    <div
-      class="card-content collapse"
-      id="collapse-2"
-      aria-labelledby="heading-2"
-    >
+    <div class="card-content collapse"
+         id="collapse-2"
+         aria-labelledby="heading-2">
       <div class="card-body">
-        <span class="card-body-title"
-          >Tрis action demonstrates the following DocuSign API functions:</span
-        >
+        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
         <ul>
           <li>Templates1111</li>
           <li>Calculatd fields</li>
@@ -90,34 +76,26 @@
         <span class="card-description">Time card</span>
       </div>
       <div class="card-actions">
-        <button
-          class="btn btn-warning btn-sm"
-          data-toggle="modal"
-          data-target="#timeCard"
-          (click)="sendTimeCard()"
-        >
+        <button class="btn btn-warning btn-sm"
+                data-toggle="modal"
+                data-target="#timeCard"
+                (click)="sendTimeCard()">
           Enter
         </button>
-        <button
-          class="btn btn-link link-with-arrow collapsed"
-          data-toggle="collapse"
-          data-target="#collapse-3"
-          aria-expanded="false"
-          aria-controls="collapse-3"
-        >
+        <button class="btn btn-link link-with-arrow collapsed"
+                data-toggle="collapse"
+                data-target="#collapse-3"
+                aria-expanded="false"
+                aria-controls="collapse-3">
           View info
         </button>
       </div>
     </div>
-    <div
-      class="card-content collapse"
-      id="collapse-3"
-      aria-labelledby="heading-3"
-    >
+    <div class="card-content collapse"
+         id="collapse-3"
+         aria-labelledby="heading-3">
       <div class="card-body">
-        <span class="card-body-title"
-          >Tрis action demonstrates the following DocuSign API functions:</span
-        >
+        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
         <ul>
           <li>Templates1111</li>
           <li>Calculatd fields</li>
@@ -136,26 +114,20 @@
       </div>
       <div class="card-actions">
         <button class="btn btn-warning btn-sm">Apply</button>
-        <button
-          class="btn btn-link link-with-arrow collapsed"
-          data-toggle="collapse"
-          data-target="#collapse-4"
-          aria-expanded="false"
-          aria-controls="collapse-4"
-        >
+        <button class="btn btn-link link-with-arrow collapsed"
+                data-toggle="collapse"
+                data-target="#collapse-4"
+                aria-expanded="false"
+                aria-controls="collapse-4">
           View info
         </button>
       </div>
     </div>
-    <div
-      class="card-content collapse"
-      id="collapse-4"
-      aria-labelledby="heading-4"
-    >
+    <div class="card-content collapse"
+         id="collapse-4"
+         aria-labelledby="heading-4">
       <div class="card-body">
-        <span class="card-body-title"
-          >Tрis action demonstrates the following DocuSign API functions:</span
-        >
+        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
         <ul>
           <li>Templates1111</li>
           <li>Calculatd fields</li>
@@ -167,26 +139,22 @@
 </div>
 
 <div class="multi-level-section">
-  <div
-    class="modal fade"
-    id="timeCard"
-    data-backdrop="static"
-    data-keyboard="false"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade"
+       id="timeCard"
+       data-backdrop="static"
+       data-keyboard="false"
+       tabindex="-1"
+       role="dialog"
+       aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Timecard</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

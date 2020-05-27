@@ -27,7 +27,9 @@ namespace DocuSign.MyHR.Services
         public void UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
         {
             _docuSignApiProvider.UsersApi.UpdateUser(
-               accountId, userId, new UserInformation(
+               accountId,
+               userId, 
+               new UserInformation(
                    FirstName: userDetails.FirstName,
                    LastName: userDetails.LastName,
                    WorkAddress: new AddressInformation(

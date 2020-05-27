@@ -16,6 +16,7 @@ namespace DocuSign.MyHR.UnitTests
         [InlineAutoData(DocumentType.W4)]
         [InlineAutoData(DocumentType.I9)]
         [InlineAutoData(DocumentType.Offer)]
+        [InlineAutoData(DocumentType.DirectDeposit)]
         public void CreateEnvelope_ReturnsCorrectResult_W4(
             DocumentType type,
             Mock<IDocuSignApiProvider> docuSignApiProvider,

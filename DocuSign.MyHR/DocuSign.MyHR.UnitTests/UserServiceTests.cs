@@ -35,7 +35,6 @@ namespace DocuSign.MyHR.UnitTests
             Assert.Equal(userInformation.HomeAddress.Phone, userDetails.Address.Phone);
             Assert.Equal(userInformation.HomeAddress.PostalCode, userDetails.Address.PostalCode);
         }
-
         [Theory, AutoData]
         public void UpdateUserDetails_ReturnsCorrectResult(
             Mock<IDocuSignApiProvider> docuSignApiProvider,
@@ -50,24 +49,16 @@ namespace DocuSign.MyHR.UnitTests
 
             var sut = new UserService(docuSignApiProvider.Object);
 
-            var userDetails = sut.UpdateUserDetails(accountId, userId, newUserDetails);
-            Assert.NotNull(userDetails);
-            Assert.Equal(updatedUserInfo.UserName, userDetails.Name);
-            Assert.Equal(updatedUserInfo.HomeAddress.Address1, userDetails.Address.Address1);
-            Assert.Equal(updatedUserInfo.HomeAddress.StateOrProvince, userDetails.Address.StateOrProvince);
-            Assert.Equal(updatedUserInfo.HomeAddress.Address2, userDetails.Address.Address2);
-            Assert.Equal(updatedUserInfo.HomeAddress.City, userDetails.Address.City);
-            Assert.Equal(updatedUserInfo.HomeAddress.Country, userDetails.Address.Country);
-            Assert.Equal(updatedUserInfo.HomeAddress.Fax, userDetails.Address.Fax);
-            Assert.Equal(updatedUserInfo.HomeAddress.Phone, userDetails.Address.Phone);
-            Assert.Equal(updatedUserInfo.HomeAddress.PostalCode, userDetails.Address.PostalCode);
+             sut.UpdateUserDetails(accountId, userId, newUserDetails);
+             usersApi.Verify(mock => mock.UpdateUser(accountId, userId, updatedUserInfo), Times.Once());
         }
 
         private UserInformation Convert(UserDetails userDetails)
         {
-            return new UserInformation(
-                UserName: userDetails.Name,
-                HomeAddress: new AddressInformation(
+            return new UserInformation( 
+                LastName:userDetails.LastName,
+                FirstName:userDetails.FirstName,
+                WorkAddress: new AddressInformation(
                     userDetails.Address.Address1,
                     userDetails.Address.Address2,
                     userDetails.Address.City,

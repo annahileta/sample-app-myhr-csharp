@@ -44,14 +44,17 @@ namespace DocuSign.MyHR.Services
                 case DocumentType.Offer:
                     templateHandler = new OfferTemplateHandler(); 
                     break;
+                case DocumentType.DirectDeposit:
+                    templateHandler = new DirectDepositTemplateHandler();
+                    break;
                 default:
                     throw new NotImplementedException(); 
             }
 
             EnvelopeTemplate envelopeTemplate = templateHandler.CreateTemplate(rootDir);
-            EnvelopeDefinition envelope = templateHandler.CreateEnvelope(userDetails, additionalUser);
+            TemplateSummary templateSummary = _docuSignApiProvider.TemplatesApi.CreateTemplate(accountId, envelopeTemplate);
 
-            TemplateSummary templateSummary = _docuSignApiProvider.TemplatesApi.CreateTemplate(accountId, envelopeTemplate); 
+            EnvelopeDefinition envelope = templateHandler.CreateEnvelope(userDetails, additionalUser);
             envelope.TemplateId = templateSummary.TemplateId;
 
             EnvelopeSummary results = _docuSignApiProvider.EnvelopApi.CreateEnvelope(accountId, envelope);
