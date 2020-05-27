@@ -1,34 +1,35 @@
 <div class="action-cards-section">
-  <h4>Employee Actions</h4>
+  <h4 translate>EmployeeActions.Header</h4>
   <div class="section-card">
     <div class="card-header">
       <div class="card-info">
         <div class="card-icon">
           <img src="assets/img/icon-1.svg" alt="icon" />
         </div>
-        <span class="card-description">Direct deposit information</span>
+        <span class="card-description" translate>EmployeeActions.DirectDeposit.Title</span>
       </div>
       <div class="card-actions">
-        <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.DirectDeposit)">Update</button>
-        <button class="btn btn-link link-with-arrow collapsed"
-                data-toggle="collapse"
-                data-target="#collapse-1"
-                aria-expanded="false"
-                aria-controls="collapse-1">
-          View info
+        <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.DirectDeposit)"
+          translate>EmployeeActions.DirectDeposit.UpdateButton</button>
+        <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-1"
+          aria-expanded="false" aria-controls="collapse-1" translate>
+          EmployeeActions.DirectDeposit.ViewInfoButton
         </button>
       </div>
     </div>
-    <div class="card-content collapse"
-         id="collapse-1"
-         aria-labelledby="heading-1">
+    <div class="card-content collapse" id="collapse-1" aria-labelledby="heading-1">
       <div class="card-body">
-        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
-        <ul>
-          <li>Templates</li>
-          <li>Calculatd fields</li>
-          <li>ets.</li>
+        <span class="card-body-title" translate>EmployeeActions.DirectDeposit.Description</span>
+        <ul [innerHTML]="'EmployeeActions.DirectDeposit.FunctionsList' | translate">
         </ul>
+        <div class="collapse-inset-wrapper">
+          <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse"
+            data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1" translate>
+            EmployeeActions.DirectDeposit.BehindTheSceneButton</button>
+          <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1"
+            [innerHTML]="'EmployeeActions.DirectDeposit.CodeFlow' | translate">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -38,32 +39,31 @@
         <div class="card-icon">
           <img src="assets/img/icon-2.svg" alt="icon" />
         </div>
-        <span class="card-description">W-4 tax withholding</span>
+        <span class="card-description" translate>EmployeeActions.W4TaxWithholding.Title</span>
       </div>
       <div class="card-actions">
-        <button class="btn btn-warning btn-sm"
-                (click)="sendEnvelope(documentType.W4)">
-          Select
+        <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.W4)" translate>
+          EmployeeActions.W4TaxWithholding.SelectButton
         </button>
-        <button class="btn btn-link link-with-arrow collapsed"
-                data-toggle="collapse"
-                data-target="#collapse-2"
-                aria-expanded="false"
-                aria-controls="collapse-2">
-          View info
+        <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-2"
+          aria-expanded="false" aria-controls="collapse-2" translate>
+          EmployeeActions.W4TaxWithholding.ViewInfoButton
         </button>
       </div>
     </div>
-    <div class="card-content collapse"
-         id="collapse-2"
-         aria-labelledby="heading-2">
+    <div class="card-content collapse" id="collapse-2" aria-labelledby="heading-2">
       <div class="card-body">
-        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
-        <ul>
-          <li>Templates1111</li>
-          <li>Calculatd fields</li>
-          <li>ets.</li>
+        <span class="card-body-title" translate>EmployeeActions.W4TaxWithholding.Description</span>
+        <ul [innerHTML]="'EmployeeActions.W4TaxWithholding.FunctionsList' | translate">
         </ul>
+        <div class="collapse-inset-wrapper">
+          <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse"
+            data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1" translate>
+            EmployeeActions.W4TaxWithholding.BehindTheSceneButton</button>
+          <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1"
+            [innerHTML]="'EmployeeActions.W4TaxWithholding.CodeFlow' | translate">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -73,34 +73,32 @@
         <div class="card-icon">
           <img src="assets/img/icon-3.svg" alt="icon" />
         </div>
-        <span class="card-description">Time card</span>
+        <span class="card-description" translate>EmployeeActions.TimeCard.Title</span>
       </div>
       <div class="card-actions">
-        <button class="btn btn-warning btn-sm"
-                data-toggle="modal"
-                data-target="#timeCard"
-                (click)="sendTimeCard()">
-          Enter
+        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#timeCard" (click)="sendTimeCard()"
+          translate>
+          EmployeeActions.TimeCard.EnterButton
         </button>
-        <button class="btn btn-link link-with-arrow collapsed"
-                data-toggle="collapse"
-                data-target="#collapse-3"
-                aria-expanded="false"
-                aria-controls="collapse-3">
-          View info
+        <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-3"
+          aria-expanded="false" aria-controls="collapse-3" translate>
+          EmployeeActions.TimeCard.ViewInfoButton
         </button>
       </div>
     </div>
-    <div class="card-content collapse"
-         id="collapse-3"
-         aria-labelledby="heading-3">
+    <div class="card-content collapse" id="collapse-3" aria-labelledby="heading-3">
       <div class="card-body">
-        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
-        <ul>
-          <li>Templates1111</li>
-          <li>Calculatd fields</li>
-          <li>ets.</li>
+        <span class="card-body-title" translate>EmployeeActions.TimeCard.Description</span>
+        <ul [innerHTML]="'EmployeeActions.TimeCard.FunctionsList' | translate">
         </ul>
+        <div class="collapse-inset-wrapper">
+          <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse"
+            data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1" translate>
+            EmployeeActions.TimeCard.BehindTheSceneButton</button>
+          <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1"
+            [innerHTML]="'EmployeeActions.TimeCard.CodeFlow' | translate">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -110,51 +108,42 @@
         <div class="card-icon">
           <img src="assets/img/icon-4.svg" alt="icon" />
         </div>
-        <span class="card-description">Tuition reimbursement</span>
+        <span class="card-description" translate>EmployeeActions.TuitionReimbursement.Title</span>
       </div>
       <div class="card-actions">
-        <button class="btn btn-warning btn-sm">Apply</button>
-        <button class="btn btn-link link-with-arrow collapsed"
-                data-toggle="collapse"
-                data-target="#collapse-4"
-                aria-expanded="false"
-                aria-controls="collapse-4">
-          View info
+        <button class="btn btn-warning btn-sm" translate>EmployeeActions.TuitionReimbursement.ApplyButton</button>
+        <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-4"
+          aria-expanded="false" aria-controls="collapse-4" translate>
+          EmployeeActions.TuitionReimbursement.ViewInfoButton
         </button>
       </div>
     </div>
-    <div class="card-content collapse"
-         id="collapse-4"
-         aria-labelledby="heading-4">
+    <div class="card-content collapse" id="collapse-4" aria-labelledby="heading-4">
       <div class="card-body">
-        <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
-        <ul>
-          <li>Templates1111</li>
-          <li>Calculatd fields</li>
-          <li>ets.</li>
+        <span class="card-body-title" translate>EmployeeActions.TuitionReimbursement.Description</span>
+        <ul [innerHTML]="'EmployeeActions.TuitionReimbursement.FunctionsList' | translate">
         </ul>
+        <div class="collapse-inset-wrapper">
+          <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse"
+            data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1" translate>
+            EmployeeActions.TuitionReimbursement.BehindTheSceneButton</button>
+          <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1"
+            [innerHTML]="'EmployeeActions.TuitionReimbursement.CodeFlow' | translate">
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="multi-level-section">
-  <div class="modal fade"
-       id="timeCard"
-       data-backdrop="static"
-       data-keyboard="false"
-       tabindex="-1"
-       role="dialog"
-       aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
+  <div class="modal fade" id="timeCard" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Timecard</h5>
-          <button type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
