@@ -59,5 +59,35 @@
     "Total": "Total",
     "Hours": "{{hours}} h",
     "SubmitButton": "Submit time report"
+  },
+  "ManagerActions": {
+    "Header": "Manager Actions",
+    "Description": "You can see this because you have admin premissions",
+    "OfferLetter": {
+      "Title": "A Candidate offer letter",
+      "Description": "This action demonstrates the following DocuSign API functions:",
+      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "SendButton": "Send",
+      "ViewInfoButton": "View Info",
+      "BehindTheSceneButton": "Behind the scene",
+      "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the form is submitted, we use the Envelopes: create method to send the signature request with the corresponding form information. The envelope we construct contains a document object, a recipient object of type signer, and tabs, which contain the form fields information. Since we are using embedded signing, we must also set the clientUserId property on the recipient.</p><p>We place the tabs on the document by specifying a SignHereTab element and a PaymentTab element as part of the signer element. The tab elements are positioned using x/y coordinates on the document.</p><p>The PaymentTab serves two purposes. It is used both to display the amount due in the document and to instruct DocuSign to proceed to collect payments after the document is signed.</p><p>Lastly, we include the status \"sent\" in the request so that the envelope is sent for signing. The eSignature REST API request is sent to the following endpoint:</p><p>POST /v2.1/accounts/{accountId}/envelopes</p><span><b>Step 2</b></span><p>To enable embedded signing of the envelope inside our application, we next use the <span class='text-warning'>EnvelopeViews</span>: createRecipient method to generate a signing URL for the recipient. For this to work, the clientUserId property must be set on the recipient when the envelope is sent during step 1 above.</p><p>Once the envelope is sent, we save the envelope ID and recipient information to our session. Then, we retrieve the envelope ID and recipient info from our session and create the recipient view by generating the URL and displaying the recipient view in a full-width and full-height iframe inside our page.</p><p>To create the recipient view of the envelope, we send an API request to:</p><p>POST /v2.1/accounts/{accountId}/envelopes/{envelopeId}/views/recipient</p>"
+    },
+    "I9Request": {
+      "Title": "An I-9 verification request",
+      "Description": "This action demonstrates the following DocuSign API functions:",
+      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "SendButton": "Send",
+      "ViewInfoButton": "View Info",
+      "BehindTheSceneButton": "Behind the scene",
+      "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the form is submitted, we use the Envelopes: create method to send the signature request with the corresponding form information. The envelope we construct contains a document object, a recipient object of type signer, and tabs, which contain the form fields information. Since we are using embedded signing, we must also set the clientUserId property on the recipient.</p><p>We place the tabs on the document by specifying a SignHereTab element and a PaymentTab element as part of the signer element. The tab elements are positioned using x/y coordinates on the document.</p><p>The PaymentTab serves two purposes. It is used both to display the amount due in the document and to instruct DocuSign to proceed to collect payments after the document is signed.</p><p>Lastly, we include the status \"sent\" in the request so that the envelope is sent for signing. The eSignature REST API request is sent to the following endpoint:</p><p>POST /v2.1/accounts/{accountId}/envelopes</p><span><b>Step 2</b></span><p>To enable embedded signing of the envelope inside our application, we next use the <span class='text-warning'>EnvelopeViews</span>: createRecipient method to generate a signing URL for the recipient. For this to work, the clientUserId property must be set on the recipient when the envelope is sent during step 1 above.</p><p>Once the envelope is sent, we save the envelope ID and recipient information to our session. Then, we retrieve the envelope ID and recipient info from our session and create the recipient view by generating the URL and displaying the recipient view in a full-width and full-height iframe inside our page.</p><p>To create the recipient view of the envelope, we send an API request to:</p><p>POST /v2.1/accounts/{accountId}/envelopes/{envelopeId}/views/recipient</p>"
+    },
+    "Modal": {
+      "Header": "Add recipient",
+      "Description": "Enter the name and email addresses<br />of the person you want to e-sign the document.",
+      "NameField": "Full name",
+      "EmailField": "Email",
+      "ErrorText": "Please fill out this field.",
+      "SubmitButtom": "Continue"
+    }
   }
 }
