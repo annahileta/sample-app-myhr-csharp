@@ -9,8 +9,8 @@ import { DocumentType } from "../document-type.enum";
   styleUrls: ["./manager-actions.component.css"],
 })
 export class ManagerActionsComponent implements OnInit {
-  public documentType = DocumentType;
-  private type: DocumentType;
+  documentType = DocumentType;
+  type: DocumentType;
 
   additionalUserForm: FormGroup = new FormGroup({
     Name: new FormControl("", Validators.required),
@@ -31,5 +31,10 @@ export class ManagerActionsComponent implements OnInit {
       .subscribe((payload) => {
         window.location.href = payload.redirectUrl;
       });
+    this.additionalUserForm.reset();
+  }
+
+  isInvalid(control: FormControl) {
+    return control.invalid && control.touched;
   }
 }

@@ -1,12 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'; 
-import { ManagerActionsComponent } from './manager-actions.component';
-import { ActionsService } from '../actions.service';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ManagerActionsComponent } from "./manager-actions.component";
+import { ActionsService } from "../actions.service";
+import { FormBuilder } from "@angular/forms";
+import { DocumentType } from "../document-type.enum";
 
-class ActionsServiceStub {
-  public getUser() { }
-}
+class ActionsServiceStub { }
 
-describe('ManagerActionsComponent', () => {
+describe("ManagerActionsComponent", () => {
   let component: ManagerActionsComponent;
   let fixture: ComponentFixture<ManagerActionsComponent>;
 
@@ -15,9 +15,9 @@ describe('ManagerActionsComponent', () => {
       declarations: [ManagerActionsComponent],
       providers: [
         { provide: ActionsService, useClass: ActionsServiceStub },
+        FormBuilder,
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -26,7 +26,18 @@ describe('ManagerActionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  describe("setDocumentType", () => {
+    it("should set type correctly", () => {
+      //arrange
+      const type = DocumentType.I9;
+      //act
+      component.setDocumentType(type);
+      //assert
+      expect(component.type).toEqual(type);
+    });
   });
 });

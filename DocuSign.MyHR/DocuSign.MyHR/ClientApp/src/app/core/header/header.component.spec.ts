@@ -4,7 +4,7 @@ import { HeaderComponent } from "./header.component";
 import { AuthenticationService } from "../authentication/auth.service";
 
 class AuthenticationServiceStub {
-  public logout() {}
+  public logout() { }
 }
 
 describe("HeaderComponent", () => {
@@ -34,15 +34,11 @@ describe("HeaderComponent", () => {
   });
 
   describe("logout", () => {
-    it("should call logout method from authentication service"),
-      () => {
-        component.logout();
-        expect(authenticationService.logout).toHaveBeenCalled();
-      };
-    it("should set window location to appropriate url"),
-      () => {
-        component.logout();
-        expect(window.location.href).toBe("/Account/Logout");
-      };
+    it("should call logout method from authentication service", () => {
+      //act
+      component.logout();
+      //assert
+      expect(authenticationService.logout).toHaveBeenCalled();
+    });
   });
 });

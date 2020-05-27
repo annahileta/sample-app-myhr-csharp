@@ -9,12 +9,11 @@ import { AuthenticationService } from "../core/authentication/auth.service";
 export class HomeComponent {
   authType = AuthType;
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   login(authType: AuthType) {
     this.authenticationService.saveAuthType(authType);
-    window.location.href = `Account/Login?${authType}`;
   }
 }

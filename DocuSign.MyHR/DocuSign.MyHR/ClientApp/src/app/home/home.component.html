@@ -9,16 +9,18 @@
           <h1 translate>WelcomeHeader</h1>
           <h4 translate>WelcomeDescription</h4>
           <div class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start">
-            <button class="btn btn-warning btn-lg"
-                    (click)="login(authType.CodeGrant)"
-                    translate>
+            <a class="btn btn-warning btn-lg"
+               [href]="'Account/Login?' + authType.CodeGrant"
+               (click)="login(authType.CodeGrant)"
+               translate>
               LoginWithDocuSignAccountButton
-            </button>
-            <button class="btn btn-white btn-lg"
-                    (click)="login(authType.JWT)"
-                    translate>
+            </a>
+            <a class="btn btn-white btn-lg"
+               [href]="'Account/Login?' + authType.JWT"
+               (click)="login(authType.JWT)"
+               translate>
               LoginWithTestAccountButton
-            </button>
+            </a>
           </div>
           <div class="cta-section">
             <span class="cta-title" translate>Note</span>

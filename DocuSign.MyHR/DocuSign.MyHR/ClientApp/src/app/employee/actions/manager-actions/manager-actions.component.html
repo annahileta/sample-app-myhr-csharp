@@ -1,21 +1,12 @@
 <hr />
 <div class="multi-level-section">
   <h4>
-    <button
-      class="link-with-arrow collapsed"
-      data-toggle="collapse"
-      data-target="#collapse-5"
-      aria-expanded="false"
-      aria-controls="collapse-5"
-    >
+    <button class="link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-5" aria-expanded="false"
+      aria-controls="collapse-5">
       Manager Actions
     </button>
   </h4>
-  <div
-    class="card-content collapse"
-    id="collapse-5"
-    aria-labelledby="heading-5"
-  >
+  <div class="card-content collapse" id="collapse-5" aria-labelledby="heading-5">
     <div class="card-body">
       <p>You can see this because you have admin premissions</p>
       <div class="row">
@@ -29,35 +20,22 @@
                 <span class="card-description">A Candidate offer letter</span>
               </div>
               <div class="card-actions">
-                <button
-                  class="btn btn-warning btn-sm"
-                  data-toggle="modal"
-                  data-target="#staticBackdrop"
-                  (click)="setDocumentType(documentType.Offer)"
-                >
+                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-1"
+                  (click)="setDocumentType(documentType.Offer)">
                   Send
                 </button>
-                <button
-                  class="btn btn-link link-with-arrow collapsed"
-                  data-toggle="collapse"
-                  data-target="#collapse-6"
-                  aria-expanded="false"
-                  aria-controls="collapse-6"
-                >
+                <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-6"
+                  aria-expanded="false" aria-controls="collapse-6">
                   View info
                 </button>
               </div>
             </div>
-            <div
-              class="card-content collapse"
-              id="collapse-6"
-              aria-labelledby="heading-6"
-            >
+            <div class="card-content collapse" id="collapse-6" aria-labelledby="heading-6">
               <div class="card-body">
-                <span class="card-body-title"
-                  >Tрis action demonstrates the following DocuSign API
-                  functions:</span
-                >
+                <span class="card-body-title">
+                  Tрis action demonstrates the following DocuSign API
+                  functions:
+                </span>
                 <ul>
                   <li>Templates1111</li>
                   <li>Calculatd fields</li>
@@ -74,40 +52,25 @@
                 <div class="card-icon">
                   <img src="assets/img/icon-7.svg" alt="icon" />
                 </div>
-                <span class="card-description"
-                  >An I-9 verification request</span
-                >
+                <span class="card-description">An I-9 verification request</span>
               </div>
               <div class="card-actions">
-                <button
-                  class="btn btn-warning btn-sm"
-                  data-toggle="modal"
-                  data-target="#staticBackdrop"
-                  (click)="setDocumentType(documentType.I9)"
-                >
+                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-1"
+                  (click)="setDocumentType(documentType.I9)">
                   Send
                 </button>
-                <button
-                  class="btn btn-link link-with-arrow collapsed"
-                  data-toggle="collapse"
-                  data-target="#collapse-7"
-                  aria-expanded="false"
-                  aria-controls="collapse-7"
-                >
+                <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-7"
+                  aria-expanded="false" aria-controls="collapse-7">
                   View info
                 </button>
               </div>
             </div>
-            <div
-              class="card-content collapse"
-              id="collapse-7"
-              aria-labelledby="heading-7"
-            >
+            <div class="card-content collapse" id="collapse-7" aria-labelledby="heading-7">
               <div class="card-body">
-                <span class="card-body-title"
-                  >Tрis action demonstrates the following DocuSign API
-                  functions:</span
-                >
+                <span class="card-body-title">
+                  Tрis action demonstrates the following DocuSign API
+                  functions:
+                </span>
                 <ul>
                   <li>Templates1111</li>
                   <li>Calculatd fields</li>
@@ -118,94 +81,48 @@
           </div>
         </div>
 
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-backdrop="static"
-          data-keyboard="false"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
+        <div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="modalLabel-1"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">
-                  Modal title
-                </h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="modal-body">
+                <h4 class="modal-title" id="modalLabel-1">Add recipient</h4>
+                <span class="modal-subtitle">
+                  Enter the name and email addresses<br />
+                  of the person you want to e-sign the document.
+                </span>
+
+                <form [formGroup]="additionalUserForm" [class.was-validated]="additionalUserForm.invalid"
+                  (ngSubmit)="sendEnvelope()">
+                  <div class="form-group">
+                    <label for="fullname">Full name</label>
+                    <input type="text" class="form-control" id="fullname" placeholder="" formControlName="Name"
+                      [class.invalid]=" isInvalid(additionalUserForm.get('Name'))" />
+                    <div *ngIf="isInvalid(additionalUserForm.get('Name'))" class="invalid-feedback">
+                      Please fill out this field.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" placeholder="" formControlName="Email"
+                      [class.invalid]="
+                        isInvalid(additionalUserForm.get('Email'))
+                      " />
+                    <div *ngIf="isInvalid(additionalUserForm.get('Email'))" class="invalid-feedback">
+                      Please fill out this field.
+                    </div>
+                  </div>
+                  <div class="buttons-group d-flex flex-wrap justify-content-end pt-3">
+                    <button class="btn btn-warning btn-sm" [class.disabled]="additionalUserForm.invalid"
+                      [disabled]="additionalUserForm.invalid">
+                      Continue
+                    </button>
+                  </div>
+                </form>
               </div>
-              <form
-                [formGroup]="additionalUserForm"
-                novalidate
-                (ngSubmit)="sendEnvelope()"
-              >
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="user-name" class="col-form-label">Name:</label>
-                    <input
-                      formControlName="Name"
-                      type="text"
-                      class="form-control"
-                      id="user-name"
-                    />
-                    <div
-                      class="alert alert-danger"
-                      *ngIf="
-                        additionalUserForm.controls['Name'].invalid &&
-                        additionalUserForm.controls['Name'].touched
-                      "
-                    >
-                      Name is required
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="user-email" class="col-form-label"
-                      >Email:</label
-                    >
-                    <input
-                      formControlName="Email"
-                      type="text"
-                      class="form-control"
-                      id="user-email"
-                    />
-                    <div
-                      class="alert alert-danger"
-                      *ngIf="
-                        additionalUserForm.controls['Email'].invalid &&
-                        additionalUserForm.controls['Email'].touched
-                      "
-                    >
-                      Incorrect e-mail
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="submit"
-                    [disabled]="additionalUserForm.invalid"
-                    class="btn btn-primary"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
