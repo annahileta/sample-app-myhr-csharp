@@ -3,4 +3,5 @@ export enum DocumentType {
   I9 = 'I9',
   Offer = 'Offer',
   DirectDeposit = 'DirectDeposit',
+  TuitionRbt = 'TuitionRbt',
 }
