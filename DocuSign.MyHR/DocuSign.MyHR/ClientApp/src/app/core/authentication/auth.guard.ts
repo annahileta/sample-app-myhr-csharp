@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core'
 import {
   Router,
   CanLoad,
@@ -6,60 +6,60 @@ import {
   UrlSegment,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  CanActivate,
-} from "@angular/router";
-import { AuthenticationService } from "./auth.service";
-import { catchError, map } from "rxjs/operators";
-import { of, Observable } from "rxjs";
+  CanActivate
+} from '@angular/router'
+import { AuthenticationService } from './auth.service'
+import { catchError, map } from 'rxjs/operators'
+import { of, Observable } from 'rxjs'
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanLoad, CanActivate {
-  constructor(
+  constructor (
     private authenticationService: AuthenticationService,
     private router: Router
   ) {}
 
-  canActivate(
+  canActivate (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
-    return this.canNavigatePage(route.url);
+    return this.canNavigatePage(route.url)
   }
 
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | boolean {
-    return this.canNavigatePage(segments);
+  canLoad (route: Route, segments: UrlSegment[]): Observable<boolean> | boolean {
+    return this.canNavigatePage(segments)
   }
 
-  canNavigatePage(urlEgments: UrlSegment[]): Observable<boolean> | boolean {
-    if (urlEgments.length == 0 || urlEgments[0].path == "/") {
+  canNavigatePage (urlEgments: UrlSegment[]): Observable<boolean> | boolean {
+    if (urlEgments.length === 0 || urlEgments[0].path === '/') {
       return this.authenticationService.isAuthenticated().pipe(
         map((res: boolean) => {
           if (res) {
-            this.router.navigate(["/employee"]);
-            return false;
+            this.router.navigate(['/employee'])
+            return false
           } else {
-            return true;
+            return true
           }
         }),
         catchError(() => {
-          return of(true);
+          return of(true)
         })
-      );
+      )
     }
-    if (urlEgments[0].path == "employee") {
+    if (urlEgments[0].path === 'employee') {
       return this.authenticationService.isAuthenticated().pipe(
         map((res: boolean) => {
           if (!res) {
-            this.router.navigate(["/"]);
-            return false;
+            this.router.navigate(['/'])
+            return false
           } else {
-            return true;
+            return true
           }
         }),
         catchError(() => {
-          return of(true);
+          return of(true)
         })
-      );
+      )
     }
   }
 }

@@ -1,225 +1,226 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProfileEditComponent } from './profile-edit.component';
-import { EmployeeService } from '../employee.service';
-import { IUser } from '../models/user.model';
-import { FormsModule, NgForm } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { By } from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { ProfileEditComponent } from './profile-edit.component'
+import { EmployeeService } from '../employee.service'
+import { IUser } from '../models/user.model'
+import { FormsModule, NgForm } from '@angular/forms'
+import { DatePipe } from '@angular/common'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { Observable, BehaviorSubject } from 'rxjs'
+import { By } from '@angular/platform-browser'
 
 class EmployeeServiceStub {
-  public saveUser(user: IUser) { }
+  public saveUser (user: IUser) {}
   user$: Observable<IUser> = new BehaviorSubject(null);
 }
 
 describe('ProfileEditComponent', () => {
-  let form: NgForm;
+  let form: NgForm
 
-  let component: ProfileEditComponent;
-  let fixture: ComponentFixture<ProfileEditComponent>;
-  let employeeService: EmployeeService;
-  let datePipe: DatePipe;
-  datePipe = new DatePipe('en-US');
+  let component: ProfileEditComponent
+  let fixture: ComponentFixture<ProfileEditComponent>
+  let employeeService: EmployeeService
+  const datePipe = new DatePipe('en-US')
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ProfileEditComponent],
       imports: [FormsModule, HttpClientTestingModule],
-      providers: [NgForm,
-        { provide: EmployeeService, useClass: EmployeeServiceStub },
-      ],
-    }).compileComponents();
-  }));
+      providers: [
+        NgForm,
+        { provide: EmployeeService, useClass: EmployeeServiceStub }
+      ]
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileEditComponent);
-    component = fixture.componentInstance;
-    employeeService = TestBed.get(EmployeeService);
-    spyOn(employeeService, "saveUser");
-    let user = <IUser>{
-      firstName: "TestName",
-      lastName: "TestLastName",
-      profileImage: "image",
-      profileId: "id",
-      hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+    fixture = TestBed.createComponent(ProfileEditComponent)
+    component = fixture.componentInstance
+    employeeService = TestBed.get(EmployeeService)
+    spyOn(employeeService, 'saveUser')
+    const user = <IUser>{
+      firstName: 'TestName',
+      lastName: 'TestLastName',
+      profileImage: 'image',
+      profileId: 'id',
+      hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
       address: {}
-    };
-    component.user = user;
-    employeeService.user = user;
-    employeeService.user$ = new BehaviorSubject(user);
-    const formElement = fixture.debugElement.query(By.css('#profileForm'));
-    form = formElement.injector.get(NgForm);
-    fixture.detectChanges();
-  });
+    }
+    component.user = user
+    employeeService.user = user
+    employeeService.user$ = new BehaviorSubject(user)
+    const formElement = fixture.debugElement.query(By.css('#profileForm'))
+    form = formElement.injector.get(NgForm)
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    expect(component).toBeTruthy()
+  })
 
-  describe("saveUser", () => {
+  describe('saveUser', () => {
     it('should save user with correct parameters', () => {
-      let updatedUser = <IUser>{
-        firstName: "FirstNameUpdated",
-        lastName: "LastNameUpdated",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+      const updatedUser = <IUser>{
+        firstName: 'FirstNameUpdated',
+        lastName: 'LastNameUpdated',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {
-          city: "City",
-          country: "USA",
-          phone: "111",
-          postalCode: "222",
-          fax: "123",
-          stateOrProvince: "state"
+          city: 'City',
+          country: 'USA',
+          phone: '111',
+          postalCode: '222',
+          fax: '123',
+          stateOrProvince: 'state'
         }
-      };
-      //act
+      }
+      // act
       component.user = <IUser>{
-        firstName: "TestName",
-        lastName: "TestLastName",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+        firstName: 'TestName',
+        lastName: 'TestLastName',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {}
-      };
+      }
       component.saveUser(<IUser>{
-        firstName: "FirstNameUpdated",
-        lastName: "LastNameUpdated",
+        firstName: 'FirstNameUpdated',
+        lastName: 'LastNameUpdated',
         address: {
-          city: "City",
-          country: "USA",
-          phone: "111",
-          postalCode: "222",
-          fax: "123",
-          stateOrProvince: "state"
+          city: 'City',
+          country: 'USA',
+          phone: '111',
+          postalCode: '222',
+          fax: '123',
+          stateOrProvince: 'state'
         }
-      });
+      })
 
-      //assert
-      expect(employeeService.saveUser).toHaveBeenCalledWith(
-        updatedUser
-      );
-    });
+      // assert
+      expect(employeeService.saveUser).toHaveBeenCalledWith(updatedUser)
+    })
 
-    it("should trigger saved event with correct user", () => {
-      spyOn(component.saved, 'next');
-      let updatedUser = <IUser>{
-        firstName: "FirstNameUpdated",
-        lastName: "LastNameUpdated",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+    it('should trigger saved event with correct user', () => {
+      spyOn(component.saved, 'next')
+      const updatedUser = <IUser>{
+        firstName: 'FirstNameUpdated',
+        lastName: 'LastNameUpdated',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {}
-      };
+      }
       component.user = <IUser>{
-        firstName: "TestName",
-        lastName: "TestLastName",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+        firstName: 'TestName',
+        lastName: 'TestLastName',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {}
-      };
-      //act
-      component.saveUser(<IUser>{ firstName: "FirstNameUpdated", lastName: "LastNameUpdated", address: {} });
+      }
+      // act
+      component.saveUser(<IUser>{
+        firstName: 'FirstNameUpdated',
+        lastName: 'LastNameUpdated',
+        address: {}
+      })
 
-      //assert
-      expect(component.saved.next).toHaveBeenCalled();
-      expect(component.saved.next).toHaveBeenCalledWith(updatedUser);
-    });
-  });
+      // assert
+      expect(component.saved.next).toHaveBeenCalled()
+      expect(component.saved.next).toHaveBeenCalledWith(updatedUser)
+    })
+  })
 
-  describe("cancel", () => {
+  describe('cancel', () => {
     it('should cancel editing and return user to initial state', () => {
       spyOn(component.canceled, 'next')
-      let initialUser = component.user;
-      let updatedUser = <IUser>{
-        firstName: "FirstNameUpdated",
-        lastName: "LastNameUpdated",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+      const initialUser = component.user
+      const updatedUser = <IUser>{
+        firstName: 'FirstNameUpdated',
+        lastName: 'LastNameUpdated',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {
-          city: "City",
-          country: "USA",
-          phone: "111",
-          postalCode: "222",
-          fax: "123",
-          stateOrProvince: "state"
+          city: 'City',
+          country: 'USA',
+          phone: '111',
+          postalCode: '222',
+          fax: '123',
+          stateOrProvince: 'state'
         }
-      };
-      //act
-      component.user = updatedUser;
-      component.cancel();
+      }
+      // act
+      component.user = updatedUser
+      component.cancel()
 
-      //assert
-      expect(component.user).toEqual(initialUser);
-      expect(component.canceled.next).toHaveBeenCalled();
-    });
-  });
+      // assert
+      expect(component.user).toEqual(initialUser)
+      expect(component.canceled.next).toHaveBeenCalled()
+    })
+  })
 
-  describe("from 2", () => {
+  describe('from 2', () => {
     it('form valid when all fields field', () => {
       spyOn(component, 'saveUser')
       component.user = <IUser>{
-        firstName: "TestName",
-        lastName: "TestLastName",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+        firstName: 'TestName',
+        lastName: 'TestLastName',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {
-          city: "City",
-          country: "USA",
-          phone: "111",
-          postalCode: "222",
-          fax: "123",
-          stateOrProvince: "state",
-          address1: "address"
+          city: 'City',
+          country: 'USA',
+          phone: '111',
+          postalCode: '222',
+          fax: '123',
+          stateOrProvince: 'state',
+          address1: 'address'
         }
-      };
-      fixture.detectChanges();
+      }
+      fixture.detectChanges()
       fixture.whenStable().then(() => {
-        expect(form.valid).toBe(true, 'Form is valid');
+        expect(form.valid).toBe(true, 'Form is valid')
 
-        //act
-        let saveButton = fixture.debugElement.query(By.css('#saveButton')).nativeElement;
-        saveButton.click();
+        // act
+        const saveButton = fixture.debugElement.query(By.css('#saveButton'))
+          .nativeElement
+        saveButton.click()
 
-        //assert
-        expect(component.saveUser).toHaveBeenCalled();
-      });
-
-    });
+        // assert
+        expect(component.saveUser).toHaveBeenCalled()
+      })
+    })
     it('form is not valid when not all fields field', () => {
       component.user = <IUser>{
-        firstName: "  ",
-        lastName: "TestLastName",
-        profileImage: "image",
-        profileId: "id",
-        hireDate: datePipe.transform("01/01/2001", 'MM/dd/yyyy'),
+        firstName: '  ',
+        lastName: 'TestLastName',
+        profileImage: 'image',
+        profileId: 'id',
+        hireDate: datePipe.transform('01/01/2001', 'MM/dd/yyyy'),
         address: {
-          city: "City",
-          country: "USA",
-          phone: "111",
-          postalCode: "222",
-          fax: "123",
-          stateOrProvince: "state",
-          address1: "address"
+          city: 'City',
+          country: 'USA',
+          phone: '111',
+          postalCode: '222',
+          fax: '123',
+          stateOrProvince: 'state',
+          address1: 'address'
         }
-      };
-      fixture.detectChanges();
+      }
+      fixture.detectChanges()
       fixture.whenStable().then(() => {
-        expect(form.valid).toBe(false, 'Form is not valid');
+        expect(form.valid).toBe(false, 'Form is not valid')
 
-        //act
-        let saveButton = fixture.debugElement.query(By.css('#saveButton')).nativeElement;
-        saveButton.click();
+        // act
+        const saveButton = fixture.debugElement.query(By.css('#saveButton'))
+          .nativeElement
+        saveButton.click()
 
-        //assert
-        expect(component.saveUser).not.toHaveBeenCalled();
-      });
-    });
-  });
-
-});
-
+        // assert
+        expect(component.saveUser).not.toHaveBeenCalled()
+      })
+    })
+  })
+})

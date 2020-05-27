@@ -1,46 +1,46 @@
-import { Injectable, Inject } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { DocumentType } from "./document-type.enum";
-import { IUser } from "../models/user.model";
+import { Injectable, Inject } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { DocumentType } from './document-type.enum'
+import { IUser } from '../models/user.model'
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class ActionsService {
   redirectUrl: string = window.location.href;
 
-  constructor(
+  constructor (
     private http: HttpClient,
-    @Inject("BASE_URL") private baseUrl: string
+    @Inject('BASE_URL') private baseUrl: string
   ) {}
 
-  sendEnvelope(type: DocumentType, user: IUser) {
+  sendEnvelope (type: DocumentType, user: IUser) {
     const body: any = {
       Type: type,
       AdditionalUser: user,
-      RedirectUrl: this.redirectUrl,
-    };
+      RedirectUrl: this.redirectUrl
+    }
     return this.http.post<any>(
-      this.baseUrl + "api/envelope",
+      this.baseUrl + 'api/envelope',
       JSON.stringify(body),
       {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-        }),
+          'Content-Type': 'application/json'
+        })
       }
-    );
+    )
   }
 
-  createClickWrap(worklogs: number[]) {
+  createClickWrap (worklogs: number[]) {
     const body: any = {
-      WorkLogs: worklogs,
-    };
+      WorkLogs: worklogs
+    }
     return this.http.post<any>(
-      this.baseUrl + "api/clickwrap",
+      this.baseUrl + 'api/clickwrap',
       JSON.stringify(body),
       {
         headers: new HttpHeaders({
-          "Content-Type": "application/json",
-        }),
+          'Content-Type': 'application/json'
+        })
       }
-    );
+    )
   }
 }
