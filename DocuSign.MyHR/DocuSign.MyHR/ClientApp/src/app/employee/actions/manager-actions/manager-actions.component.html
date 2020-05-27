@@ -2,13 +2,13 @@
 <div class="multi-level-section">
   <h4>
     <button class="link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-5" aria-expanded="false"
-      aria-controls="collapse-5">
-      Manager Actions
+      aria-controls="collapse-5" translate>
+      ManagerActions.Header
     </button>
   </h4>
   <div class="card-content collapse" id="collapse-5" aria-labelledby="heading-5">
     <div class="card-body">
-      <p>You can see this because you have admin premissions</p>
+      <p translate>ManagerActions.Description</p>
       <div class="row">
         <div class="col-xl-6">
           <div class="section-card">
@@ -17,30 +17,34 @@
                 <div class="card-icon">
                   <img src="assets/img/icon-6.svg" alt="icon" />
                 </div>
-                <span class="card-description">A Candidate offer letter</span>
+                <span class="card-description" translate>ManagerActions.OfferLetter.Title</span>
               </div>
               <div class="card-actions">
                 <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-1"
-                  (click)="setDocumentType(documentType.Offer)">
-                  Send
+                  (click)="setDocumentType(documentType.Offer)" translate>
+                  ManagerActions.OfferLetter.SendButton
                 </button>
                 <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-6"
-                  aria-expanded="false" aria-controls="collapse-6">
-                  View info
+                  aria-expanded="false" aria-controls="collapse-6" translate>
+                  ManagerActions.OfferLetter.ViewInfoButton
                 </button>
               </div>
             </div>
             <div class="card-content collapse" id="collapse-6" aria-labelledby="heading-6">
               <div class="card-body">
-                <span class="card-body-title">
-                  Tрis action demonstrates the following DocuSign API
-                  functions:
+                <span class="card-body-title" translate>
+                  ManagerActions.OfferLetter.Description
                 </span>
-                <ul>
-                  <li>Templates1111</li>
-                  <li>Calculatd fields</li>
-                  <li>ets.</li>
+                <ul [innerHTML]="'ManagerActions.OfferLetter.FunctionsList' | translate">
                 </ul>
+                <div class="collapse-inset-wrapper">
+                  <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse"
+                    data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1" translate>
+                    ManagerActions.OfferLetter.BehindTheSceneButton</button>
+                  <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1"
+                    [innerHTML]="'ManagerActions.OfferLetter.CodeFlow' | translate">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -52,30 +56,34 @@
                 <div class="card-icon">
                   <img src="assets/img/icon-7.svg" alt="icon" />
                 </div>
-                <span class="card-description">An I-9 verification request</span>
+                <span class="card-description" translate>ManagerActions.I9Request.Title</span>
               </div>
               <div class="card-actions">
                 <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-1"
-                  (click)="setDocumentType(documentType.I9)">
-                  Send
+                  (click)="setDocumentType(documentType.I9)" translate>
+                  ManagerActions.I9Request.SendButton
                 </button>
                 <button class="btn btn-link link-with-arrow collapsed" data-toggle="collapse" data-target="#collapse-7"
-                  aria-expanded="false" aria-controls="collapse-7">
-                  View info
+                  aria-expanded="false" aria-controls="collapse-7" translate>
+                  ManagerActions.I9Request.ViewInfoButton
                 </button>
               </div>
             </div>
             <div class="card-content collapse" id="collapse-7" aria-labelledby="heading-7">
               <div class="card-body">
-                <span class="card-body-title">
-                  Tрis action demonstrates the following DocuSign API
-                  functions:
+                <span class="card-body-title" translate>
+                  ManagerActions.I9Request.Description
                 </span>
-                <ul>
-                  <li>Templates1111</li>
-                  <li>Calculatd fields</li>
-                  <li>ets.</li>
+                <ul [innerHTML]="'ManagerActions.I9Request.FunctionsList' | translate">
                 </ul>
+                <div class="collapse-inset-wrapper">
+                  <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse"
+                    data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1" translate>
+                    ManagerActions.I9Request.BehindTheSceneButton</button>
+                  <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1"
+                    [innerHTML]="'ManagerActions.I9Request.CodeFlow' | translate">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -89,36 +97,33 @@
                 <span aria-hidden="true">&times;</span>
               </button>
               <div class="modal-body">
-                <h4 class="modal-title" id="modalLabel-1">Add recipient</h4>
-                <span class="modal-subtitle">
-                  Enter the name and email addresses<br />
-                  of the person you want to e-sign the document.
-                </span>
+                <h4 class="modal-title" id="modalLabel-1" translate>ManagerActions.Modal.Header</h4>
+                <span class="modal-subtitle" [innerHTML]="'ManagerActions.Modal.Description' | translate"></span>
 
                 <form [formGroup]="additionalUserForm" [class.was-validated]="additionalUserForm.invalid"
                   (ngSubmit)="sendEnvelope()">
                   <div class="form-group">
-                    <label for="fullname">Full name</label>
+                    <label for="fullname" translate>ManagerActions.Modal.NameField</label>
                     <input type="text" class="form-control" id="fullname" placeholder="" formControlName="Name"
                       [class.invalid]=" isInvalid(additionalUserForm.get('Name'))" />
-                    <div *ngIf="isInvalid(additionalUserForm.get('Name'))" class="invalid-feedback">
-                      Please fill out this field.
+                    <div *ngIf="isInvalid(additionalUserForm.get('Name'))" class="invalid-feedback" translate>
+                      ManagerActions.Modal.ErrorText
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="email">E-mail</label>
+                    <label for="email" translate>ManagerActions.Modal.EmailField</label>
                     <input type="email" class="form-control" id="email" placeholder="" formControlName="Email"
                       [class.invalid]="
                         isInvalid(additionalUserForm.get('Email'))
                       " />
-                    <div *ngIf="isInvalid(additionalUserForm.get('Email'))" class="invalid-feedback">
-                      Please fill out this field.
+                    <div *ngIf="isInvalid(additionalUserForm.get('Email'))" class="invalid-feedback" translate>
+                      ManagerActions.Modal.ErrorText
                     </div>
                   </div>
                   <div class="buttons-group d-flex flex-wrap justify-content-end pt-3">
                     <button class="btn btn-warning btn-sm" [class.disabled]="additionalUserForm.invalid"
-                      [disabled]="additionalUserForm.invalid">
-                      Continue
+                      [disabled]="additionalUserForm.invalid" translate>
+                      ManagerActions.Modal.SubmitButtom
                     </button>
                   </div>
                 </form>
