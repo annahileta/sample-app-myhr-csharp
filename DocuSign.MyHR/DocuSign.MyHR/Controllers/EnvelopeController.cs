@@ -31,5 +31,12 @@ namespace DocuSign.MyHR.Controllers
                      Url.Action("ping", "info", null, scheme))
             });
         }
+
+
+        [HttpGet]
+        public IActionResult Index([FromQuery]string envelopId)
+        {
+            return Ok(_envelopeService.GetEnvelopData(Context.Account.Id, envelopId));
+        }
     }
 }

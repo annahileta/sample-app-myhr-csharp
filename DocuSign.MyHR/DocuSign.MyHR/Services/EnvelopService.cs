@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services.TemplateHandlers;
@@ -9,7 +11,7 @@ namespace DocuSign.MyHR.Services
 {
     public class EnvelopeService : IEnvelopeService
     {
-        private string _signerClientId = "1000"; 
+        private string _signerClientId = "1000";
         private readonly IDocuSignApiProvider _docuSignApiProvider;
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
@@ -29,26 +31,29 @@ namespace DocuSign.MyHR.Services
             string redirectUrl,
             string pingAction)
         {
-            string rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey); 
+            string rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
             UserDetails userDetails = _userService.GetUserDetails(accountId, userId);
 
             ITemplateHandler templateHandler;
             switch (type)
             {
                 case DocumentType.I9:
-                    templateHandler = new I9TemplateHandler(); 
+                    templateHandler = new I9TemplateHandler();
                     break;
                 case DocumentType.W4:
-                    templateHandler = new W4TemplateHandler(); 
+                    templateHandler = new W4TemplateHandler();
                     break;
                 case DocumentType.Offer:
-                    templateHandler = new OfferTemplateHandler(); 
+                    templateHandler = new OfferTemplateHandler();
                     break;
                 case DocumentType.DirectDeposit:
                     templateHandler = new DirectDepositTemplateHandler();
                     break;
+                case DocumentType.TuitionRbt:
+                    templateHandler = new TuitionReimbursementTemplateHandler();
+                    break;
                 default:
-                    throw new NotImplementedException(); 
+                    throw new NotImplementedException();
             }
 
             EnvelopeTemplate envelopeTemplate = templateHandler.CreateTemplate(rootDir);
@@ -61,16 +66,24 @@ namespace DocuSign.MyHR.Services
             string envelopeId = results.EnvelopeId;
 
             RecipientViewRequest viewRequest = CreateRecipientViewRequest(
-                userDetails.Email, 
+                userDetails.Email,
                 userDetails.Name,
-                redirectUrl, 
+                redirectUrl,
                 _signerClientId,
                 pingAction);
-             
+
             ViewUrl recipientView = _docuSignApiProvider.EnvelopApi.CreateRecipientView(accountId, envelopeId, viewRequest);
 
             return recipientView.Url;
-        } 
+        }
+
+        public Dictionary<string, string> GetEnvelopData(
+          string accountId,
+          string envelopId)
+        {
+            EnvelopeFormData results = _docuSignApiProvider.EnvelopApi.GetFormData(accountId, envelopId);
+            return results.FormData.ToDictionary(x => x.Name, x => x.Value);  
+        }
 
         private static RecipientViewRequest CreateRecipientViewRequest(string signerEmail, string signerName, string returnUrl, string signerClientId, string pingUrl = null)
         {
