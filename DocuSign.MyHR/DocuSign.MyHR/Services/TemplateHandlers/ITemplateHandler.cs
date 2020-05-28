@@ -5,7 +5,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
 {
     public interface ITemplateHandler
     {
-        EnvelopeTemplate CreateTemplate(string rootDir);
-        EnvelopeDefinition CreateEnvelope(UserDetails currentUser, UserDetails additionalUser);
+        EnvelopeTemplate BuildTemplate(string rootDir);
+        EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser);
     }
 }

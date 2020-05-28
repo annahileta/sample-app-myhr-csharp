@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DocuSign.MyHR.Domain;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -58,8 +59,9 @@ namespace DocuSign.MyHR.Security
                 options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub");
                 options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
                 options.ClaimActions.MapJsonKey("accounts", "accounts");
+                options.ClaimActions.MapJsonKey("authType", "authType");
                 options.ClaimActions.MapCustomJson("account_id", obj => ExtractDefaultAccountValue(obj, "account_id"));
-
+             
                 options.Events = new OAuthEvents
                 {
                     OnCreatingTicket = async context =>
@@ -70,7 +72,9 @@ namespace DocuSign.MyHR.Security
 
                         var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
                         response.EnsureSuccessStatusCode();
+                        
                         var user = JObject.Parse(await response.Content.ReadAsStringAsync());
+                        user.Add("authType", LoginType.CodeGrant.ToString());
 
                         using (JsonDocument payload = JsonDocument.Parse(user.ToString()))
                         {

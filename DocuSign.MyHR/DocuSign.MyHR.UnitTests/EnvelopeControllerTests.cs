@@ -31,10 +31,11 @@ namespace DocuSign.MyHR.UnitTests
                     It.IsAny<DocumentType>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
+                    It.IsAny<LoginType>(),
                     It.IsAny<UserDetails>(),
                     It.IsAny<string>(),
                     It.IsAny<string>()))
-                .Returns(() => "envelopeUrl");
+                .Returns(() => new CreateEnvelopeResponse( "envelopeUrl", "1"));
 
             var sut = new EnvelopeController(envelopeService.Object);
             var urlHelperMock = new Mock<IUrlHelper>();
@@ -54,6 +55,7 @@ namespace DocuSign.MyHR.UnitTests
             Assert.True(result is OkObjectResult); 
             var response = (ResponseEnvelopeModel)((OkObjectResult)result).Value;
             Assert.Equal("envelopeUrl", response.RedirectUrl);
+            Assert.Equal("1", response.EnvelopeId);
         }
 
         private void InitContext(Account account, User user)
@@ -70,6 +72,7 @@ namespace DocuSign.MyHR.UnitTests
 
             claimsIdentity.AddClaim(new Claim("accounts", JsonConvert.SerializeObject(account)));
             claimsIdentity.AddClaim(new Claim("account_id", account.Id));
+            claimsIdentity.AddClaim(new Claim("authType", LoginType.CodeGrant.ToString()));
 
             context.Init(new ClaimsPrincipal(claimsIdentity));
         }

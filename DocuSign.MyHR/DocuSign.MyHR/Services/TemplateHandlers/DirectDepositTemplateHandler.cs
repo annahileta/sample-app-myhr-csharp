@@ -11,7 +11,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/Direct Deposit.docx";
 
-        public EnvelopeTemplate CreateTemplate(string rootDir)
+        public EnvelopeTemplate BuildTemplate(string rootDir)
         {
             var envelopeTemplate = new EnvelopeTemplate
             {
@@ -45,7 +45,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
             return envelopeTemplate;
         }
 
-        public EnvelopeDefinition CreateEnvelope(UserDetails currentUser, UserDetails additionalUser)
+        public EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser)
         {
             var env = new EnvelopeDefinition
             {

@@ -5,10 +5,11 @@ namespace DocuSign.MyHR.Services
 {
     public interface IEnvelopeService
     {
-        string CreateEnvelope(
+        CreateEnvelopeResponse CreateEnvelope(
             DocumentType type, 
             string accountId,
-            string userId, 
+            string userId,
+            LoginType loginType,
             UserDetails additionalUser,
             string redirectUrl,
             string pingAction);

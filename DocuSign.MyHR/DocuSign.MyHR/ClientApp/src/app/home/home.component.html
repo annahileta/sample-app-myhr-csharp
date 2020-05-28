@@ -10,13 +10,13 @@
           <h4 translate>WelcomeDescription</h4>
           <div class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start">
             <a class="btn btn-warning btn-lg"
-               [href]="'Account/Login?' + authType.CodeGrant"
+               [href]="'Account/Login?authType=' + authType.CodeGrant"
                (click)="login(authType.CodeGrant)"
                translate>
               LoginWithDocuSignAccountButton
             </a>
             <a class="btn btn-white btn-lg"
-               [href]="'Account/Login?' + authType.JWT"
+               [href]="'Account/Login?authType=' + authType.JWT"
                (click)="login(authType.JWT)"
                translate>
               LoginWithTestAccountButton

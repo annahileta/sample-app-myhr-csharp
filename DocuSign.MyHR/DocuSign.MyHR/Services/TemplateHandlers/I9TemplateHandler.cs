@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using Newtonsoft.Json;
@@ -9,15 +8,14 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
 {
     public class I9TemplateHandler : ITemplateHandler
     {
-        private string _signerClientId = "1000";
         private string _templatePath = "/Templates/I-9_2020.json";
 
-        public EnvelopeTemplate CreateTemplate(string rootDir)
+        public EnvelopeTemplate BuildTemplate(string rootDir)
         {
             return JsonConvert.DeserializeObject<EnvelopeTemplate>(new StreamReader(rootDir + _templatePath).ReadToEnd());
         }
 
-        public EnvelopeDefinition CreateEnvelope(UserDetails currentUser, UserDetails additionalUser)
+        public EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser)
         {
             EnvelopeDefinition env = new EnvelopeDefinition();
 
@@ -25,7 +23,6 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
             {
                 Email = currentUser.Email,
                 Name = currentUser.Name,
-                ClientUserId = _signerClientId,
                 RoleName = "HR"
             };
             TemplateRole roleNewHire = new TemplateRole

@@ -46,6 +46,7 @@ namespace DocuSign.MyHR.UnitTests
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.Name),
+                new Claim("authType", LoginType.CodeGrant.ToString())
             };
             var claimsIdentity = new ClaimsIdentity(
                 claims,

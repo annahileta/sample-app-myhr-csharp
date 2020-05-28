@@ -17,6 +17,7 @@ namespace DocuSign.MyHR.Services
         private Lazy<IUsersApi> _usersApi => new Lazy<IUsersApi>(() => new UsersApi(_docuSignConfig.Value));
         private Lazy<IEnvelopesApi> _envelopApi => new Lazy<IEnvelopesApi>(() => new EnvelopesApi(_docuSignConfig.Value));
         private Lazy<ITemplatesApi> _templatesApi => new Lazy<ITemplatesApi>(() => new TemplatesApi(_docuSignConfig.Value));
+        private Lazy<IAccountsApi> _accountsApi => new Lazy<IAccountsApi>(() => new AccountsApi(_docuSignConfig.Value));
         private Lazy<HttpClient> _docuSignHttpClient => new Lazy<HttpClient>(() =>
         {
             HttpClient client = _clientFactory.CreateClient();
@@ -52,5 +53,6 @@ namespace DocuSign.MyHR.Services
         public IEnvelopesApi EnvelopApi => _envelopApi.Value;
         public HttpClient DocuSignHttpClient => _docuSignHttpClient.Value;
         public ITemplatesApi TemplatesApi => _templatesApi.Value;
+        public IAccountsApi AccountsApi => _accountsApi.Value;
     }
 }

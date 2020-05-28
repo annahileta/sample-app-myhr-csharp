@@ -1,3 +1,4 @@
+using System;
 using Moq;
 using Xunit;
 using AutoFixture.Xunit2;
@@ -18,6 +19,7 @@ namespace DocuSign.MyHR.UnitTests
             string accountId,
             string userId)
         {
+            userInformation.CreatedDateTime = DateTime.Now.ToString();
             usersApi.Setup(x => x.GetInformation(accountId, userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
             docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(usersApi.Object);
 
@@ -26,15 +28,16 @@ namespace DocuSign.MyHR.UnitTests
             var userDetails = sut.GetUserDetails(accountId, userId);
             Assert.NotNull(userDetails);
             Assert.Equal(userInformation.UserName, userDetails.Name);
-            Assert.Equal(userInformation.HomeAddress.Address1, userDetails.Address.Address1);
-            Assert.Equal(userInformation.HomeAddress.StateOrProvince, userDetails.Address.StateOrProvince);
-            Assert.Equal(userInformation.HomeAddress.Address2, userDetails.Address.Address2);
-            Assert.Equal(userInformation.HomeAddress.City, userDetails.Address.City);
-            Assert.Equal(userInformation.HomeAddress.Country, userDetails.Address.Country);
-            Assert.Equal(userInformation.HomeAddress.Fax, userDetails.Address.Fax);
-            Assert.Equal(userInformation.HomeAddress.Phone, userDetails.Address.Phone);
-            Assert.Equal(userInformation.HomeAddress.PostalCode, userDetails.Address.PostalCode);
+            Assert.Equal(userInformation.WorkAddress.Address1, userDetails.Address.Address1);
+            Assert.Equal(userInformation.WorkAddress.StateOrProvince, userDetails.Address.StateOrProvince);
+            Assert.Equal(userInformation.WorkAddress.Address2, userDetails.Address.Address2);
+            Assert.Equal(userInformation.WorkAddress.City, userDetails.Address.City);
+            Assert.Equal(userInformation.WorkAddress.Country, userDetails.Address.Country);
+            Assert.Equal(userInformation.WorkAddress.Fax, userDetails.Address.Fax);
+            Assert.Equal(userInformation.WorkAddress.Phone, userDetails.Address.Phone);
+            Assert.Equal(userInformation.WorkAddress.PostalCode, userDetails.Address.PostalCode);
         }
+
         [Theory, AutoData]
         public void UpdateUserDetails_ReturnsCorrectResult(
             Mock<IDocuSignApiProvider> docuSignApiProvider,

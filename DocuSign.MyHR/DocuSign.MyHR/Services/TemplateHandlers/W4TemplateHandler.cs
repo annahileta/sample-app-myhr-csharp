@@ -12,12 +12,12 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/W-4_2020.json";
 
-        public EnvelopeTemplate CreateTemplate(string rootDir)
+        public EnvelopeTemplate BuildTemplate(string rootDir)
         {
             return JsonConvert.DeserializeObject<EnvelopeTemplate>(new StreamReader(rootDir + _templatePath).ReadToEnd());
         }
          
-        public EnvelopeDefinition CreateEnvelope(UserDetails currentUser, UserDetails additionalUser)
+        public EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser)
         {
             EnvelopeDefinition env = new EnvelopeDefinition();
 
@@ -32,6 +32,6 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
             env.TemplateRoles = new List<TemplateRole> { role };
             env.Status = "sent";
             return env;
-        }
+        } 
     }
 }

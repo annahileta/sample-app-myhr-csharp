@@ -4,15 +4,22 @@ namespace DocuSign.MyHR.Domain
     {
         public User()
         {
-                
+
         }
+
         public User(string id, string name)
         {
             Id = id;
-            Name = name; 
+            Name = name;
         }
+
+        public User(string id, string name, LoginType loginType) : this(id, name)
+        {
+            LoginType = loginType;
+        }
+        
         public string Id { get; set; }
-        public string Name { get; set; }
-       
+        public string Name { get; set; } 
+        public LoginType LoginType { get; set; }
     }
 }
