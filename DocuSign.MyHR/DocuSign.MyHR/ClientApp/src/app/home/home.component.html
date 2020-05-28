@@ -8,17 +8,14 @@
         <div class="hero-info">
           <h1 translate>WelcomeHeader</h1>
           <h4 translate>WelcomeDescription</h4>
-          <div class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start">
-            <a class="btn btn-warning btn-lg"
-               [href]="'Account/Login?' + authType.CodeGrant"
-               (click)="login(authType.CodeGrant)"
-               translate>
+          <div
+            class="buttons-group d-flex flex-column flex-xl-row justify-content-center justify-content-md-start align-items-center align-items-md-start">
+            <a class="btn btn-warning btn-lg" [href]="'Account/Login?authType=' + authType.CodeGrant"
+              (click)="login(authType.CodeGrant)" translate>
               LoginWithDocuSignAccountButton
             </a>
-            <a class="btn btn-white btn-lg"
-               [href]="'Account/Login?' + authType.JWT"
-               (click)="login(authType.JWT)"
-               translate>
+            <a class="btn btn-white btn-lg" [href]="'Account/Login?authType=' + authType.JWT"
+              (click)="login(authType.JWT)" translate>
               LoginWithTestAccountButton
             </a>
           </div>
@@ -28,13 +25,15 @@
               <div class="img-holder">
                 <img src="assets/img/download.svg" alt="download icon" />
               </div>
-              <a href="#" translate>VSExtentionLink</a>
+              <a href="https://marketplace.visualstudio.com/items?itemName=DocuSign.DocuSignVSExtension" target="blank"
+                translate>VSExtentionLink</a>
             </div>
             <div class="cta-row">
               <div class="img-holder">
                 <img src="assets/img/download.svg" alt="download icon" />
               </div>
-              <a href="#" translate>VSCodeExtentionLink</a>
+              <a href="https://marketplace.visualstudio.com/items?itemName=DocuSign.docusign-vscode-extension"
+                target="blank" translate>VSCodeExtentionLink</a>
             </div>
           </div>
         </div>
