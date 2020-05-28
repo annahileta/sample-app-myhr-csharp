@@ -1,24 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
-import { AppRoutingModule } from './app-routing.module'
-import { AppComponent } from './app.component'
-import { CoreModule } from './core/core.module'
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { CoreModule } from "./core/core.module";
 import {
   HttpClientModule,
   HttpClient,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http'
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
-import { AboutComponent } from './about/about.component'
-import { AuthInterceptor } from './core/authentication/auth.interceptor'
+  HTTP_INTERCEPTORS,
+} from "@angular/common/http";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { AuthInterceptor } from "./core/authentication/auth.interceptor";
 
-export function HttpLoaderFactory (http: HttpClient): TranslateLoader {
-  return new TranslateHttpLoader(http, '../assets/i18n/', '.json')
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return new TranslateHttpLoader(http, "../assets/i18n/", ".json");
 }
 
 @NgModule({
-  declarations: [AppComponent, AboutComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -26,20 +25,20 @@ export function HttpLoaderFactory (http: HttpClient): TranslateLoader {
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        deps: [HttpClient],
       },
-      useDefaultLang: false
+      useDefaultLang: false,
     }),
     AppRoutingModule,
-    CoreModule
+    CoreModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
