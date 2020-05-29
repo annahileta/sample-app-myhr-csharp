@@ -5,7 +5,6 @@ import {
   Route,
   UrlSegment,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
   CanActivate
 } from '@angular/router'
 import { AuthenticationService } from './auth.service'
@@ -20,8 +19,7 @@ export class AuthGuard implements CanLoad, CanActivate {
   ) {}
 
   canActivate (
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ): Observable<boolean> | boolean {
     return this.canNavigatePage(route.url)
   }

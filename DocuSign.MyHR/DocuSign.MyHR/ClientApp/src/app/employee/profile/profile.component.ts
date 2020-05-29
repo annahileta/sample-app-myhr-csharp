@@ -2,12 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { EmployeeService } from '../employee.service'
 import { FormGroup } from '@angular/forms'
 import { Observable } from 'rxjs'
-import { IUser } from '../models/user.model'
+import { IUser } from '../shared/user.model'
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
   @Output() editUserClicked = new EventEmitter<void>();
@@ -15,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit () {}
 
-  editProfile () {
+  editProfile ():void {
     this.editUserClicked.next()
   }
 }

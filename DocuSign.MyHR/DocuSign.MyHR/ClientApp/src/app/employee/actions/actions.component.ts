@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { ActionsService } from './actions.service'
-import { DocumentType } from './document-type.enum'
+import { ActionsService } from '../shared/actions.service'
+import { DocumentType } from '../shared/document-type.enum'
 
 import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-actions',
-  templateUrl: './actions.component.html',
-  styleUrls: ['./actions.component.css']
+  templateUrl: './actions.component.html'
 })
 export class ActionsComponent implements OnInit {
   public documentType = DocumentType;
@@ -16,13 +15,13 @@ export class ActionsComponent implements OnInit {
 
   ngOnInit (): void {}
 
-  sendEnvelope (type: DocumentType) {
+  sendEnvelope (type: DocumentType):void{
     this.actionServise.sendEnvelope(type, null).subscribe((payload) => {
       window.location.href = payload.redirectUrl
     })
   }
 
-  sendTimeCard () {
+  sendTimeCard ():void{
     this.router.navigate(['/employee/timecard'])
   }
 }

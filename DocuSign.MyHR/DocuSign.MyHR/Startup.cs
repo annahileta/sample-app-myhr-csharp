@@ -1,5 +1,6 @@
 using System.Net;
 using System.Threading.Tasks;
+using DocuSign.eSign.Client;
 using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
@@ -49,7 +50,7 @@ namespace DocuSign.MyHR
             services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)))
                             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddRazorPages().AddNewtonsoftJson();
- 
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Events.OnRedirectToLogin = context =>
@@ -66,19 +67,7 @@ namespace DocuSign.MyHR
         {
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
 
-            var logger = loggerFactory.CreateLogger<Startup>();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
+            app.ConfigureDocuSignExceptionHandling(env, loggerFactory);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -108,41 +97,7 @@ namespace DocuSign.MyHR
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-            app.UseExceptionHandler(appError =>
-            {
-                appError.Run(async context =>
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
-                   
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
-                    {
-                        logger.LogError($"Something went wrong: {contextFeature.Error}");
 
-                        await context.Response.WriteAsync(new ErrorDetails()
-                        {
-                            StatusCode = context.Response.StatusCode,
-                            Message = "Internal Server Error."
-                        }.ToString());
-                    }
-                });
-            });
-        }
-
-        public class JsonFormatter : SystemTextJsonInputFormatter
-        {
-            public JsonFormatter(
-                JsonOptions options,
-                ILogger<SystemTextJsonInputFormatter> logger)
-            : base(options, logger)
-            {
-            }
-
-            public override bool CanRead(InputFormatterContext context)
-            {
-                return base.CanRead(context);
-            }
         }
     }
 }
