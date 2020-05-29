@@ -1,11 +1,10 @@
 import { EmployeeService } from './employee.service'
 import { Component, OnInit } from '@angular/core'
-import { IUser } from './models/user.model'
+import { IUser } from './shared/user.model'
 
 @Component({
   selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css']
+  templateUrl: './employee.component.html'
 })
 export class EmployeeComponent implements OnInit {
   constructor (private employeeService: EmployeeService) {}

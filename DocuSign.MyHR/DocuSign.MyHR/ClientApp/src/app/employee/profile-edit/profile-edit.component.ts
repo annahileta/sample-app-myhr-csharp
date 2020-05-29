@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { IUser } from '../models/user.model'
+import { IUser } from '../shared/user.model'
 import * as i18nIsoCountries from 'i18n-iso-countries'
 import { EmployeeService } from '../employee.service'
 import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-profile-edit',
-  templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.css']
+  templateUrl: './profile-edit.component.html'
 })
 export class ProfileEditComponent implements OnInit {
   @Input() user: IUser;

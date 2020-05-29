@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { ProfileEditComponent } from './profile-edit.component'
 import { EmployeeService } from '../employee.service'
-import { IUser } from '../models/user.model'
+import { IUser } from '../shared/user.model'
 import { FormsModule, NgForm } from '@angular/forms'
 import { DatePipe } from '@angular/common'
 import { HttpClientTestingModule } from '@angular/common/http/testing'

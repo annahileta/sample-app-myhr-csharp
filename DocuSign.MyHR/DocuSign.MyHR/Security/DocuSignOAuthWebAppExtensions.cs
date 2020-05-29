@@ -1,20 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DocuSign.eSign.Client;
 using DocuSign.MyHR.Domain;
+using DocuSign.MyHR.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
@@ -147,14 +153,15 @@ namespace DocuSign.MyHR.Security
                                 };
 
                                 // Request new access token
-                                var content = new FormUrlEncodedContent(pairs);
-                                var refreshResponse = options.Backchannel.PostAsync(options.TokenEndpoint, content,
+                                var refreshResponse = options.Backchannel.PostAsync(
+                                    options.TokenEndpoint,
+                                    new FormUrlEncodedContent(pairs),
                                     context.HttpContext.RequestAborted).Result;
                                 refreshResponse.EnsureSuccessStatusCode();
 
                                 var payload = JObject.Parse(refreshResponse.Content.ReadAsStringAsync().Result);
 
-                                // Persist the new acess token
+                                // Persist the new access token
                                 authProperties.UpdateTokenValue("access_token", payload.Value<string>("access_token"));
                                 var refreshToken = payload.Value<string>("refresh_token");
 
@@ -189,6 +196,45 @@ namespace DocuSign.MyHR.Security
             });
 
         }
+
+        public static void ConfigureDocuSignExceptionHandling(this IApplicationBuilder app, IWebHostEnvironment env,
+            ILoggerFactory loggerFactory)
+        {
+            var logger = loggerFactory.CreateLogger<Startup>();
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (contextFeature != null)
+                    {
+                        if (contextFeature.Error is ApiException)
+                        {
+                            var apiError = (ApiException)contextFeature.Error;
+                            logger.LogError($"Error occured during DocuSign api call: {contextFeature.Error}");
+
+                            if (apiError.ErrorCode == (int)HttpStatusCode.Unauthorized)
+                            {
+                                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                            }
+                        }
+                        else
+                        {
+                            logger.LogError($"Error occured: {contextFeature.Error}");
+                        }
+                        await context.Response.WriteAsync(new ErrorDetails
+                        {
+                            StatusCode = context.Response.StatusCode,
+                            Message = "Internal Server Error."
+                        }.ToString());
+                    }
+                });
+            });
+        }
+
         private static string ExtractDefaultAccountValue(JsonElement obj, string key)
         {
             if (!obj.TryGetProperty("accounts", out var accounts))
