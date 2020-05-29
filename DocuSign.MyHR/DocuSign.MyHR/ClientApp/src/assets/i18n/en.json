@@ -8,7 +8,7 @@
   "LoginWithDocuSignAccountButton": "Log in with your DocuSign account",
   "LoginWithTestAccountButton": "Log in with a test account",
   "Note": "Note: This sample app is written in C#",
-  "VSExtentionLink": "Get the Visual Studio Ectension",
+  "VSExtentionLink": "Get the Visual Studio Extension",
   "VSCodeExtentionLink": "Get the Visual Studio Code. Extension",
   "InfoHeader": {
     "Part1": "DocuSign:",
@@ -38,7 +38,7 @@
       "City": "City",
       "State": "State/Province/Region",
       "ZipCode": "Zip Code",
-      "Contry": "Contry",
+      "Country": "Country",
       "Cancel": "Cancel",
       "Save": "Save"
     }
@@ -61,11 +61,11 @@
   },
   "ManagerActions": {
     "Header": "Manager Actions",
-    "Description": "You can see this because you have admin premissions",
+    "Description": "You can see this because you have admin permissions",
     "OfferLetter": {
       "Title": "A Candidate offer letter",
       "Description": "This action demonstrates the following DocuSign API functions:",
-      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "FunctionsList": "<li>Templates1111</li><li>Calculated fields</li><li>ets.</li>",
       "SendButton": "Send",
       "ViewInfoButton": "View Info",
       "BehindTheSceneButton": "Behind the scene",
@@ -74,7 +74,7 @@
     "I9Request": {
       "Title": "An I-9 verification request",
       "Description": "This action demonstrates the following DocuSign API functions:",
-      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "FunctionsList": "<li>Templates1111</li><li>Calculated fields</li><li>ets.</li>",
       "SendButton": "Send",
       "ViewInfoButton": "View Info",
       "BehindTheSceneButton": "Behind the scene",
@@ -94,7 +94,7 @@
     "DirectDeposit": {
       "Title": "Direct deposit information",
       "Description": "This action demonstrates the following DocuSign API functions:",
-      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "FunctionsList": "<li>Templates1111</li><li>Calculated fields</li><li>ets.</li>",
       "UpdateButton": "Update",
       "ViewInfoButton": "View Info",
       "BehindTheSceneButton": "Behind the scene",
@@ -103,7 +103,7 @@
     "W4TaxWithholding": {
       "Title": "W-4 tax withholding",
       "Description": "This action demonstrates the following DocuSign API functions:",
-      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "FunctionsList": "<li>Templates1111</li><li>Calculated fields</li><li>ets.</li>",
       "SelectButton": "Select",
       "ViewInfoButton": "View Info",
       "BehindTheSceneButton": "Behind the scene",
@@ -112,7 +112,7 @@
     "TimeCard": {
       "Title": "Time Card",
       "Description": "This action demonstrates the following DocuSign API functions:",
-      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "FunctionsList": "<li>Templates1111</li><li>Calculated fields</li><li>ets.</li>",
       "EnterButton": "Enter",
       "ViewInfoButton": "View Info",
       "BehindTheSceneButton": "Behind the scene",
@@ -121,7 +121,7 @@
     "TuitionReimbursement": {
       "Title": "Tuition reimbursement",
       "Description": "This action demonstrates the following DocuSign API functions:",
-      "FunctionsList": "<li>Templates1111</li><li>Calculatd fields</li><li>ets.</li>",
+      "FunctionsList": "<li>Templates1111</li><li>Calculated fields</li><li>ets.</li>",
       "ApplyButton": "Apply",
       "ViewInfoButton": "View Info",
       "BehindTheSceneButton": "Behind the scene",

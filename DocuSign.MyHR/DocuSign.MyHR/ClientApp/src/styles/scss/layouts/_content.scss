@@ -35,6 +35,7 @@ body {
 .content {
   flex: 1 0 auto;
   overflow: hidden;
+  min-height: calc(100vh - 53px);
 }
 
 .container-fluid {

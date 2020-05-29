@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class ActionsService {
-  redirectUrl: string = window.location.href;
+  redirectUrl: string = window.location.href.split('?')[0];
 
   constructor (
     private http: HttpClient,

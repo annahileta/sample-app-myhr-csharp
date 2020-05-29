@@ -6,13 +6,15 @@ import { EmployeeService } from '../../employee.service'
 import { of, Observable, BehaviorSubject } from 'rxjs'
 import { IUser } from '../../shared/user.model'
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms'
+import { TranslateModule } from '@ngx-translate/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 class ActionsServiceStub {
   public createClickWrap () {}
 }
 
 class EmployeeServiceStub {
-  user$: Observable<IUser> = new BehaviorSubject(null);
+  user$: Observable<IUser> = new BehaviorSubject({ profileImage: '' } as IUser);
   public getUser () {}
 }
 
@@ -40,13 +42,17 @@ describe('TimeCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot()
+      ],
       declarations: [TimeCardComponent],
       providers: [
         { provide: ActionsService, useClass: ActionsServiceStub },
         { provide: EmployeeService, useClass: EmployeeServiceStub },
         FormBuilder
-      ],
-      imports: [ReactiveFormsModule, RouterTestingModule]
+      ]
     }).compileComponents()
   }))
 

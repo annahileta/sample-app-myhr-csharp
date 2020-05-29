@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ManagerActionsComponent } from './manager-actions/manager-actions.component'
 import { ProfileEditComponent } from './profile-edit/profile-edit.component'
 import { TimeCardComponent } from './actions/timecard/timecard.component'
+import { ToastComponent } from './toast/toast.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TimeCardComponent } from './actions/timecard/timecard.component'
     ActionsComponent,
     ManagerActionsComponent,
     ProfileEditComponent,
-    TimeCardComponent
+    TimeCardComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,
