@@ -5,7 +5,7 @@ import { IUser } from '../models/user.model'
 
 @Injectable({ providedIn: 'root' })
 export class ActionsService {
-  redirectUrl: string = window.location.href;
+  redirectUrl: string =  window.location.href.split('?')[0];
 
   constructor (
     private http: HttpClient,
@@ -13,7 +13,7 @@ export class ActionsService {
   ) {}
 
   sendEnvelope (type: DocumentType, user: IUser) {
-    const body: any = {
+     const body: any = {
       Type: type,
       AdditionalUser: user,
       RedirectUrl: this.redirectUrl
