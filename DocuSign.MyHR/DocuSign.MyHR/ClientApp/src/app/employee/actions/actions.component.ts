@@ -15,13 +15,13 @@ export class ActionsComponent implements OnInit {
 
   ngOnInit (): void {}
 
-  sendEnvelope (type: DocumentType) {
+  sendEnvelope (type: DocumentType):void{
     this.actionServise.sendEnvelope(type, null).subscribe((payload) => {
       window.location.href = payload.redirectUrl
     })
   }
 
-  sendTimeCard () {
+  sendTimeCard ():void{
     this.router.navigate(['/employee/timecard'])
   }
 }

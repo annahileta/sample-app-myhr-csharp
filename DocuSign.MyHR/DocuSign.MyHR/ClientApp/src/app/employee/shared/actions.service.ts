@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { DocumentType } from './document-type.enum'
 import { IUser } from './user.model'
+import { Observable } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class ActionsService {
@@ -12,7 +13,7 @@ export class ActionsService {
     @Inject('BASE_URL') private baseUrl: string
   ) {}
 
-  sendEnvelope (type: DocumentType, user: IUser) {
+  sendEnvelope (type: DocumentType, user: IUser):Observable<any> {
     const body: any = {
       Type: type,
       AdditionalUser: user,
@@ -29,7 +30,7 @@ export class ActionsService {
     )
   }
 
-  createClickWrap (worklogs: number[]) {
+  createClickWrap (worklogs: number[]):Observable<any> {
     const body: any = {
       WorkLogs: worklogs
     }

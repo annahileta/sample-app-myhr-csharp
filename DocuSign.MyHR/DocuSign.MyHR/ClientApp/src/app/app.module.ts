@@ -11,7 +11,6 @@ import {
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { AuthInterceptor } from './core/authentication/auth.interceptor'
-import { ModalModule } from 'ngx-bootstrap/modal'
 export function HttpLoaderFactory (http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json')
 }
@@ -29,7 +28,6 @@ export function HttpLoaderFactory (http: HttpClient): TranslateLoader {
       },
       useDefaultLang: false
     }),
-    ModalModule.forRoot(),
     AppRoutingModule,
     CoreModule
   ],

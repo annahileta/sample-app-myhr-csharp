@@ -13,7 +13,7 @@ export class EmployeeService {
     @Inject('BASE_URL') private baseUrl: string
   ) {}
 
-  saveUser (user: IUser) {
+  saveUser (user: IUser):void {
     this.http.put<any>(this.baseUrl + 'api/user', user).subscribe(
       () => {
         this.getUser()
@@ -22,7 +22,7 @@ export class EmployeeService {
     )
   }
 
-  getUser () {
+  getUser ():void {
     this.http.get<any>(this.baseUrl + 'api/user').subscribe(
       (result) => {
         this.user = result

@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { IUser } from '../shared/user.model'
 import * as i18nIsoCountries from 'i18n-iso-countries'
 import { EmployeeService } from '../employee.service'
-import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-profile-edit',
@@ -29,7 +28,7 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  saveUser (user: IUser) {
+  saveUser (user: IUser):void {
     this.employeeService.saveUser(user)
     this.employeeService.user$.subscribe((user) => (this.user = user))
     user.profileImage = this.user.profileImage
@@ -39,7 +38,7 @@ export class ProfileEditComponent implements OnInit {
     // todo:show message
   }
 
-  cancel () {
+  cancel () :void{
     this.user = { ...this.employeeService.user }
     this.canceled.next()
   }

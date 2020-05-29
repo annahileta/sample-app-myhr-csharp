@@ -1,7 +1,8 @@
 import { AuthType } from './auth-type.enum'
 import { Injectable, Inject } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { tap, map } from 'rxjs/operators'
+import { tap } from 'rxjs/operators'
+import { Observable } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -13,7 +14,7 @@ export class AuthenticationService {
     @Inject('BASE_URL') private baseUrl: string
   ) {}
 
-  isAuthenticated () {
+  isAuthenticated () :Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + 'api/isauthenticated').pipe(
       tap((result: boolean) => {
         this.isUserAuthenticated = result
@@ -21,15 +22,15 @@ export class AuthenticationService {
     )
   }
 
-  saveAuthType (authType: AuthType) {
+  saveAuthType (authType: AuthType) :void{
     sessionStorage.setItem('authType', authType)
   }
 
-  getAuthType () {
+  getAuthType () :string {
     return sessionStorage.getItem('authType')
   }
 
-  logout () {
+  logout () :void{
     sessionStorage.removeItem('authType')
     this.isUserAuthenticated = false
   }

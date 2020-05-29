@@ -64,7 +64,7 @@ export class TimeCardComponent implements OnInit {
     }
   }
 
-  updateWorkLogs () {
+  updateWorkLogs ():void {
     this.workLogs = this.weekDays.map(
       (day) => +this.timecardForm.controls[day].value
     )
@@ -75,7 +75,7 @@ export class TimeCardComponent implements OnInit {
     )
   }
 
-  sendTimeCard () {
+  sendTimeCard ():void {
     this.actionServise.createClickWrap(this.workLogs).subscribe((payload) => {
       const clickwrap = payload.clickWrap
       const baseUrl = payload.docuSignBaseUrl

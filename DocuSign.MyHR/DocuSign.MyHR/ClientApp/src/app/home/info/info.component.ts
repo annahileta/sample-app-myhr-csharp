@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core'
   selector: 'app-info',
   templateUrl: './info.component.html'
 })
+
 export class InfoComponent implements OnInit {
   ngOnInit (): void {}
 }

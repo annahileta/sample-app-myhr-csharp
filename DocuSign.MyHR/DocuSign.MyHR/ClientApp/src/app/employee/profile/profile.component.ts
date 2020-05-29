@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit () {}
 
-  editProfile () {
+  editProfile ():void {
     this.editUserClicked.next()
   }
 }

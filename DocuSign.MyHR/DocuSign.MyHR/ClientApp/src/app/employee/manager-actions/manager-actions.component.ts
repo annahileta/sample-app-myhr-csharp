@@ -24,11 +24,11 @@ export class ManagerActionsComponent {
 
   constructor (private actionServise: ActionsService) {}
 
-  setDocumentType (type: DocumentType) {
+  setDocumentType (type: DocumentType):void {
     this.type = type
   }
 
-  sendEnvelope () {
+  sendEnvelope ():void {
     this.actionServise
       .sendEnvelope(this.type, this.additionalUserForm.value)
       .subscribe((payload) => {
@@ -42,7 +42,7 @@ export class ManagerActionsComponent {
       })
   }
 
-  isInvalid (control: AbstractControl) {
+  isInvalid (control: AbstractControl) :boolean {
     const form = <FormGroup>control
     return form.invalid && form.touched
   }

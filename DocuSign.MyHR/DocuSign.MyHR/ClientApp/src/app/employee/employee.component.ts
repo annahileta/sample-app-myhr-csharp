@@ -16,15 +16,15 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.user$.subscribe((user) => (this.user = user))
   }
 
-  editUser () {
+  editUser ():void {
     this.isEditUser = true
   }
 
-  cancelEdit () {
+  cancelEdit ():void {
     this.isEditUser = false
   }
 
-  exitSaving (user: IUser) {
+  exitSaving (user: IUser):void {
     this.user = user
     this.isEditUser = false
   }

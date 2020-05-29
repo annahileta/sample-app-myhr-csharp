@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { EmployeeComponent } from './employee.component'
 import { EmployeeService } from './employee.service'
 import { IUser } from './shared/user.model'
-import { Observable, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 import { DatePipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 
