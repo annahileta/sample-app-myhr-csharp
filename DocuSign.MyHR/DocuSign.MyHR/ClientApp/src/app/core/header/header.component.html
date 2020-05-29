@@ -1,4 +1,4 @@
-<header class="header header-home" role="banner">
+<header class="header" [class.header-home]="isHomePage$ | async" role="banner">
   <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light p-0 align-items-lg-end">
       <a class="navbar-brand d-inline-flex align-items-center p-0"

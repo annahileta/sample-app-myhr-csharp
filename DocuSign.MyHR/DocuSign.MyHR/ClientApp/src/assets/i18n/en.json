@@ -8,7 +8,7 @@
   "LoginWithDocuSignAccountButton": "Log in with your DocuSign account",
   "LoginWithTestAccountButton": "Log in with a test account",
   "Note": "Note: This sample app is written in C#",
-  "VSExtentionLink": "Get the Visual Studio Ectension",
+  "VSExtentionLink": "Get the Visual Studio Extension",
   "VSCodeExtentionLink": "Get the Visual Studio Code. Extension",
   "InfoHeader": {
     "Part1": "DocuSign:",
