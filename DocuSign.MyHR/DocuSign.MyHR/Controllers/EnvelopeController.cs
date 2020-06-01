@@ -37,9 +37,9 @@ namespace DocuSign.MyHR.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index([FromQuery]string envelopId)
+        public IActionResult Index([FromQuery]string envelopeId)
         {
-            return Ok(_envelopeService.GetEnvelopData(Context.Account.Id, envelopId));
+            return Ok(_envelopeService.GetEnvelopData(Context.Account.Id, envelopeId));
         }
     }
 }
