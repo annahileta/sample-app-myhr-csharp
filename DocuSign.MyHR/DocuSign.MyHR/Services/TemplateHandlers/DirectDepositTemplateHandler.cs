@@ -36,7 +36,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                             RecipientId = "1",
                             RoleName = "Employee",
                             RoutingOrder = "1",
-                            Tabs = CreateTabs()
+                            Tabs = CreateTabs(),
                         }
                     }
                 }
@@ -102,8 +102,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                 {
                     new Number
                     {
-                        TabLabel = "PrimaryRoutingNumber",
-                        ValidationMessage = "Primary routing number is required",
+                        TabLabel = "PrimaryRoutingNumber", 
                         DocumentId = "1",
                         PageNumber = "1",
                         RecipientId = "1",
@@ -113,11 +112,11 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "106",
                         Width = "151",
                         Height = "23",
+                        TabType = "number"
                     },
                     new Number
                     {
-                        TabLabel = "PrimaryAccountNumber",
-                        ValidationMessage = "Primary account number is required",
+                        TabLabel = "PrimaryAccountNumber", 
                         DocumentId = "1",
                         PageNumber = "1",
                         RecipientId = "1",
@@ -127,12 +126,12 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "137",
                         Width = "151",
                         Height = "23",
+                        TabType = "number"
                     },
                     new Number
                     {
                         TabLabel = "PercentageFirstAccount",
-                        ValidationPattern = "^[1-9][0-9]?$|^100$",
-                        ValidationMessage = "Percentage must be between 1 and 100",
+                        ValidationPattern = "^[1-9][0-9]?$|^100$", 
                         DocumentId = "1",
                         PageNumber = "1",
                         RecipientId = "1",
@@ -142,11 +141,11 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "171",
                         Width = "151",
                         Height = "23",
+                        TabType = "number"
                     },
                     new Number
                     {
                         TabLabel = "SecondaryRoutingNumber",
-                        ValidationMessage = "Secondary routing number is required",
                         DocumentId = "1",
                         PageNumber = "1",
                         RecipientId = "1",
@@ -156,6 +155,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "204",
                         Width = "151",
                         Height = "23",
+                        TabType = "number",
                     },
                     new Number
                     {
@@ -170,12 +170,12 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "237",
                         Width = "151",
                         Height = "23",
+                        TabType = "number"
                     },
                     new Number
                     {
                         TabLabel = "PercentageSecondAccount",
-                        ValidationPattern = "^[1-9][0-9]?$|^100$",
-                        ValidationMessage = "Percentage must be between 1 and 100",
+                        ValidationPattern = "^[1-9][0-9]?$|^100$", 
                         DocumentId = "1",
                         PageNumber = "1",
                         RecipientId = "1",
@@ -185,13 +185,14 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "275",
                         Width = "151",
                         Height = "23",
+                        TabType = "number"
                     }
                 },
                 NoteTabs = new List<Note>
                 {
                     new Note
                     {
-                        Value = "Total Percentage cannot be more than hundred",
+                        Value = "Total Percentage must be equal to hundred",
                         Name = "Note to recipient",
                         TabLabel = "ValidationMessage",
                         DocumentId = "1",
@@ -203,11 +204,11 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         Height = "20",
                         FontColor = "BrightRed",
                         ConditionalParentLabel = "NumberValidation",
-                        ConditionalParentValue = "0"
+                        ConditionalParentValue = "0",
                     }
                 },
                 FormulaTabs = new List<FormulaTab>
-                { 
+                {
                     new FormulaTab
                     {
                         Formula = "[PercentageFirstAccount] + [PercentageSecondAccount]",
@@ -219,12 +220,17 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         YPosition = "322",
                         RoundDecimalPlaces = "0",
                         Locked = "true",
-                        ConcealValueOnDocument = "true",
+                        ConcealValueOnDocument = "false",
                         TabLabel = "TotalPercentage",
                         TabType = "formula",
                         Hidden =  "false",
                         Width =  "42",
+                        TemplateLocked = "false",
+                        TemplateRequired = "false",
+                        DisableAutoSize = "false",
+                        Required = "true",
                     },
+
                     new FormulaTab
                     {
                         Formula = "[PercentageFirstAccount] + [PercentageSecondAccount] = 100",
@@ -237,6 +243,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         ConcealValueOnDocument = "true",
                         TabLabel = "NumberValidation",
                         TabType = "formula",
+                        Required = "true",
                     }
                 },
             };
