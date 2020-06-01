@@ -28,7 +28,6 @@ namespace DocuSign.MyHR.Controllers
                     ClickWrap = JsonConvert.DeserializeObject<dynamic>(response.Content.ReadAsStringAsync().Result),
                     DocuSignBaseUrl = Context.Account.BaseUri
                 });
-
         }
     }
 }

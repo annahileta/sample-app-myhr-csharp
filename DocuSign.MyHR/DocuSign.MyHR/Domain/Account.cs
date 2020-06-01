@@ -10,6 +10,7 @@ namespace DocuSign.MyHR.Domain
         {
 
         }
+        
         public Account(string id, string name, string baseUri)
         {
             Id = id;
@@ -19,8 +20,10 @@ namespace DocuSign.MyHR.Domain
 
         [JsonProperty("account_id")]
         public string Id { get; set; }
+
         [JsonProperty("account_name")]
         public string Name { get; set; }
+        
         [JsonProperty("base_uri")]
         public string BaseUri { get; set; }
     }

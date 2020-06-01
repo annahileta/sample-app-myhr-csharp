@@ -74,8 +74,8 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                 {
                     new SignHere
                     {
-                        XPosition = "158",
-                        YPosition = "379",
+                        XPosition = "170",
+                        YPosition = "418",
                         Optional = "false",
                         StampType = "signature",
                         DocumentId = "1",
@@ -91,8 +91,8 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         Name = "DateSigned",
                         DocumentId = "1",
                         PageNumber = "1",
-                        XPosition = "415",
-                        YPosition = "400",
+                        XPosition = "419",
+                        YPosition = "426",
                         TemplateLocked = "false",
                         TemplateRequired = "false",
                         TabType = "datesigned"
@@ -198,7 +198,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                         PageNumber = "1",
                         RecipientId = "1",
                         XPosition = "85",
-                        YPosition = "330",
+                        YPosition = "370",
                         Width = "300",
                         Height = "20",
                         FontColor = "BrightRed",
@@ -207,10 +207,27 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                     }
                 },
                 FormulaTabs = new List<FormulaTab>
-                {
+                { 
                     new FormulaTab
                     {
-                        Formula = "[PercentageFirstAccount] + [PercentageSecondAccount] <= 100",
+                        Formula = "[PercentageFirstAccount] + [PercentageSecondAccount]",
+                        Name = "Formula Tab",
+                        DocumentId = "1",
+                        PageNumber = "1",
+                        RecipientId = "1",
+                        XPosition = "378",
+                        YPosition = "322",
+                        RoundDecimalPlaces = "0",
+                        Locked = "true",
+                        ConcealValueOnDocument = "true",
+                        TabLabel = "TotalPercentage",
+                        TabType = "formula",
+                        Hidden =  "false",
+                        Width =  "42",
+                    },
+                    new FormulaTab
+                    {
+                        Formula = "[PercentageFirstAccount] + [PercentageSecondAccount] = 100",
                         Name = "Formula Tab",
                         DocumentId = "1",
                         PageNumber = "1",

@@ -19,7 +19,9 @@ namespace DocuSign.MyHR.Domain
         }
         
         public string Id { get; set; }
+
         public string Name { get; set; } 
+
         public LoginType LoginType { get; set; }
     }
 }

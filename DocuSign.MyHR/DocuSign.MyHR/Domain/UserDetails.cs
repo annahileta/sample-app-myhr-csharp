@@ -18,11 +18,17 @@ namespace DocuSign.MyHR.Domain
             Email = email;
         }
         public string Email { get; set; }
+
         public Address Address { get; set; }
+
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
+
         public DateTime HireDate { get; set; }
+
         public string ProfileImage { get; set; }
+
         public string ProfileId { get; set; }
     }
 }

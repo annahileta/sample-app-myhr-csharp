@@ -25,6 +25,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                 Name = currentUser.Name,
                 RoleName = "HR"
             };
+
             TemplateRole roleNewHire = new TemplateRole
             {
                 Email = additionalUser.Email,

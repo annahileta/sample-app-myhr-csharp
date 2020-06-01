@@ -25,8 +25,8 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 namespace DocuSign.MyHR.Security
-{  
-    public static class DocuSignOAuthWebAppExtensions
+{
+    public static class DocuSignWebAppExtensions
     {
         public static void ConfigureDocuSign(this IApplicationBuilder applicationBuilder)
         {
@@ -59,7 +59,7 @@ namespace DocuSign.MyHR.Security
                 options.UserInformationEndpoint = Configuration["DocuSign:UserInformationEndpoint"];
 
                 options.Scope.Add("signature");
-                options.Scope.Add("click.manage"); 
+                options.Scope.Add("click.manage");
                 options.SaveTokens = true;
 
                 options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "sub");
@@ -67,7 +67,7 @@ namespace DocuSign.MyHR.Security
                 options.ClaimActions.MapJsonKey("accounts", "accounts");
                 options.ClaimActions.MapJsonKey("authType", "authType");
                 options.ClaimActions.MapCustomJson("account_id", obj => ExtractDefaultAccountValue(obj, "account_id"));
-             
+
                 options.Events = new OAuthEvents
                 {
                     OnCreatingTicket = async context =>
@@ -78,14 +78,13 @@ namespace DocuSign.MyHR.Security
 
                         var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
                         response.EnsureSuccessStatusCode();
-                        
+
                         var user = JObject.Parse(await response.Content.ReadAsStringAsync());
                         user.Add("authType", LoginType.CodeGrant.ToString());
 
-                        using (JsonDocument payload = JsonDocument.Parse(user.ToString()))
-                        {
-                            context.RunClaimActions(payload.RootElement);
-                        }
+                        using JsonDocument payload = JsonDocument.Parse(user.ToString());
+
+                        context.RunClaimActions(payload.RootElement);
                     },
                     OnRemoteFailure = context =>
                     {
@@ -117,20 +116,21 @@ namespace DocuSign.MyHR.Security
                 config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 config.Events = new CookieAuthenticationEvents
                 {
-                    OnRedirectToLogin =  context =>
-                    {
-                        if (context.Request.Path.StartsWithSegments("/api"))
-                        {
-                            context.Response.Headers["Location"] = context.RedirectUri;
-                            context.Response.StatusCode = 401;
-                        }
-                        else
-                        {
-                            context.Response.Redirect(context.RedirectUri);
-                        }
+                    OnRedirectToLogin = context =>
+                   {
+                       // Return 401 HttpCode for api calls instead of redirecting to login page 
+                       if (context.Request.Path.StartsWithSegments("/api"))
+                       {
+                           context.Response.Headers["Location"] = context.RedirectUri;
+                           context.Response.StatusCode = 401;
+                       }
+                       else
+                       {
+                           context.Response.Redirect(context.RedirectUri);
+                       }
 
-                        return Task.CompletedTask;
-                    },
+                       return Task.CompletedTask;
+                   },
                     // Check access token expiration and refresh if expired
                     OnValidatePrincipal = context =>
                     {
@@ -144,7 +144,7 @@ namespace DocuSign.MyHR.Security
                                     .GetRequiredService<IOptionsMonitor<OAuthOptions>>()
                                     .Get("DocuSign");
 
-                                var pairs = new Dictionary<string, string>
+                                var requestParameters = new Dictionary<string, string>
                                 {
                                     {"client_id", Configuration["DocuSign:IntegrationKey"]},
                                     {"client_secret", Configuration["DocuSign:SecretKey"]},
@@ -152,23 +152,19 @@ namespace DocuSign.MyHR.Security
                                     {"refresh_token", authProperties.GetTokenValue("refresh_token")}
                                 };
 
-                                // Request new access token
+                                // Request new access token with refresh token
                                 var refreshResponse = options.Backchannel.PostAsync(
                                     options.TokenEndpoint,
-                                    new FormUrlEncodedContent(pairs),
+                                    new FormUrlEncodedContent(requestParameters),
                                     context.HttpContext.RequestAborted).Result;
                                 refreshResponse.EnsureSuccessStatusCode();
 
                                 var payload = JObject.Parse(refreshResponse.Content.ReadAsStringAsync().Result);
 
-                                // Persist the new access token
+                                // Persist the new access token and refresh token
                                 authProperties.UpdateTokenValue("access_token", payload.Value<string>("access_token"));
-                                var refreshToken = payload.Value<string>("refresh_token");
+                                authProperties.UpdateTokenValue("refresh_token", payload.Value<string>("refresh_token"));
 
-                                if (!string.IsNullOrEmpty(refreshToken))
-                                {
-                                    authProperties.UpdateTokenValue("refresh_token", refreshToken);
-                                }
                                 if (int.TryParse(
                                     payload.Value<string>("expires_in"),
                                     NumberStyles.Integer,
@@ -211,9 +207,8 @@ namespace DocuSign.MyHR.Security
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
                     {
-                        if (contextFeature.Error is ApiException)
+                        if (contextFeature.Error is ApiException apiError)
                         {
-                            var apiError = (ApiException)contextFeature.Error;
                             logger.LogError($"Error occured during DocuSign api call: {contextFeature.Error}");
 
                             if (apiError.ErrorCode == (int)HttpStatusCode.Unauthorized)
