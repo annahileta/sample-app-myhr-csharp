@@ -5,23 +5,23 @@ import { DocumentType } from '../shared/document-type.enum'
 import { Router } from '@angular/router'
 
 @Component({
-  selector: 'app-actions',
-  templateUrl: './actions.component.html'
+    selector: 'app-actions',
+    templateUrl: './actions.component.html'
 })
 export class ActionsComponent implements OnInit {
-  public documentType = DocumentType;
+    public documentType = DocumentType
 
-  constructor (private actionServise: ActionsService, private router: Router) {}
+    constructor(private actionServise: ActionsService, private router: Router) {}
 
-  ngOnInit (): void {}
+    ngOnInit(): void {}
 
-  sendEnvelope (type: DocumentType):void{
-    this.actionServise.sendEnvelope(type, null).subscribe((payload) => {
-      window.location.href = payload.redirectUrl
-    })
-  }
+    sendEnvelope(type: DocumentType): void {
+        this.actionServise.sendEnvelope(type, null).subscribe((payload) => {
+            window.location.href = payload.redirectUrl
+        })
+    }
 
-  sendTimeCard ():void{
-    this.router.navigate(['/employee/timecard'])
-  }
+    sendTimeCard(): void {
+        this.router.navigate(['/employee/timecard'])
+    }
 }

@@ -3,23 +3,22 @@ import { Routes, RouterModule } from '@angular/router'
 import { AuthGuard } from './core/authentication/auth.guard'
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
-    canLoad: [AuthGuard],
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'employee',
-    loadChildren: () =>
-      import('./employee/employee.module').then((m) => m.EmployeeModule),
-    canLoad: [AuthGuard],
-    canActivate: [AuthGuard]
-  }
+    {
+        path: '',
+        loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'employee',
+        loadChildren: () => import('./employee/employee.module').then((m) => m.EmployeeModule),
+        canLoad: [AuthGuard],
+        canActivate: [AuthGuard]
+    }
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {}

@@ -5,26 +5,23 @@ import { filter, map, startWith } from 'rxjs/operators'
 import { Observable } from 'rxjs'
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html'
+    selector: 'app-header',
+    templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
-  isHomePage$: Observable<boolean>;
+    isHomePage$: Observable<boolean>
 
-  constructor (
-    private authenticationService: AuthenticationService,
-    private router: Router
-  ) {}
+    constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
-  ngOnInit (): void {
-    this.isHomePage$ = this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      map((event: NavigationEnd) => event.url === '/'),
-      startWith(true)
-    )
-  }
+    ngOnInit(): void {
+        this.isHomePage$ = this.router.events.pipe(
+            filter((event) => event instanceof NavigationEnd),
+            map((event: NavigationEnd) => event.url === '/'),
+            startWith(true)
+        )
+    }
 
-  logout (): void{
-    this.authenticationService.logout()
-  }
+    logout(): void {
+        this.authenticationService.logout()
+    }
 }

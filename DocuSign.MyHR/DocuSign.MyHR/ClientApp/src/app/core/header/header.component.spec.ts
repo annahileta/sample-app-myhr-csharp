@@ -5,42 +5,45 @@ import { AuthenticationService } from '../authentication/auth.service'
 import { RouterTestingModule } from '@angular/router/testing'
 
 class AuthenticationServiceStub {
-  public logout () { }
+    public logout() {}
 }
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent
-  let fixture: ComponentFixture<HeaderComponent>
-  let authenticationService: AuthenticationService
+    let component: HeaderComponent
+    let fixture: ComponentFixture<HeaderComponent>
+    let authenticationService: AuthenticationService
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [HeaderComponent],
-      providers: [
-        { provide: AuthenticationService, useClass: AuthenticationServiceStub }
-      ]
-    }).compileComponents()
-  }))
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule],
+            declarations: [HeaderComponent],
+            providers: [
+                {
+                    provide: AuthenticationService,
+                    useClass: AuthenticationServiceStub
+                }
+            ]
+        }).compileComponents()
+    }))
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent)
-    component = fixture.componentInstance
-    authenticationService = TestBed.inject(AuthenticationService)
-    spyOn(authenticationService, 'logout').and.stub()
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
-  describe('logout', () => {
-    it('should call logout method from authentication service', () => {
-      // act
-      component.logout()
-      // assert
-      expect(authenticationService.logout).toHaveBeenCalled()
+    beforeEach(() => {
+        fixture = TestBed.createComponent(HeaderComponent)
+        component = fixture.componentInstance
+        authenticationService = TestBed.inject(AuthenticationService)
+        spyOn(authenticationService, 'logout').and.stub()
+        fixture.detectChanges()
     })
-  })
+
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+
+    describe('logout', () => {
+        it('should call logout method from authentication service', () => {
+            // act
+            component.logout()
+            // assert
+            expect(authenticationService.logout).toHaveBeenCalled()
+        })
+    })
 })

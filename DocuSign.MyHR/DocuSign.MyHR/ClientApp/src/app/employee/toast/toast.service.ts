@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class ToastService {
-  message$ = new BehaviorSubject<string>(null);
+    message$ = new BehaviorSubject<string>(null)
 
-  constructor() {}
+    constructor() {}
 
-  setToastMessage(message: string) {
-    this.message$.next(message);
-  }
+    setToastMessage(message: string) {
+        this.message$.next(message)
+    }
 }

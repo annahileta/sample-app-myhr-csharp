@@ -6,8 +6,8 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RouterModule } from '@angular/router'
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent],
-  imports: [CommonModule, RouterModule, TranslateModule.forChild()],
-  exports: [HeaderComponent, FooterComponent]
+    declarations: [HeaderComponent, FooterComponent],
+    imports: [CommonModule, RouterModule, TranslateModule.forChild()],
+    exports: [HeaderComponent, FooterComponent]
 })
 export class CoreModule {}

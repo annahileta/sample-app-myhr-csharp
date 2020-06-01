@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:ssr": "ng run DocuSign.MyHR:server:dev",
     "test": "ng test",
-    "lint": "eslint  --ext .ts src",
+    "lint": "eslint \"**/*.{js,ts}\" --quiet --fix",
     "e2e": "ng e2e"
   },
   "private": true,

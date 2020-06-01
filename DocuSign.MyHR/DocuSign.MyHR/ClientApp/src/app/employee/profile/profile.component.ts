@@ -5,16 +5,16 @@ import { Observable } from 'rxjs'
 import { IUser } from '../shared/user.model'
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html'
+    selector: 'app-profile',
+    templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-  @Output() editUserClicked = new EventEmitter<void>();
-  @Input() user: IUser;
+    @Output() editUserClicked = new EventEmitter<void>()
+    @Input() user: IUser
 
-  ngOnInit () {}
+    ngOnInit() {}
 
-  editProfile ():void {
-    this.editUserClicked.next()
-  }
+    editProfile(): void {
+        this.editUserClicked.next()
+    }
 }

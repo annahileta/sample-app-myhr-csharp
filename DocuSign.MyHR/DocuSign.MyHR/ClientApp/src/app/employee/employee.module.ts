@@ -8,25 +8,19 @@ import { ActionsComponent } from './actions/actions.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ManagerActionsComponent } from './manager-actions/manager-actions.component'
 import { ProfileEditComponent } from './profile-edit/profile-edit.component'
-import { TimeCardComponent } from './actions/timecard/timecard.component'
+import { TimeCardComponent } from './timecard/timecard.component'
 import { ToastComponent } from './toast/toast.component'
 
 @NgModule({
-  declarations: [
-    EmployeeComponent,
-    ProfileComponent,
-    ActionsComponent,
-    ManagerActionsComponent,
-    ProfileEditComponent,
-    TimeCardComponent,
-    ToastComponent
-  ],
-  imports: [
-    CommonModule,
-    EmployeeRoutingModule,
-    TranslateModule.forChild(),
-    FormsModule,
-    ReactiveFormsModule
-  ]
+    declarations: [
+        EmployeeComponent,
+        ProfileComponent,
+        ActionsComponent,
+        ManagerActionsComponent,
+        ProfileEditComponent,
+        TimeCardComponent,
+        ToastComponent
+    ],
+    imports: [CommonModule, EmployeeRoutingModule, TranslateModule.forChild(), FormsModule, ReactiveFormsModule]
 })
 export class EmployeeModule {}

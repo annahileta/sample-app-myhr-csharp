@@ -1,4 +1,4 @@
 export enum AuthType {
-  CodeGrant = 'CodeGrant',
-  JWT = 'JWT',
+    CodeGrant = 'CodeGrant',
+    JWT = 'JWT'
 }

@@ -5,23 +5,21 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TranslateService } from '@ngx-translate/core'
 
 class TranslateServiceStub {
-  public use () {}
+    public use() {}
 }
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [AppComponent],
-      providers: [
-        { provide: TranslateService, useClass: TranslateServiceStub }
-      ]
-    }).compileComponents()
-  }))
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule, HttpClientTestingModule],
+            declarations: [AppComponent],
+            providers: [{ provide: TranslateService, useClass: TranslateServiceStub }]
+        }).compileComponents()
+    }))
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.componentInstance
-    expect(app).toBeTruthy()
-  })
+    it('should create the app', () => {
+        const fixture = TestBed.createComponent(AppComponent)
+        const app = fixture.componentInstance
+        expect(app).toBeTruthy()
+    })
 })

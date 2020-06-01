@@ -6,32 +6,29 @@ import { Observable } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private isUserAuthenticated: boolean | null;
-  public authType: AuthType;
+    private isUserAuthenticated: boolean | null
+    public authType: AuthType
 
-  constructor (
-    private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string
-  ) {}
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {}
 
-  isAuthenticated () :Observable<boolean> {
-    return this.http.get<boolean>(this.baseUrl + 'api/isauthenticated').pipe(
-      tap((result: boolean) => {
-        this.isUserAuthenticated = result
-      })
-    )
-  }
+    isAuthenticated(): Observable<boolean> {
+        return this.http.get<boolean>(this.baseUrl + 'api/isauthenticated').pipe(
+            tap((result: boolean) => {
+                this.isUserAuthenticated = result
+            })
+        )
+    }
 
-  saveAuthType (authType: AuthType) :void{
-    sessionStorage.setItem('authType', authType)
-  }
+    saveAuthType(authType: AuthType): void {
+        sessionStorage.setItem('authType', authType)
+    }
 
-  getAuthType () :string {
-    return sessionStorage.getItem('authType')
-  }
+    getAuthType(): string {
+        return sessionStorage.getItem('authType')
+    }
 
-  logout () :void{
-    sessionStorage.removeItem('authType')
-    this.isUserAuthenticated = false
-  }
+    logout(): void {
+        sessionStorage.removeItem('authType')
+        this.isUserAuthenticated = false
+    }
 }
