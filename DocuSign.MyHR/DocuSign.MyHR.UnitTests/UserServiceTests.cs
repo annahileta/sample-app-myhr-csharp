@@ -19,13 +19,17 @@ namespace DocuSign.MyHR.UnitTests
             string accountId,
             string userId)
         {
+            //Arrange
             userInformation.CreatedDateTime = DateTime.Now.ToString();
             usersApi.Setup(x => x.GetInformation(accountId, userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
             docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(usersApi.Object);
 
             var sut = new UserService(docuSignApiProvider.Object);
-
+            
+            //Act
             var userDetails = sut.GetUserDetails(accountId, userId);
+            
+            //Assert
             Assert.NotNull(userDetails);
             Assert.Equal(userInformation.UserName, userDetails.Name);
             Assert.Equal(userInformation.WorkAddress.Address1, userDetails.Address.Address1);
@@ -46,14 +50,18 @@ namespace DocuSign.MyHR.UnitTests
             string accountId,
             string userId)
         {
+            //Arrange
             var updatedUserInfo = Convert(newUserDetails);
             usersApi.Setup(x => x.UpdateUser(accountId, userId, It.IsAny<UserInformation>())).Returns(updatedUserInfo);
             docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(usersApi.Object);
 
             var sut = new UserService(docuSignApiProvider.Object);
 
-             sut.UpdateUserDetails(accountId, userId, newUserDetails);
-             usersApi.Verify(mock => mock.UpdateUser(accountId, userId, updatedUserInfo), Times.Once());
+            //Act
+            sut.UpdateUserDetails(accountId, userId, newUserDetails);
+            
+            //Assert
+            usersApi.Verify(mock => mock.UpdateUser(accountId, userId, updatedUserInfo), Times.Once());
         }
 
         private UserInformation Convert(UserDetails userDetails)

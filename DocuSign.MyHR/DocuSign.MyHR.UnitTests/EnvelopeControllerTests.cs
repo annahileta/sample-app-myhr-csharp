@@ -26,6 +26,7 @@ namespace DocuSign.MyHR.UnitTests
             User user,
             UserDetails additionalUser)
         {
+            //Arrange
             InitContext(account, user);
             envelopeService.Setup(c => c.CreateEnvelope(
                     It.IsAny<DocumentType>(),
@@ -35,7 +36,7 @@ namespace DocuSign.MyHR.UnitTests
                     It.IsAny<UserDetails>(),
                     It.IsAny<string>(),
                     It.IsAny<string>()))
-                .Returns(() => new CreateEnvelopeResponse( "envelopeUrl", "1"));
+                .Returns(() => new CreateEnvelopeResponse("envelopeUrl", "1"));
 
             var sut = new EnvelopeController(envelopeService.Object);
             var urlHelperMock = new Mock<IUrlHelper>();
@@ -51,8 +52,11 @@ namespace DocuSign.MyHR.UnitTests
             urlHelperMock.SetupGet(x => x.ActionContext).Returns(actionContext).Verifiable();
             sut.Url = urlHelperMock.Object;
 
+            //Act
             var result = sut.Index(new RequestEnvelopeModel { AdditionalUser = additionalUser, RedirectUrl = "/", Type = DocumentType.I9 });
-            Assert.True(result is OkObjectResult); 
+
+            //Assert
+            Assert.True(result is OkObjectResult);
             var response = (ResponseEnvelopeModel)((OkObjectResult)result).Value;
             Assert.Equal("envelopeUrl", response.RedirectUrl);
             Assert.Equal("1", response.EnvelopeId);

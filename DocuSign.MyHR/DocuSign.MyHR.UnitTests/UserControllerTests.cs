@@ -22,13 +22,17 @@ namespace DocuSign.MyHR.UnitTests
             Account account,
             User user)
         {
+            //Arrange
             InitContext(account, user);
             userService.Setup(c => c.GetUserDetails(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(userDetails);
 
             var sut = new UserController(userService.Object);
 
+            //Act
             var result = sut.Index();
+            
+            //Assert
             Assert.True(result is OkObjectResult); 
             Assert.IsType<UserDetails>(((OkObjectResult)result).Value);
             var receivedUser = (UserDetails) ((OkObjectResult) result).Value;
@@ -43,12 +47,16 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userDetails,
             Account account,
             User user)
-        {
+        {  
+            //Arrange
             InitContext(account, user);
 
             var sut = new UserController(userService.Object);
 
+            //Act
             var result = sut.Index(userDetails);
+
+            //Assert
             Assert.True(result is OkResult);
         }
          

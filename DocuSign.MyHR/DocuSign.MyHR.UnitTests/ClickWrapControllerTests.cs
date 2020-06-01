@@ -24,6 +24,7 @@ namespace DocuSign.MyHR.UnitTests
             Account account,
             User user)
         {
+            // Arrange
             InitContext(account, user);
             clickWrapService.Setup(c => c.CreateTimeTrackClickWrap(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int[]>()))
                 .Returns(() => new HttpResponseMessage(HttpStatusCode.OK)
@@ -33,7 +34,10 @@ namespace DocuSign.MyHR.UnitTests
 
             var sut = new ClickWrapController(clickWrapService.Object);
 
+            // Act
             var result = sut.Index(new RequestClickWrapModel { WorkLogs = new[] { 1, 2, 4 } });
+            
+            // Assert
             Assert.True(result is OkObjectResult);
             var response = (ResponseClickWrapModel)((OkObjectResult)result).Value;
             Assert.Equal("1", (string) response.ClickWrap.clickWrapId);

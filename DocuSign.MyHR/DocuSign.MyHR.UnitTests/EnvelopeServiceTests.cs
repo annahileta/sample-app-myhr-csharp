@@ -27,12 +27,16 @@ namespace DocuSign.MyHR.UnitTests
             string accountId,
             string userId)
         {
+            //Arrange
             SetupApi(docuSignApiProvider, accountId);
             userService.Setup(x => x.GetUserDetails(accountId, userId)).Returns(userInformation);
 
             var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
-
+           
+            //Act
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, accountId, userId, LoginType.CodeGrant, additionalUser, "", "");
+            
+            //Assert
             Assert.NotNull(res);
             Assert.Equal($"accountId={accountId}&templateId=1&userEmail={userInformation.Email}&userName={userInformation.Name}", res.RedirectUrl);
             Assert.Equal("1", res.EnvelopeId);
@@ -48,6 +52,7 @@ namespace DocuSign.MyHR.UnitTests
             string accountId,
             string userId)
         {
+            //Arrange
             SetupApi(docuSignApiProvider, accountId);
             userService.Setup(x => x.GetUserDetails(accountId, userId)).Returns(userInformation);
 
@@ -65,7 +70,10 @@ namespace DocuSign.MyHR.UnitTests
 
             var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
 
+            //Act
             CreateEnvelopeResponse res = sut.CreateEnvelope(DocumentType.I9, accountId, userId, LoginType.JWT, additionalUser, "", "");
+            
+            //Assert
             Assert.NotNull(res);
             Assert.Equal(string.Empty, res.RedirectUrl);
             Assert.Equal("1", res.EnvelopeId);
