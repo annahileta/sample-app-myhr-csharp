@@ -20,6 +20,7 @@ export class TimeCardComponent implements OnInit {
     total = 0
     workWeekDates: string
     user: IUser
+    timecartSent: boolean
     private readonly scriptUrl = '/clickapi/sdk/latest/docusign-click.js'
 
     workLogs: number[] = []
@@ -31,8 +32,8 @@ export class TimeCardComponent implements OnInit {
         Wednesday: new FormControl('', Validators.required),
         Thursday: new FormControl('', Validators.required),
         Friday: new FormControl('', Validators.required),
-        Saturday: new FormControl('', Validators.required),
-        Sunday: new FormControl('', Validators.required)
+        Saturday: new FormControl(''),
+        Sunday: new FormControl('')
     })
 
     constructor(
@@ -58,11 +59,11 @@ export class TimeCardComponent implements OnInit {
 
     updateWorkLogs(): void {
         this.workLogs = this.weekDays.map((day) => +this.timecardForm.controls[day].value)
-
         this.total = this.workLogs.reduce((total: number, workLog: number) => total + workLog, 0)
     }
 
     sendTimeCard(): void {
+        this.timecartSent = true
         this.actionServise.createClickWrap(this.workLogs).subscribe((payload) => {
             const clickwrap = payload.clickWrap
             const baseUrl = payload.docuSignBaseUrl

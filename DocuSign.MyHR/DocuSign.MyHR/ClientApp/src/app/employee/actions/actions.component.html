@@ -9,7 +9,12 @@
                 <span class="card-description" translate>EmployeeActions.DirectDeposit.Title</span>
             </div>
             <div class="card-actions">
-                <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.DirectDeposit)" translate>
+                <button
+                    class="btn btn-warning btn-sm"
+                    (click)="sendEnvelope(documentType.DirectDeposit)"
+                    [class.disabled]="actionExecuted"
+                    translate
+                >
                     EmployeeActions.DirectDeposit.UpdateButton
                 </button>
                 <button
@@ -58,7 +63,7 @@
                 <span class="card-description" translate>EmployeeActions.W4TaxWithholding.Title</span>
             </div>
             <div class="card-actions">
-                <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.W4)" translate>
+                <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.W4)" [class.disabled]="actionExecuted" translate>
                     EmployeeActions.W4TaxWithholding.SelectButton
                 </button>
                 <button
@@ -107,7 +112,14 @@
                 <span class="card-description" translate>EmployeeActions.TimeCard.Title</span>
             </div>
             <div class="card-actions">
-                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#timeCard" (click)="sendTimeCard()" translate>
+                <button
+                    class="btn btn-warning btn-sm"
+                    data-toggle="modal"
+                    data-target="#timeCard"
+                    [class.disabled]="actionExecuted"
+                    (click)="sendTimeCard()"
+                    translate
+                >
                     EmployeeActions.TimeCard.EnterButton
                 </button>
                 <button
@@ -156,7 +168,12 @@
                 <span class="card-description" translate>EmployeeActions.TuitionReimbursement.Title</span>
             </div>
             <div class="card-actions">
-                <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.TuitionRbt)" translate>
+                <button
+                    class="btn btn-warning btn-sm"
+                    (click)="sendEnvelope(documentType.TuitionRbt)"
+                    [class.disabled]="actionExecuted"
+                    translate
+                >
                     EmployeeActions.TuitionReimbursement.ApplyButton
                 </button>
                 <button

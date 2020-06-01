@@ -31,6 +31,7 @@
                                     data-toggle="modal"
                                     data-target="#modal-1"
                                     (click)="setDocumentType(documentType.Offer)"
+                                    [class.disabled]="executingAction"
                                     translate
                                 >
                                     ManagerActions.OfferLetter.SendButton
@@ -90,6 +91,7 @@
                                     data-toggle="modal"
                                     data-target="#modal-1"
                                     (click)="setDocumentType(documentType.I9)"
+                                    [class.disabled]="executingAction"
                                     translate
                                 >
                                     ManagerActions.I9Request.SendButton

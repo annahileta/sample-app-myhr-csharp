@@ -29,11 +29,12 @@ namespace DocuSign.MyHR.Security
         public (ClaimsPrincipal, AuthenticationProperties) AuthenticateFromJwt()
         {
             OAuth.OAuthToken authToken = _apiClient.RequestJWTUserToken(
-                    ConfigurationManager.AppSettings["IntegrationKey"],
-                    ConfigurationManager.AppSettings["UserId"],
-                    ConfigurationManager.AppSettings["AuthServer"],
-                    Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["RSAKey"]),
-                    1);
+                ConfigurationManager.AppSettings["IntegrationKey"],
+                ConfigurationManager.AppSettings["UserId"],
+                ConfigurationManager.AppSettings["AuthServer"],
+                Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["RSAKey"]),
+                1,
+                new List<string> { "click.manage", "signature" });
 
             OAuth.UserInfo userInfo = _apiClient.GetUserInfo(authToken.access_token);
             var claims = new List<Claim>
@@ -49,7 +50,7 @@ namespace DocuSign.MyHR.Security
             {
                 claims.Add(new Claim("accounts", JsonConvert.SerializeObject(account)));
             }
-            
+
             var claimsIdentity = new ClaimsIdentity(
                 claims,
                 CookieAuthenticationDefaults.AuthenticationScheme);
@@ -60,7 +61,7 @@ namespace DocuSign.MyHR.Security
                 ExpiresUtc = DateTimeOffset.Now.AddDays(1),
                 IsPersistent = true,
             };
-            
+
             return (new ClaimsPrincipal(claimsIdentity), authProperties);
         }
     }

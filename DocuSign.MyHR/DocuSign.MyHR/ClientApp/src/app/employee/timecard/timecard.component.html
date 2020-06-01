@@ -15,14 +15,14 @@
                 <div class="editable">
                     <div class="user-avatar">
                         <div class="user-image">
-                            <img src="{{ 'data:image/jpg;base64,' + user.profileImage }}" alt="avatar" />
+                            <img src="{{ 'data:image/jpg;base64,' + user?.profileImage }}" alt="avatar" />
                         </div>
                         <div class="user-info">
                             <span>{{ user?.firstName }}</span>
                             <span>{{ user?.lastName }} </span>
                         </div>
                     </div>
-                    <form action="" class="was-validated" [formGroup]="timecardForm" novalidate (ngSubmit)="sendTimeCard()">
+                    <form action="" class="was-validated" [formGroup]="timecardForm" (ngSubmit)="timecardForm.valid && sendTimeCard()">
                         <div class="timecard-inputs">
                             <div class="form-group">
                                 <label for="Monday" translate>Timecard.Weekdays.Mon</label>
@@ -114,7 +114,12 @@
                         <hr />
                         <div class="d-flex flex-wrap justify-content-center justify-content-md-end align-items-center">
                             <div id="ds-clickwrap"></div>
-                            <button class="btn btn-warning" translate>
+                            <button
+                                class="btn btn-warning"
+                                [disabled]="timecardForm.invalid || this.timecartSent"
+                                [class.disabled]="timecardForm.invalid || this.timecartSent"
+                                translate
+                            >
                                 Timecard.SubmitButton
                             </button>
                         </div>

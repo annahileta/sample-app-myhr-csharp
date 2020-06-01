@@ -11,6 +11,7 @@ export class ManagerActionsComponent {
     @ViewChild('closeModalButton') closeModalButton: ElementRef
     documentType = DocumentType
     type: DocumentType
+    executingAction: boolean
 
     additionalUserForm: FormGroup = new FormGroup({
         Name: new FormControl('', Validators.required),
@@ -24,6 +25,7 @@ export class ManagerActionsComponent {
     }
 
     sendEnvelope(): void {
+        this.executingAction = true
         this.actionServise.sendEnvelope(this.type, this.additionalUserForm.value).subscribe((payload) => {
             if (payload.redirectUrl != null && payload.redirectUrl !== '') {
                 window.location.href = payload.redirectUrl
@@ -32,6 +34,7 @@ export class ManagerActionsComponent {
             sessionStorage.setItem('envelopeId', payload.envelopeId)
             this.closeModalButton.nativeElement.click()
             this.additionalUserForm.reset()
+            this.executingAction = false
         })
     }
 
