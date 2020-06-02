@@ -1,3 +1,4 @@
+import { of } from 'rxjs'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { EmployeeActionsComponent } from './employee-actions.component'
@@ -6,7 +7,9 @@ import { TranslateModule } from '@ngx-translate/core'
 import { NotificationService } from 'src/app/shared/notification/notification.service'
 
 class ActionsServiceStub {
-    public getUser() {}
+    public getUser() {
+        return of(null)
+    }
 }
 
 class NotificationServiceStub {

@@ -45,7 +45,7 @@ export class TimeCardComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.employeeService.getUser()
+        this.employeeService.getUser().subscribe()
         this.employeeService.user$.subscribe((user) => (this.user = user))
         this.workWeekDates = this.getWorkWeek()
     }

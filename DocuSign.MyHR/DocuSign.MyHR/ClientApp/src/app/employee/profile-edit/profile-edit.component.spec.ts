@@ -5,12 +5,20 @@ import { IUser } from '../shared/user.model'
 import { FormsModule, NgForm } from '@angular/forms'
 import { DatePipe } from '@angular/common'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { Observable, BehaviorSubject } from 'rxjs'
+import { Observable, BehaviorSubject, of } from 'rxjs'
 import { By } from '@angular/platform-browser'
+import { NotificationService } from '../../shared/notification/notification.service'
 
 class EmployeeServiceStub {
-    public saveUser(user: IUser) {}
+    public saveUser(user: IUser) {
+        return of(user)
+    }
+
     user$: Observable<IUser> = new BehaviorSubject(null)
+}
+
+class NotificationServiceStub {
+    public showNotificationMessage() {}
 }
 
 describe('ProfileEditComponent', () => {
@@ -25,7 +33,10 @@ describe('ProfileEditComponent', () => {
         TestBed.configureTestingModule({
             declarations: [ProfileEditComponent],
             imports: [FormsModule, HttpClientTestingModule],
-            providers: [NgForm, { provide: EmployeeService, useClass: EmployeeServiceStub }]
+            providers: [
+                { provide: EmployeeService, useClass: EmployeeServiceStub },
+                { provide: NotificationService, useClass: NotificationServiceStub }
+            ]
         }).compileComponents()
     }))
 
@@ -33,7 +44,7 @@ describe('ProfileEditComponent', () => {
         fixture = TestBed.createComponent(ProfileEditComponent)
         component = fixture.componentInstance
         employeeService = TestBed.get(EmployeeService)
-        spyOn(employeeService, 'saveUser')
+        spyOn(employeeService, 'saveUser').and.returnValue(of(null))
         const user = <IUser>{
             firstName: 'TestName',
             lastName: 'TestLastName',
@@ -159,7 +170,6 @@ describe('ProfileEditComponent', () => {
 
     describe('from 2', () => {
         it('form valid when all fields field', () => {
-            spyOn(component, 'saveUser')
             component.user = <IUser>{
                 firstName: 'TestName',
                 lastName: 'TestLastName',
