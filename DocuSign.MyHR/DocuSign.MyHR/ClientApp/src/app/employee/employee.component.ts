@@ -1,9 +1,13 @@
-import { ToastService } from './toast/toast.service'
+import { of, Observable } from 'rxjs'
+import { IMessage } from './shared/message.model'
+import { NotificationService } from '../shared/notification/notification.service'
 import { EmployeeService } from './employee.service'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core'
 import { IUser } from './shared/user.model'
 import { ActivatedRoute, Params } from '@angular/router'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, switchMap } from 'rxjs/operators'
+import { ActionsService } from './shared/actions.service'
+import { DocumentType } from './shared/document-type.enum'
 
 @Component({
     selector: 'app-employee',
@@ -12,9 +16,16 @@ import { filter, map } from 'rxjs/operators'
 export class EmployeeComponent implements OnInit {
     isEditUser = false
     user: IUser
-    message: string
+    directDepositPayload
+    @ViewChild('directDepositTemplate', { static: true }) directDepositTemplate: TemplateRef<unknown>
+    @ViewChild('defaultNotificationTemplate', { static: true }) defaultNotificationTemplate: TemplateRef<unknown>
 
-    constructor(private employeeService: EmployeeService, private activatedRoute: ActivatedRoute, private toastService: ToastService) {}
+    constructor(
+        private employeeService: EmployeeService,
+        private activatedRoute: ActivatedRoute,
+        private notificationService: NotificationService,
+        private actionServise: ActionsService
+    ) {}
 
     ngOnInit(): void {
         this.employeeService.getUser()
@@ -23,13 +34,10 @@ export class EmployeeComponent implements OnInit {
         this.activatedRoute.queryParams
             .pipe(
                 map((params: Params) => params.event),
-                filter((event: string) => !!event)
+                filter((event: string) => !!event && event === 'signing_complete'),
+                switchMap(() => this.getNotificationMessage())
             )
-            .subscribe((event: string) => {
-                if (event === 'signing_complete') {
-                    this.toastService.setToastMessage('Success')
-                }
-            })
+            .subscribe((message: IMessage) => this.notificationService.showNotificationMessage(message))
     }
 
     editUser(): void {
@@ -43,5 +51,29 @@ export class EmployeeComponent implements OnInit {
     exitSaving(user: IUser): void {
         this.user = user
         this.isEditUser = false
+    }
+
+    private getNotificationMessage(): Observable<IMessage> {
+        const documentType = this.popSavedData('documentType')
+
+        if (documentType === DocumentType.DirectDeposit) {
+            const envelopeId = this.popSavedData('envelopeId')
+            return this.actionServise.getEnvelopeInfo(envelopeId).pipe(
+                map((payload) => {
+                    this.directDepositPayload = payload
+                    return { header: 'Header', body: this.directDepositTemplate }
+                })
+            )
+        }
+        return of({ header: 'Default Header', body: this.defaultNotificationTemplate })
+    }
+
+    private popSavedData(key: string): string {
+        const savedData = sessionStorage.getItem(key)
+
+        if (savedData) {
+            sessionStorage.removeItem(key)
+        }
+        return savedData
     }
 }

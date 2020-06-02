@@ -51,9 +51,9 @@ export class TimeCardComponent implements OnInit {
     }
 
     @HostListener('window:message', ['$event'])
-    onMessage(event) {
+    onMessage(event: MessageEvent): void {
         if (event.data.type === 'CLOSE_HAS_AGREED') {
-            this.router.navigate(['/employee'])
+            this.router.navigate(['/employee'], { queryParams: { event: 'signing_complete' } })
         }
     }
 

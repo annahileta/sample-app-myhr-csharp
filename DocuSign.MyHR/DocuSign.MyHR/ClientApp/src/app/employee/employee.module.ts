@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module'
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { EmployeeComponent } from './employee.component'
@@ -9,18 +10,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ManagerActionsComponent } from './manager-actions/manager-actions.component'
 import { ProfileEditComponent } from './profile-edit/profile-edit.component'
 import { TimeCardComponent } from './timecard/timecard.component'
-import { ToastComponent } from './toast/toast.component'
 
 @NgModule({
-    declarations: [
-        EmployeeComponent,
-        ProfileComponent,
-        ActionsComponent,
-        ManagerActionsComponent,
-        ProfileEditComponent,
-        TimeCardComponent,
-        ToastComponent
-    ],
-    imports: [CommonModule, EmployeeRoutingModule, TranslateModule.forChild(), FormsModule, ReactiveFormsModule]
+  declarations: [
+    EmployeeComponent,
+    ProfileComponent,
+    ActionsComponent,
+    ManagerActionsComponent,
+    ProfileEditComponent,
+    TimeCardComponent
+  ],
+  imports: [
+    CommonModule,
+    EmployeeRoutingModule,
+    TranslateModule.forChild(),
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule
+  ]
 })
 export class EmployeeModule {}
