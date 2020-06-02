@@ -10,10 +10,11 @@ export class EmployeeService {
 
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {}
 
-    saveUser(user: IUser): void {
+    saveUser(user: IUser, callback: () => void): void {
         this.http.put<any>(this.baseUrl + 'api/user', user).subscribe(
             () => {
                 this.getUser()
+                callback()
             },
             (error) => console.error(error)
         )
