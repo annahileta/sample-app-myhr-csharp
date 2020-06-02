@@ -4,10 +4,10 @@ import { DocumentType } from '../shared/document-type.enum'
 import { Router } from '@angular/router'
 
 @Component({
-    selector: 'app-actions',
-    templateUrl: './actions.component.html'
+    selector: 'app-employee-actions',
+  templateUrl: './employee-actions.component.html'
 })
-export class ActionsComponent implements OnInit {
+export class EmployeeActionsComponent implements OnInit {
     public documentType = DocumentType
     actionExecuted: boolean
     constructor(private actionServise: ActionsService, private router: Router) {}

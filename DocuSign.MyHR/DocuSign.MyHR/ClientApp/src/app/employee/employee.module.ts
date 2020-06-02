@@ -5,14 +5,21 @@ import { EmployeeComponent } from './employee.component'
 import { EmployeeRoutingModule } from './employee-routing.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { ProfileComponent } from './profile/profile.component'
-import { ActionsComponent } from './actions/actions.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ManagerActionsComponent } from './manager-actions/manager-actions.component'
 import { ProfileEditComponent } from './profile-edit/profile-edit.component'
 import { TimeCardComponent } from './timecard/timecard.component'
+import { EmployeeActionsComponent } from './employee-actions/employee-actions.component'
 
 @NgModule({
-    declarations: [EmployeeComponent, ProfileComponent, ActionsComponent, ManagerActionsComponent, ProfileEditComponent, TimeCardComponent],
+    declarations: [
+        EmployeeComponent,
+        ProfileComponent,
+        EmployeeActionsComponent,
+        ManagerActionsComponent,
+        ProfileEditComponent,
+        TimeCardComponent
+    ],
     imports: [CommonModule, EmployeeRoutingModule, TranslateModule.forChild(), FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class EmployeeModule {}

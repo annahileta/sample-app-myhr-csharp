@@ -8,7 +8,6 @@ import { ActivatedRoute, Params } from '@angular/router'
 import { filter, map, switchMap } from 'rxjs/operators'
 import { ActionsService } from './shared/actions.service'
 import { DocumentType } from './shared/document-type.enum'
-import { TranslateService } from '@ngx-translate/core'
 import { popSavedDataFromSrorage } from './shared/storage-utils'
 
 @Component({
@@ -21,14 +20,12 @@ export class EmployeeComponent implements OnInit {
     directDepositPayload
     messageBody
     @ViewChild('directDepositTemplate', { static: true }) directDepositTemplate: TemplateRef<unknown>
-    @ViewChild('defaultNotificationTemplate', { static: true }) defaultNotificationTemplate: TemplateRef<unknown>
 
     constructor(
         private employeeService: EmployeeService,
         private activatedRoute: ActivatedRoute,
         private notificationService: NotificationService,
-        private actionServise: ActionsService,
-        private translateService: TranslateService
+        private actionServise: ActionsService
     ) {}
 
     ngOnInit(): void {

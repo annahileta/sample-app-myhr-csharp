@@ -10,7 +10,7 @@
         <ng-container *ngIf="isEditUser">
             <app-profile-edit (canceled)="cancelEdit()" (saved)="exitSaving($event)" [user]="user" class="col-lg-5"></app-profile-edit>
         </ng-container>
-        <app-actions class="col-lg-7"></app-actions>
+        <app-employee-actions class="col-lg-7"></app-employee-actions>
     </div>
     <app-manager-actions></app-manager-actions>
     <app-notification></app-notification>
@@ -18,14 +18,40 @@
 
 <!-- template -->
 <ng-template #directDepositTemplate>
-  <ul>
-      <li translate>Notifications.DirectDepositTemplate.PrimaryAccountNumber<span class="modal-success-value">{{directDepositPayload.PrimaryAccountNumber}}</span></li>
-      <li translate>Notifications.DirectDepositTemplate.PrimaryRoutingNumber<span class="modal-success-value">{{directDepositPayload.PrimaryRoutingNumber}}</span></li>
-      <li translate>Notifications.DirectDepositTemplate.PercentageAllocationFirstAccount<span class="modal-success-value">{{directDepositPayload.PercentageFirstAccount}}</span></li>
-      <li translate>Notifications.DirectDepositTemplate.SecondaryRoutingNumber<span class="modal-success-value">{{directDepositPayload.SecondaryRoutingNumber}}</span></li>
-      <li translate>Notifications.DirectDepositTemplate.SecondaryAccountNumber<span class="modal-success-value">{{directDepositPayload.SecondaryAccountNumber}}</span></li>
-      <li translate>Notifications.DirectDepositTemplate.PercentageAllocationSecondAccount<span class="modal-success-value">{{directDepositPayload.PercentageSecondAccount}}</span></li>
-      <li translate>Notifications.DirectDepositTemplate.Date<span class="modal-success-value">{{directDepositPayload['Date Signed']}}</span></li>
-  </ul>
+    <ul>
+        <li translate>
+            Notifications.DirectDepositTemplate.PrimaryAccountNumber<span class="modal-success-value">{{
+                directDepositPayload.PrimaryAccountNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.PrimaryRoutingNumber<span class="modal-success-value">{{
+                directDepositPayload.PrimaryRoutingNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.PercentageAllocationFirstAccount<span class="modal-success-value">{{
+                directDepositPayload.PercentageFirstAccount
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.SecondaryRoutingNumber<span class="modal-success-value">{{
+                directDepositPayload.SecondaryRoutingNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.SecondaryAccountNumber<span class="modal-success-value">{{
+                directDepositPayload.SecondaryAccountNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.PercentageAllocationSecondAccount<span class="modal-success-value">{{
+                directDepositPayload.PercentageSecondAccount
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.Date<span class="modal-success-value">{{ directDepositPayload['Date Signed'] }}</span>
+        </li>
+    </ul>
 </ng-template>
 <!-- end of template -->

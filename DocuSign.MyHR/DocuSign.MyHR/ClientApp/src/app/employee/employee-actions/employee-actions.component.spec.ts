@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { ActionsComponent } from './actions.component'
+import { EmployeeActionsComponent } from './employee-actions.component'
 import { ActionsService } from '../shared/actions.service'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -9,19 +9,19 @@ class ActionsServiceStub {
 }
 
 describe('ActionsComponent', () => {
-    let component: ActionsComponent
-    let fixture: ComponentFixture<ActionsComponent>
+    let component: EmployeeActionsComponent
+    let fixture: ComponentFixture<EmployeeActionsComponent>
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [RouterTestingModule, TranslateModule.forRoot()],
-            declarations: [ActionsComponent],
+            declarations: [EmployeeActionsComponent],
             providers: [{ provide: ActionsService, useClass: ActionsServiceStub }]
         }).compileComponents()
     }))
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ActionsComponent)
+        fixture = TestBed.createComponent(EmployeeActionsComponent)
         component = fixture.componentInstance
         fixture.detectChanges()
     })
