@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router'
 import { NotificationComponent } from './notification/notification.component'
 
 @NgModule({
-  declarations: [NotificationComponent],
-  imports: [CommonModule, RouterModule, TranslateModule.forChild()],
-  exports: [NotificationComponent]
+    declarations: [NotificationComponent],
+    imports: [CommonModule, RouterModule, TranslateModule.forChild()],
+    exports: [NotificationComponent]
 })
 export class SharedModule {}

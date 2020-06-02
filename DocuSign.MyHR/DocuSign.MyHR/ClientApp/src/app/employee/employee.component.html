@@ -16,20 +16,16 @@
     <app-notification></app-notification>
 </section>
 
-<!-- templates -->
+<!-- template -->
 <ng-template #directDepositTemplate>
   <ul>
-    <li>Primary routing number:<span class="modal-success-value">{{directDepositPayload.PrimaryRoutingNumber}}</span></li>
-    <li>Primary account number:<span class="modal-success-value">{{directDepositPayload.PrimaryAccountNumber}}</span></li>
-    <li>Percentage of allocation for first account:<span class="modal-success-value">{{directDepositPayload.PercentageFirstAccount}}</span></li>
-    <li>Secondary routing number:<span class="modal-success-value">{{directDepositPayload.SecondaryRoutingNumber}}</span></li>
-    <li>Secondary account number:<span class="modal-success-value">{{directDepositPayload.SecondaryAccountNumber}}</span></li>
-    <li>Percentage of allocation for second account:<span class="modal-success-value">{{directDepositPayload['Date Signed']}}</span></li>
-    <li>Date:<span class="modal-success-value">{{directDepositPayload.PrimaryAccountNumber}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.PrimaryAccountNumber<span class="modal-success-value">{{directDepositPayload.PrimaryAccountNumber}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.PrimaryRoutingNumber<span class="modal-success-value">{{directDepositPayload.PrimaryRoutingNumber}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.PercentageAllocationFirstAccount<span class="modal-success-value">{{directDepositPayload.PercentageFirstAccount}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.SecondaryRoutingNumber<span class="modal-success-value">{{directDepositPayload.SecondaryRoutingNumber}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.SecondaryAccountNumber<span class="modal-success-value">{{directDepositPayload.SecondaryAccountNumber}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.PercentageAllocationSecondAccount<span class="modal-success-value">{{directDepositPayload.PercentageSecondAccount}}</span></li>
+      <li translate>Notifications.DirectDepositTemplate.Date<span class="modal-success-value">{{directDepositPayload['Date Signed']}}</span></li>
   </ul>
 </ng-template>
-
-<ng-template #defaultNotificationTemplate>
-  <p>Success!</p>
-</ng-template>
-<!-- end of templates -->
+<!-- end of template -->

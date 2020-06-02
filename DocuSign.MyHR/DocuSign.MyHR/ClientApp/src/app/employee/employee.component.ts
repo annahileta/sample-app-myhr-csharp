@@ -8,6 +8,8 @@ import { ActivatedRoute, Params } from '@angular/router'
 import { filter, map, switchMap } from 'rxjs/operators'
 import { ActionsService } from './shared/actions.service'
 import { DocumentType } from './shared/document-type.enum'
+import { TranslateService } from '@ngx-translate/core'
+import { popSavedDataFromSrorage } from './shared/storage-utils'
 
 @Component({
     selector: 'app-employee',
@@ -17,6 +19,7 @@ export class EmployeeComponent implements OnInit {
     isEditUser = false
     user: IUser
     directDepositPayload
+    messageBody
     @ViewChild('directDepositTemplate', { static: true }) directDepositTemplate: TemplateRef<unknown>
     @ViewChild('defaultNotificationTemplate', { static: true }) defaultNotificationTemplate: TemplateRef<unknown>
 
@@ -24,7 +27,8 @@ export class EmployeeComponent implements OnInit {
         private employeeService: EmployeeService,
         private activatedRoute: ActivatedRoute,
         private notificationService: NotificationService,
-        private actionServise: ActionsService
+        private actionServise: ActionsService,
+        private translateService: TranslateService
     ) {}
 
     ngOnInit(): void {
@@ -54,26 +58,18 @@ export class EmployeeComponent implements OnInit {
     }
 
     private getNotificationMessage(): Observable<IMessage> {
-        const documentType = this.popSavedData('documentType')
+        const documentType = popSavedDataFromSrorage('documentType')
+        const header = `Notifications.SuccessMessageHeader.${documentType || 'Timecard'}`
 
         if (documentType === DocumentType.DirectDeposit) {
-            const envelopeId = this.popSavedData('envelopeId')
+            const envelopeId = popSavedDataFromSrorage('envelopeId')
             return this.actionServise.getEnvelopeInfo(envelopeId).pipe(
                 map((payload) => {
                     this.directDepositPayload = payload
-                    return { header: 'Header', body: this.directDepositTemplate }
+                    return { header, body: this.directDepositTemplate }
                 })
             )
         }
-        return of({ header: 'Default Header', body: this.defaultNotificationTemplate })
-    }
-
-    private popSavedData(key: string): string {
-        const savedData = sessionStorage.getItem(key)
-
-        if (savedData) {
-            sessionStorage.removeItem(key)
-        }
-        return savedData
+        return of({ header, body: `Notifications.SuccessMessageBody.${documentType || 'Timecard'}` })
     }
 }
