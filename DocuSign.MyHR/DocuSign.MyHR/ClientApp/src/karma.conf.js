@@ -2,6 +2,10 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const puppeteer = require('puppeteer')
+    process.env.CHROME_BIN = puppeteer.executablePath()
+
     config.set({
         basePath: '',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -17,7 +21,7 @@ module.exports = function (config) {
         },
         coverageIstanbulReporter: {
             dir: require('path').join(__dirname, '../coverage'),
-            reports: ['html', 'lcovonly'],
+            reports: ['html', 'lcovonly', 'text-summary', 'cobertura'],
             fixWebpackSourcePaths: true
         },
         reporters: ['progress', 'kjhtml'],

@@ -6,9 +6,10 @@
     "start": "echo Starting && ng serve",
     "build": "ng build",
     "build:ssr": "ng run DocuSign.MyHR:server:dev",
-    "test": "ng test",
     "lint": "eslint \"**/*.{js,ts}\" --quiet --fix",
-    "e2e": "ng e2e"
+    "install-puppeteer": "cd node_modules/puppeteer && npm run install",
+    "test": "npm run install-puppeteer && ng test",
+    "e2e": "npm run install-puppeteer && ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -68,6 +69,7 @@
     "prettier": "^2.0.5",
     "prettier-eslint": "^10.1.1",
     "protractor": "~5.4.3",
+    "puppeteer": "^3.3.0",
     "ts-node": "~8.3.0",
     "typescript": "~3.8.3"
   },
