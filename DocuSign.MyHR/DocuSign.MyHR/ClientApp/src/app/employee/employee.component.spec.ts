@@ -5,35 +5,23 @@ import { IUser } from './shared/user.model'
 import { Subject } from 'rxjs'
 import { DatePipe } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { NotificationService } from '../shared/notification/notification.service'
 import { RouterTestingModule } from '@angular/router/testing'
-import { ActionsService } from './shared/actions.service'
 
 class EmployeeServiceStub {
     public getUser() {}
     public user$: Subject<string> = new Subject<string>()
 }
-class NotificationServiceStub {
-    public showNotificationMessage() {}
-}
-class ActionsServiceStub {}
 
 describe('EmployeeComponent', () => {
     let component: EmployeeComponent
     let fixture: ComponentFixture<EmployeeComponent>
     let employeeService: EmployeeService
-    let notificationService: NotificationService
-    let actionsService: ActionsService
     const datePipe = new DatePipe('en-US')
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [EmployeeComponent],
-            providers: [
-                { provide: EmployeeService, useClass: EmployeeServiceStub },
-                { provide: NotificationService, useClass: NotificationServiceStub },
-                { provide: ActionsService, useClass: ActionsServiceStub }
-            ],
+            providers: [{ provide: EmployeeService, useClass: EmployeeServiceStub }],
             imports: [TranslateModule.forRoot(), RouterTestingModule]
         }).compileComponents()
     }))
@@ -51,9 +39,7 @@ describe('EmployeeComponent', () => {
         }
         employeeService = TestBed.inject(EmployeeService)
         spyOn(employeeService, 'getUser').and.stub()
-        notificationService = TestBed.inject(NotificationService)
-        spyOn(notificationService, 'showNotificationMessage').and.stub()
-        actionsService = TestBed.inject(ActionsService)
+
         fixture.detectChanges()
     })
 
