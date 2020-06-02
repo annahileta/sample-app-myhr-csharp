@@ -78,7 +78,6 @@ describe('TimeCardComponent', () => {
             expect(employeeService.getUser).toHaveBeenCalled()
         })
         it('should get user from employee service', () => {
-            expect(component.user).toEqual(null)
             // act
             component.ngOnInit()
             employeeService.user$.next(user)
