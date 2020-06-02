@@ -12,21 +12,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component'
 import { TimeCardComponent } from './timecard/timecard.component'
 
 @NgModule({
-  declarations: [
-    EmployeeComponent,
-    ProfileComponent,
-    ActionsComponent,
-    ManagerActionsComponent,
-    ProfileEditComponent,
-    TimeCardComponent
-  ],
-  imports: [
-    CommonModule,
-    EmployeeRoutingModule,
-    TranslateModule.forChild(),
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+    declarations: [EmployeeComponent, ProfileComponent, ActionsComponent, ManagerActionsComponent, ProfileEditComponent, TimeCardComponent],
+    imports: [CommonModule, EmployeeRoutingModule, TranslateModule.forChild(), FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class EmployeeModule {}

@@ -6,25 +6,28 @@ import { NotificationService } from './notification.service'
 import { IMessage } from './../../employee/shared/message.model'
 
 @Component({
-  selector: 'app-notification',
-  templateUrl: './notification.component.html'
+    selector: 'app-notification',
+    templateUrl: './notification.component.html'
 })
-
 @Injectable()
 export class NotificationComponent implements OnInit {
-  message$ : Observable<IMessage>;
-  isClosed = true;
+    message$: Observable<IMessage>
+    isClosed = true
+    withTemplate: boolean
 
-  constructor (private notificationService: NotificationService, private router: Router) {}
+    constructor(private notificationService: NotificationService, private router: Router) {}
 
-  ngOnInit (): void {
-    this.message$ = this.notificationService.message$.pipe(tap(message => {
-      this.isClosed = !message
-    }))
-  }
+    ngOnInit(): void {
+        this.message$ = this.notificationService.message$.pipe(
+            tap((message) => {
+                this.withTemplate = !(typeof message?.body === 'string')
+                this.isClosed = !message
+            })
+        )
+    }
 
-  close (): void {
-    this.notificationService.clear()
-    this.router.navigate(['./'], { queryParams: null })
-  }
+    close(): void {
+        this.notificationService.clear()
+        this.router.navigate(['./'], { queryParams: null })
+    }
 }
