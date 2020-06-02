@@ -66,9 +66,9 @@ namespace DocuSign.MyHR.Services
             return new CreateEnvelopeResponse(string.Empty, envelopeSummary.EnvelopeId);
         }
 
-        public Dictionary<string, string> GetEnvelopData(string accountId, string envelopId)
+        public Dictionary<string, string> GetEnvelopData(string accountId, string envelopeId)
         {
-            EnvelopeFormData results = _docuSignApiProvider.EnvelopApi.GetFormData(accountId, envelopId);
+            EnvelopeFormData results = _docuSignApiProvider.EnvelopApi.GetFormData(accountId, envelopeId);
             return results.FormData.ToDictionary(x => x.Name, x => x.Value);
         }
 
