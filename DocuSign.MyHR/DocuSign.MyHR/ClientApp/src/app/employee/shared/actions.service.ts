@@ -1,8 +1,8 @@
+import { Observable } from 'rxjs'
 import { Injectable, Inject } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { DocumentType } from './document-type.enum'
 import { IUser } from './user.model'
-import { Observable } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class ActionsService {
@@ -31,6 +31,14 @@ export class ActionsService {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json'
             })
+        })
+    }
+
+    getEnvelopeInfo(envelopeId: string): Observable<any> {
+        return this.http.get<any>(this.baseUrl + 'api/envelope', {
+            params: {
+                envelopeId: envelopeId
+            }
         })
     }
 }

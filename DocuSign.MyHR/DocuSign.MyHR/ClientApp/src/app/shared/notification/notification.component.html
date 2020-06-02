@@ -1,0 +1,7 @@
+<div *ngIf="message$ | async as message" class="modal-success" [class.fade]="isClosed" >
+    <button type="button" class="modal-success-close" data-dismiss="modal" (click) = "close()" >&times;</button>
+    <div class="modal-success-title">{{message.header}}</div>
+    <div class="modal-success-content">
+        <ng-container *ngTemplateOutlet="message.body"></ng-container>        
+    </div>
+</div>

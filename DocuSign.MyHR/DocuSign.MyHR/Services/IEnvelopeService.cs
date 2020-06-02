@@ -16,6 +16,6 @@ namespace DocuSign.MyHR.Services
 
         Dictionary<string, string> GetEnvelopData(
             string accountId,
-            string envelopId);
+            string envelopeId);
     }
 }
