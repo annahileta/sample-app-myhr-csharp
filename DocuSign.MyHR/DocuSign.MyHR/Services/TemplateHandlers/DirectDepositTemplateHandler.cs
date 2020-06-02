@@ -89,6 +89,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
                     new DateSigned
                     {
                         Name = "DateSigned",
+                        TabLabel="DateSigned",
                         DocumentId = "1",
                         PageNumber = "1",
                         XPosition = "419",
