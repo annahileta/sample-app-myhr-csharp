@@ -29,10 +29,10 @@ namespace DocuSign.MyHR.Security
         public (ClaimsPrincipal, AuthenticationProperties) AuthenticateFromJwt()
         {
             OAuth.OAuthToken authToken = _apiClient.RequestJWTUserToken(
-                ConfigurationManager.AppSettings["IntegrationKey"],
-                ConfigurationManager.AppSettings["UserId"],
-                ConfigurationManager.AppSettings["AuthServer"],
-                Encoding.UTF8.GetBytes(ConfigurationManager.AppSettings["RSAKey"]),
+                _configurationService["DocuSign:IntegrationKey"],
+                _configurationService["DocuSign:UserId"],
+                _configurationService["DocuSign:AuthServer"],
+                Encoding.UTF8.GetBytes(_configurationService["DocuSign:RSAPrivateKey"]),
                 1,
                 new List<string> { "click.manage", "signature" });
 

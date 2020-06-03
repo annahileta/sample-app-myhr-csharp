@@ -23,7 +23,7 @@ bin/
 Bin/
 obj/
 Obj/
-
+Logs/
 # Visual Studio 2015 cache/options directory
 .vs/
 
@@ -229,3 +229,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+/Properties/launchSettings.json

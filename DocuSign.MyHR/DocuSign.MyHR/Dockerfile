@@ -1,29 +1,42 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-#FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim AS base
-FROM mcr.microsoft.com/dotnet/core/aspnet AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk AS build
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g @angular/cli
+RUN npm update
+RUN ng version
+
+ENV PATH "$PATH:/usr/bin/node"
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+
 WORKDIR /src
-COPY DocuSign.MyHR/*.sln ./
-COPY ["DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj", "DocuSign.MyHR/"]
+COPY ["DocuSign.MyHR/*.sln", "DocuSign.MyHR/"]
+COPY ["DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj", "DocuSign.MyHR/DocuSign.MyHR/"]
 COPY ["DocuSign.MyHR/DocuSign.MyHR.UnitTests/DocuSign.MyHR.UnitTests.csproj", "DocuSign.MyHR.UnitTests/"]
-RUN dotnet restore "DocuSign.MyHR.UnitTests/DocuSign.MyHR.UnitTests.csproj"
-RUN dotnet restore "DocuSign.MyHR/DocuSign.MyHR.csproj"
-#RUN dotnet restore
+COPY ["DocuSign.MyHR/DocuSign.MyHR.UnitTests/DocuSign.MyHR.UnitTests.csproj", "DocuSign.MyHR/DocuSign.MyHR.UnitTests/"]
+WORKDIR /src/DocuSign.MyHR
+RUN dotnet restore
 COPY . .
 
-WORKDIR "/src/DocuSign.MyHR.UnitTests"
-RUN dotnet build "DocuSign.MyHR.UnitTests.csproj" -c Release
-
-WORKDIR "/src/DocuSign.MyHR"
-RUN dotnet build "DocuSign.MyHR.csproj" -c Release -o /app/build
+RUN dotnet build "DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "DocuSign.MyHR.csproj" -c Release -o /app/publish
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g @angular/cli
+RUN npm update
+RUN ng version
+ENV PATH "$PATH:/usr/bin/node"
+
+
+RUN dotnet publish "DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
