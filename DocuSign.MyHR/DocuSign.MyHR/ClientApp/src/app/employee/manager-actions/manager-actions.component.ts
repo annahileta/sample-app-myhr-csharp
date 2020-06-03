@@ -36,7 +36,7 @@ export class ManagerActionsComponent {
             sessionStorage.setItem('envelopeId', payload.envelopeId)
             sessionStorage.setItem('documentType', this.type)
             this.closeModalButton.nativeElement.click()
-            this.additionalUserForm.reset()
+            this.resetForm()
             this.executingAction = false
             if (this.type === DocumentType.I9) {
                 this.showNotification()
@@ -47,6 +47,10 @@ export class ManagerActionsComponent {
     isInvalid(control: AbstractControl): boolean {
         const form = <FormGroup>control
         return form.invalid && form.touched
+    }
+
+    resetForm(): void {
+        this.additionalUserForm.reset()
     }
 
     private showNotification(): void {
