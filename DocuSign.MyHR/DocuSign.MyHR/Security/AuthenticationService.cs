@@ -33,29 +33,31 @@ namespace DocuSign.MyHR.Security
                 try
                 {
                     authToken = _apiClient.RequestJWTUserToken(
-                         _configurationService["DocuSign:IntegrationKey"],
-                         _configurationService["DocuSign:UserId"],
-                         _configurationService["DocuSign:AuthServer"],
-                         Convert.FromBase64String(_configurationService["DocuSign:RSAPrivateKey"]),
-                         1,
-                         new List<string> { "click.manage", "signature" });
+                        _configurationService["DocuSign:IntegrationKey"],
+                        _configurationService["DocuSign:UserId"],
+                        _configurationService["DocuSign:AuthServer"],
+                        Convert.FromBase64String(_configurationService["DocuSign:RSAPrivateKey"]),
+                        1,
+                        new List<string> {"click.manage", "signature"});
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    throw new Exception($"Key: { _configurationService["DocuSign:IntegrationKey"]}, User:{  _configurationService["DocuSign:UserId"]} , server : { _configurationService["DocuSign:AuthServer"]}, privateKey : { _configurationService["DocuSign:RSAPrivateKey"]}", e);
+                    throw new Exception(
+                        $"Key: {_configurationService["DocuSign:IntegrationKey"]}, User:{_configurationService["DocuSign:UserId"]} , server : {_configurationService["DocuSign:AuthServer"]}, privateKey : {_configurationService["DocuSign:RSAPrivateKey"]}",
+                        e);
                 }
 
 
                 OAuth.UserInfo userInfo = _apiClient.GetUserInfo(authToken.access_token);
                 var claims = new List<Claim>
-            {
-                new Claim("access_token", authToken.access_token),
-                new Claim(ClaimTypes.NameIdentifier, userInfo.Sub),
-                new Claim(ClaimTypes.Name, userInfo.Name),
-                new Claim("account_id",  userInfo.Accounts.First(x => x.IsDefault == "true").AccountId),
-                new Claim("authType", LoginType.JWT.ToString()),
-            };
+                {
+                    new Claim("access_token", authToken.access_token),
+                    new Claim(ClaimTypes.NameIdentifier, userInfo.Sub),
+                    new Claim(ClaimTypes.Name, userInfo.Name),
+                    new Claim("account_id", userInfo.Accounts.First(x => x.IsDefault == "true").AccountId),
+                    new Claim("authType", LoginType.JWT.ToString()),
+                };
 
                 foreach (var account in userInfo.Accounts)
                 {
@@ -77,3 +79,4 @@ namespace DocuSign.MyHR.Security
             }
         }
     }
+}
