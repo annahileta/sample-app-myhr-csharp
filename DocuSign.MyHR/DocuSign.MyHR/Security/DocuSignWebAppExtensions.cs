@@ -34,7 +34,7 @@ namespace DocuSign.MyHR.Security
             applicationBuilder.UseSession();
         }
 
-        public static void ConfigureDocuSignSSO(this IServiceCollection services, IConfiguration Configuration)
+        public static void ConfigureDocuSignSSO(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMemoryCache();
             services.AddSession();
@@ -50,13 +50,13 @@ namespace DocuSign.MyHR.Security
             })
             .AddOAuth("DocuSign", options =>
             {
-                options.ClientId = Configuration["DocuSign:IntegrationKey"];
-                options.ClientSecret = Configuration["DocuSign:SecretKey"];
+                options.ClientId = configuration["DocuSign:IntegrationKey"];
+                options.ClientSecret = configuration["DocuSign:SecretKey"];
                 options.CallbackPath = new PathString("/ds/callback");
 
-                options.AuthorizationEndpoint = Configuration["DocuSign:AuthorizationEndpoint"];
-                options.TokenEndpoint = Configuration["DocuSign:TokenEndpoint"];
-                options.UserInformationEndpoint = Configuration["DocuSign:UserInformationEndpoint"];
+                options.AuthorizationEndpoint = configuration["DocuSign:AuthorizationEndpoint"];
+                options.TokenEndpoint = configuration["DocuSign:TokenEndpoint"];
+                options.UserInformationEndpoint = configuration["DocuSign:UserInformationEndpoint"];
 
                 options.Scope.Add("signature");
                 options.Scope.Add("click.manage");
@@ -146,8 +146,8 @@ namespace DocuSign.MyHR.Security
 
                                 var requestParameters = new Dictionary<string, string>
                                 {
-                                    {"client_id", Configuration["DocuSign:IntegrationKey"]},
-                                    {"client_secret", Configuration["DocuSign:SecretKey"]},
+                                    {"client_id", configuration["DocuSign:IntegrationKey"]},
+                                    {"client_secret", configuration["DocuSign:SecretKey"]},
                                     {"grant_type", "refresh_token"},
                                     {"refresh_token", authProperties.GetTokenValue("refresh_token")}
                                 };
