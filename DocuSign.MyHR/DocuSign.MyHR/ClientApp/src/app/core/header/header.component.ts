@@ -10,7 +10,7 @@ import { Observable } from 'rxjs'
 })
 export class HeaderComponent implements OnInit {
     isHomePage$: Observable<boolean>
-
+    isAuthenticated$: Observable<boolean>
     constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
     ngOnInit(): void {
@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
             map((event: NavigationEnd) => event.url === '/'),
             startWith(true)
         )
+        this.isAuthenticated$ = this.authenticationService.isAuthenticated()
     }
 
     logout(): void {

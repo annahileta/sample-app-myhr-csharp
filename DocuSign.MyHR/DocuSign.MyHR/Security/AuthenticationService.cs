@@ -32,7 +32,7 @@ namespace DocuSign.MyHR.Security
                 _configurationService["DocuSign:IntegrationKey"],
                 _configurationService["DocuSign:UserId"],
                 _configurationService["DocuSign:AuthServer"],
-                Encoding.UTF8.GetBytes(_configurationService["DocuSign:RSAPrivateKey"]),
+                Convert.FromBase64String(_configurationService["DocuSign:RSAPrivateKey"]),
                 1,
                 new List<string> { "click.manage", "signature" });
 
