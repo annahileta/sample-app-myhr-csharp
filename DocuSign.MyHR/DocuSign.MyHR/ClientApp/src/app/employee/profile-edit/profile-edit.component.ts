@@ -1,11 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { IUser } from '../shared/user.model'
 import * as i18nIsoCountries from 'i18n-iso-countries'
 import { EmployeeService } from '../employee.service'
-import { NotificationService } from '../../shared/notification/notification.service'
-import { TranslateService } from '@ngx-translate/core'
 import { IMessage } from '../shared/message.model'
-
+import { NotificationService } from '../../shared/notification/notification.service'
 @Component({
     selector: 'app-profile-edit',
     templateUrl: './profile-edit.component.html'
@@ -15,11 +13,7 @@ export class ProfileEditComponent implements OnInit {
     @Output() canceled = new EventEmitter<void>()
     @Output() saved = new EventEmitter<IUser>()
     countries = [] as Array<any>
-    constructor(
-        private employeeService: EmployeeService,
-        private notificationService: NotificationService,
-        private translate: TranslateService
-    ) {}
+    constructor(private employeeService: EmployeeService, private notificationService: NotificationService) {}
 
     ngOnInit(): void {
         i18nIsoCountries.registerLocale(
@@ -40,7 +34,7 @@ export class ProfileEditComponent implements OnInit {
             header: `Profile.Edit.SuccessMessage.Header`,
             body: `Profile.Edit.SuccessMessage.Message`
         }
-        this.employeeService.saveUser(user, () => this.notificationService.showNotificationMessage(message))
+        this.employeeService.saveUser(user).subscribe(() => this.notificationService.showNotificationMessage(message))
         this.employeeService.user$.subscribe((user) => {
             this.user = user
         })

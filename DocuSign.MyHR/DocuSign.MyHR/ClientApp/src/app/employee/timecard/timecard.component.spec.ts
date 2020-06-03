@@ -7,7 +7,6 @@ import { of, Observable, BehaviorSubject } from 'rxjs'
 import { IUser } from '../shared/user.model'
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 class ActionsServiceStub {
     public createClickWrap() {}
@@ -61,7 +60,7 @@ describe('TimeCardComponent', () => {
         actionsService = TestBed.inject(ActionsService)
         spyOn(actionsService, 'createClickWrap').and.returnValue(of(response))
         employeeService = TestBed.inject(EmployeeService)
-        spyOn(employeeService, 'getUser').and.stub()
+        spyOn(employeeService, 'getUser').and.returnValue(of(null))
         fixture.detectChanges()
     })
 

@@ -37,16 +37,17 @@
                     <button
                         class="btn btn-link link-with-arrow link-with-arrow-orange collapsed"
                         data-toggle="collapse"
-                        data-target="#collapse-inset-1"
+                        data-target="#collapse-inset-direct-deposit"
                         aria-expanded="false"
-                        aria-controls="collapse-inset-1"
+                        aria-controls="collapse-inset-direct-deposit"
                         translate
                     >
                         EmployeeActions.DirectDeposit.BehindTheSceneButton
                     </button>
                     <div
+                        data-parent="#actions"
                         class="collapse-inset-body collapse"
-                        id="collapse-inset-1"
+                        id="collapse-inset-direct-deposit"
                         aria-labelledby="heading-1"
                         [innerHTML]="'EmployeeActions.DirectDeposit.CodeFlow' | translate"
                     ></div>
@@ -86,16 +87,17 @@
                     <button
                         class="btn btn-link link-with-arrow link-with-arrow-orange collapsed"
                         data-toggle="collapse"
-                        data-target="#collapse-inset-1"
+                        data-target="#collapse-inset-w4"
                         aria-expanded="false"
-                        aria-controls="collapse-inset-1"
+                        aria-controls="collapse-inset-w4"
                         translate
                     >
                         EmployeeActions.W4TaxWithholding.BehindTheSceneButton
                     </button>
                     <div
+                        data-parent="#actions"
                         class="collapse-inset-body collapse"
-                        id="collapse-inset-1"
+                        id="collapse-inset-w4"
                         aria-labelledby="heading-1"
                         [innerHTML]="'EmployeeActions.W4TaxWithholding.CodeFlow' | translate"
                     ></div>
@@ -142,16 +144,17 @@
                     <button
                         class="btn btn-link link-with-arrow link-with-arrow-orange collapsed"
                         data-toggle="collapse"
-                        data-target="#collapse-inset-1"
+                        data-target="#collapse-inset-timecard"
                         aria-expanded="false"
-                        aria-controls="collapse-inset-1"
+                        aria-controls="collapse-inset-timecard"
                         translate
                     >
                         EmployeeActions.TimeCard.BehindTheSceneButton
                     </button>
                     <div
+                        data-parent="#actions"
                         class="collapse-inset-body collapse"
-                        id="collapse-inset-1"
+                        id="collapse-inset-timecard"
                         aria-labelledby="heading-1"
                         [innerHTML]="'EmployeeActions.TimeCard.CodeFlow' | translate"
                     ></div>
@@ -196,16 +199,17 @@
                     <button
                         class="btn btn-link link-with-arrow link-with-arrow-orange collapsed"
                         data-toggle="collapse"
-                        data-target="#collapse-inset-1"
+                        data-target="#collapse-inset-tuition-rbt"
                         aria-expanded="false"
-                        aria-controls="collapse-inset-1"
+                        aria-controls="collapse-inset-tuition-rbt"
                         translate
                     >
                         EmployeeActions.TuitionReimbursement.BehindTheSceneButton
                     </button>
                     <div
+                        data-parent="#actions"
                         class="collapse-inset-body collapse"
-                        id="collapse-inset-1"
+                        id="collapse-inset-tuition-rbt"
                         aria-labelledby="heading-1"
                         [innerHTML]="'EmployeeActions.TuitionReimbursement.CodeFlow' | translate"
                     ></div>
@@ -214,3 +218,43 @@
         </div>
     </div>
 </div>
+
+<!-- template -->
+<ng-template #directDepositTemplate>
+    <ul>
+        <li translate>
+            Notifications.DirectDepositTemplate.PrimaryAccountNumber<span class="modal-success-value">{{
+                directDepositPayload.PrimaryAccountNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.PrimaryRoutingNumber<span class="modal-success-value">{{
+                directDepositPayload.PrimaryRoutingNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.PercentageAllocationFirstAccount<span class="modal-success-value">{{
+                directDepositPayload.PercentageFirstAccount
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.SecondaryRoutingNumber<span class="modal-success-value">{{
+                directDepositPayload.SecondaryRoutingNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.SecondaryAccountNumber<span class="modal-success-value">{{
+                directDepositPayload.SecondaryAccountNumber
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.PercentageAllocationSecondAccount<span class="modal-success-value">{{
+                directDepositPayload.PercentageSecondAccount
+            }}</span>
+        </li>
+        <li translate>
+            Notifications.DirectDepositTemplate.Date<span class="modal-success-value">{{ directDepositPayload['Date Signed'] }}</span>
+        </li>
+    </ul>
+</ng-template>
+<!-- end of template -->

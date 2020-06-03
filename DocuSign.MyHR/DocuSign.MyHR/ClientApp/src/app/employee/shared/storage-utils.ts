@@ -1,4 +1,4 @@
-export function popSavedDataFromSrorage(key: string): string {
+export function popSavedDataFromStorage(key: string): string {
     const savedData = sessionStorage.getItem(key)
 
     if (savedData) {
