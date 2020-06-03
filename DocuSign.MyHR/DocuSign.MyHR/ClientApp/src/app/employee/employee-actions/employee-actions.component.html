@@ -61,7 +61,7 @@
                 <div class="card-icon">
                     <img src="assets/img/icon-2.svg" alt="icon" />
                 </div>
-                <span class="card-description" translate>EmployeeActions.W4TaxWithholding.Title</span>
+                <span class="card-description"  [innerHTML]="'EmployeeActions.W4TaxWithholding.Title' | translate"></span>
             </div>
             <div class="card-actions">
                 <button class="btn btn-warning btn-sm" (click)="sendEnvelope(documentType.W4)" [class.disabled]="actionExecuted" translate>
