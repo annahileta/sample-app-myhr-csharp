@@ -4,8 +4,8 @@
     {
         public Address()
         {
-                
         }
+
         public Address(
             string address1,
             string address2,

@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,7 +52,6 @@ namespace DocuSign.MyHR.Security
                 options.ClientId = configuration["DocuSign:IntegrationKey"];
                 options.ClientSecret = configuration["DocuSign:SecretKey"];
                 options.CallbackPath = new PathString("/ds/callback");
-
                 options.AuthorizationEndpoint = configuration["DocuSign:AuthorizationEndpoint"];
                 options.TokenEndpoint = configuration["DocuSign:TokenEndpoint"];
                 options.UserInformationEndpoint = configuration["DocuSign:UserInformationEndpoint"];
@@ -193,8 +191,7 @@ namespace DocuSign.MyHR.Security
 
         }
 
-        public static void ConfigureDocuSignExceptionHandling(this IApplicationBuilder app, IWebHostEnvironment env,
-            ILoggerFactory loggerFactory)
+        public static void ConfigureDocuSignExceptionHandling(this IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             var logger = loggerFactory.CreateLogger<Startup>();
             app.UseExceptionHandler(appError =>

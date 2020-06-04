@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -42,13 +41,15 @@ namespace DocuSign.MyHR.UnitTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("Time Tracking Confirmation", (string)createRequestObj.documents[0].documentName);
             Assert.NotNull(createRequestObj.documents[0].documentBase64);
+            Assert.Equal("1", (string)responseContent.clickwrapId);
+
+            //Assert - verify document content
             byte[] data = Convert.FromBase64String((string)createRequestObj.documents[0].documentBase64);
             using (Stream ms = new MemoryStream(data))
             {
                 WordprocessingDocument wordDoc = WordprocessingDocument.Open(ms, false);
                 Assert.Equal("I affirm I worked 7 hours this week.", wordDoc.MainDocumentPart.Document.Body.InnerText);
             }
-            Assert.Equal("1", (string)responseContent.clickwrapId);
         }
 
         [Theory, AutoData]

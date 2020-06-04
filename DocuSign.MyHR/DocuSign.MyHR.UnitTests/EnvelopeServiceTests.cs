@@ -78,7 +78,7 @@ namespace DocuSign.MyHR.UnitTests
             Assert.Equal(string.Empty, res.RedirectUrl);
             Assert.Equal("1", res.EnvelopeId);
 
-            //Asset Created template - IDV must be enabled
+            //Assert - Created template - IDV must be enabled
             var templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = new RecipientIdentityVerification(WorkflowId: "100");
             docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(accountId, templateToExpect), Times.Once());

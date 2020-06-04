@@ -3,7 +3,6 @@ using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,14 +34,15 @@ namespace DocuSign.MyHR
             services.AddScoped<IClickWrapService, ClickWrapService>();
 
             services.AddControllersWithViews().AddNewtonsoftJson();
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            
             services.ConfigureDocuSignSSO(Configuration);
-            services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)))
-                            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => options.Filters.Add(typeof(ContextFilter)));
             services.AddRazorPages().AddNewtonsoftJson();
 
             services.ConfigureApplicationCookie(options =>
@@ -61,7 +61,7 @@ namespace DocuSign.MyHR
         {
             loggerFactory.AddFile("Logs/myapp-{Date}.txt");
 
-            app.ConfigureDocuSignExceptionHandling(env, loggerFactory);
+            app.ConfigureDocuSignExceptionHandling(loggerFactory);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -73,12 +73,14 @@ namespace DocuSign.MyHR
             app.ConfigureDocuSign();
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+            
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -88,7 +90,6 @@ namespace DocuSign.MyHR
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
         }
     }
 }

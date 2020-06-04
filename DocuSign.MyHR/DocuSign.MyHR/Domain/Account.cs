@@ -8,7 +8,6 @@ namespace DocuSign.MyHR.Domain
     {
         public Account()
         {
-
         }
         
         public Account(string id, string name, string baseUri)

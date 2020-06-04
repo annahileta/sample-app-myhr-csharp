@@ -4,7 +4,6 @@ namespace DocuSign.MyHR.Domain
     {
         public User()
         {
-
         }
 
         public User(string id, string name)

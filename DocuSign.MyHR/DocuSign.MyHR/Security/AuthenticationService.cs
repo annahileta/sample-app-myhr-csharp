@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using DocuSign.eSign.Client;
 using DocuSign.eSign.Client.Auth;
 using DocuSign.MyHR.Domain;
@@ -17,7 +15,7 @@ namespace DocuSign.MyHR.Security
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _configurationService;
-        private ApiClient _apiClient;
+        private readonly ApiClient _apiClient;
 
         public AuthenticationService(IConfiguration configurationService)
         {
@@ -33,7 +31,7 @@ namespace DocuSign.MyHR.Security
                     _configurationService["DocuSign:UserId"],
                     _configurationService["DocuSign:AuthServer"],
                     Convert.FromBase64String(_configurationService["DocuSign:RSAPrivateKey"]),
-                    1,
+                    int.Parse(_configurationService["DocuSign:JWTLifeTime"]),
                     new List<string> { "click.manage", "signature" });
 
 
