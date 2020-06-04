@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 
 class AuthenticationServiceStub {
     public logout() {}
+    public isAuthenticated() {}
 }
 
 describe('HeaderComponent', () => {
@@ -31,6 +32,7 @@ describe('HeaderComponent', () => {
         component = fixture.componentInstance
         authenticationService = TestBed.inject(AuthenticationService)
         spyOn(authenticationService, 'logout').and.stub()
+        spyOn(authenticationService, 'isAuthenticated').and.stub()
         fixture.detectChanges()
     })
 
