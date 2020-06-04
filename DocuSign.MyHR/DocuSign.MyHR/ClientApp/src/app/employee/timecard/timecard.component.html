@@ -22,7 +22,7 @@
                             <span>{{ user?.lastName }} </span>
                         </div>
                     </div>
-                    <form action="" class="was-validated" [formGroup]="timecardForm" (ngSubmit)="timecardForm.valid && sendTimeCard()">
+                    <form action="" class="timecard-form needs-validation" [class.was-validated]="timecardForm.invalid" novalidate [formGroup]="timecardForm" (ngSubmit)="timecardForm.valid && sendTimeCard()">
                         <div class="timecard-inputs">
                             <div class="form-group">
                                 <label for="Monday" translate>Timecard.Weekdays.Mon</label>
@@ -106,6 +106,7 @@
                                     (change)="updateWorkLogs()"
                                 />
                             </div>
+                            <span class="timecard-feedback" translate>Timecard.ValidationMessage</span>
                         </div>
                         <div class="total-time text-md-right mt-4">
                             <span class="total-time-title" translate>Timecard.Total</span>
