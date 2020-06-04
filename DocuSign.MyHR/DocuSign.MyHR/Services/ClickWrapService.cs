@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -27,12 +28,30 @@ namespace DocuSign.MyHR.Services
         }
 
         public HttpResponseMessage CreateTimeTrackClickWrap(string accountId, string userId, int[] workingLog)
-        { 
+        {
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (workingLog == null)
+            {
+                throw new ArgumentNullException(nameof(workingLog));
+            }
+
+            if (workingLog.Length < 5)
+            {
+                throw new InvalidOperationException("Work log must be provided for all working days");
+            }
+
             var createResponse = CreateClickWrap(accountId, userId, workingLog);
             if (createResponse.StatusCode != HttpStatusCode.Created)
             {
-               throw new InvalidOperationException($"ClickWrap was not created. " +
-                                                   $"Returned status code {createResponse.StatusCode}, reason {createResponse.ReasonPhrase}");
+                throw new InvalidOperationException($"ClickWrap was not created. " +
+                                                    $"Returned status code {createResponse.StatusCode}, reason {createResponse.ReasonPhrase}");
             }
 
             var response = JsonConvert.DeserializeObject<dynamic>(createResponse.Content.ReadAsStringAsync().Result);
@@ -43,7 +62,7 @@ namespace DocuSign.MyHR.Services
         {
             var rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
 
-            var request = new HttpRequestMessage(
+            using var request = new HttpRequestMessage(
                 HttpMethod.Post,
                 $"clickapi/v1/accounts/{accountId}/clickwraps");
 
@@ -86,12 +105,11 @@ namespace DocuSign.MyHR.Services
 
         private HttpResponseMessage ActivateClickWrap(string accountId, string clickwrapId)
         {
-           var request = new HttpRequestMessage(
+            using var request = new HttpRequestMessage(
                 HttpMethod.Put,
                 $"clickapi/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/1");
-
             var requestBody = new
-            {  
+            {
                 status = "active"
             };
             request.Content = new StringContent(
@@ -117,9 +135,9 @@ namespace DocuSign.MyHR.Services
                     }
                 }
 
-                doc.SaveAs(tempDocPath).Close(); 
+                doc.SaveAs(tempDocPath).Close();
             }
-             
+
             using var memoryStream = new MemoryStream(File.ReadAllBytes(tempDocPath));
             var docBase64 = Convert.ToBase64String(memoryStream.ReadAsBytes());
             File.Delete(tempDocPath);

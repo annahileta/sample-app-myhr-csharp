@@ -18,7 +18,7 @@ namespace DocuSign.MyHR.UnitTests
     public class ClickWrapControllerTests
     {
         [Theory, AutoData]
-        public void Index_Get_ReturnsCorrectResult(
+        public void Index_WhenGetWithWorkLogs_ReturnsCorrectResult(
             Mock<IClickWrapService> clickWrapService,
             Account account,
             User user)

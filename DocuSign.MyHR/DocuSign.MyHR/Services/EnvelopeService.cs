@@ -33,6 +33,15 @@ namespace DocuSign.MyHR.Services
             string redirectUrl,
             string pingAction)
         {
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+
             string rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
             UserDetails userDetails = _userService.GetUserDetails(accountId, userId);
 
@@ -68,6 +77,15 @@ namespace DocuSign.MyHR.Services
 
         public Dictionary<string, string> GetEnvelopData(string accountId, string envelopeId)
         {
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+            if (envelopeId == null)
+            {
+                throw new ArgumentNullException(nameof(envelopeId));
+            }
+
             EnvelopeFormData results = _docuSignApiProvider.EnvelopApi.GetFormData(accountId, envelopeId);
             return results.FormData.ToDictionary(x => x.Name, x => x.Value);
         }
@@ -75,7 +93,7 @@ namespace DocuSign.MyHR.Services
         private void EnableIDV(string accountId, EnvelopeTemplate envelopeTemplate, string roleName)
         {
             AccountIdentityVerificationResponse idvResponse = _docuSignApiProvider.AccountsApi.GetAccountIdentityVerification(accountId);
-            var workflowId = idvResponse.IdentityVerification.First()?.WorkflowId;
+            var workflowId = idvResponse.IdentityVerification.FirstOrDefault()?.WorkflowId;
             if (workflowId == null)
             {
                 throw new IDVException("IdentityVerification workflow is not found. Check that IDV is enabled in DocuSign account.");

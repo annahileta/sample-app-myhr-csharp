@@ -47,9 +47,13 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
 
         public EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser)
         {
-            var env = new EnvelopeDefinition
+            if (currentUser == null)
             {
+                throw new ArgumentNullException(nameof(currentUser));
+            }  
 
+            var env = new EnvelopeDefinition
+            { 
                 TemplateRoles = new List<TemplateRole>
                 {
                     new TemplateRole

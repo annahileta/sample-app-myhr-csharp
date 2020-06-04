@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
@@ -12,29 +13,40 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
 
         public EnvelopeTemplate BuildTemplate(string rootDir)
         {
-            return JsonConvert.DeserializeObject<EnvelopeTemplate>(new StreamReader(rootDir + _templatePath).ReadToEnd());
+            using var reader =  new StreamReader(rootDir + _templatePath);
+            return JsonConvert.DeserializeObject<EnvelopeTemplate>(reader.ReadToEnd());
         }
 
         public EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser)
         {
-            EnvelopeDefinition env = new EnvelopeDefinition();
+            if (currentUser == null)
+            {
+                throw new ArgumentNullException(nameof(currentUser));
+            }
 
-            TemplateRole roleHr = new TemplateRole
+            if (additionalUser == null)
+            {
+                throw new ArgumentNullException(nameof(additionalUser));
+            }  
+
+            var roleHr = new TemplateRole
             {
                 Email = currentUser.Email,
                 Name = currentUser.Name,
                 RoleName = "HR"
             };
 
-            TemplateRole roleNewHire = new TemplateRole
+            var roleNewHire = new TemplateRole
             {
                 Email = additionalUser.Email,
                 Name = additionalUser.Name,
                 RoleName = "New Hire"
             };
 
-            env.TemplateRoles = new List<TemplateRole> { roleHr, roleNewHire };
-            env.Status = "sent";
+            var env = new EnvelopeDefinition
+            {
+                TemplateRoles = new List<TemplateRole> {roleHr, roleNewHire}, Status = "sent"
+            };
             return env;
         }
     }

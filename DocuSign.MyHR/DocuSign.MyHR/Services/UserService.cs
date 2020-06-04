@@ -17,18 +17,46 @@ namespace DocuSign.MyHR.Services
 
         public UserDetails GetUserDetails(string accountId, string userId)
         {
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+
             UserInformation userInfo = _docuSignApiProvider.UsersApi.GetInformation(accountId, userId);
-            Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
             UserDetails userDetails = GetUserDetails(userInfo);
-            userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
+           
+            Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
+            if (image != null)
+            {
+                userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
+            }
+            
             return userDetails;
         }
 
         public void UpdateUserDetails(string accountId, string userId, UserDetails userDetails)
         {
+            if (accountId == null)
+            {
+                throw new ArgumentNullException(nameof(accountId));
+            }
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+            if (userDetails == null)
+            {
+                throw new ArgumentNullException(nameof(userDetails));
+            }
+
             _docuSignApiProvider.UsersApi.UpdateUser(
                accountId,
-               userId, 
+               userId,
                new UserInformation(
                    FirstName: userDetails.FirstName,
                    LastName: userDetails.LastName,
@@ -41,7 +69,7 @@ namespace DocuSign.MyHR.Services
                        userDetails.Address.Phone,
                        userDetails.Address.PostalCode,
                        userDetails.Address.StateOrProvince
-                       ))); 
+                       )));
         }
 
         private static UserDetails GetUserDetails(UserInformation userInfo)
