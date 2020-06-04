@@ -61,7 +61,8 @@
     },
     "Total": "Total",
     "Hours": "{{hours}} h",
-    "SubmitButton": "Submit time report"
+    "SubmitButton": "Submit time report",
+    "ValidationMessage":"Please fill out the form"
   },
   "ManagerActions": {
     "Header": "Manager Actions",
