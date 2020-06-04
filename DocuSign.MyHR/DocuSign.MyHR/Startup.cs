@@ -1,15 +1,9 @@
-using System.Net;
 using System.Threading.Tasks;
-using DocuSign.eSign.Client;
-using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Security;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
