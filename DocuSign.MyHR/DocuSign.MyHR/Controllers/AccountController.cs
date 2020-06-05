@@ -45,7 +45,7 @@ namespace DocuSign.MyHR.Controllers
          
         [HttpGet]
         [Route("/api/isauthenticated")]
-        public async System.Threading.Tasks.Task<IActionResult> IsAuthenticated()
+        public IActionResult IsAuthenticated()
         { 
             return Ok(User.Identity.IsAuthenticated);
         }

@@ -1,4 +1,5 @@
-﻿using DocuSign.MyHR.Models;
+﻿using System;
+using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,10 @@ namespace DocuSign.MyHR.Controllers
         [HttpPost]
         public IActionResult Index([FromBody]RequestEnvelopeModel model)
         {
+            if (model == null)
+            {
+                return BadRequest("Invalid model");
+            }
             string scheme = Url.ActionContext.HttpContext.Request.Scheme;
             CreateEnvelopeResponse createEnvelopeResponse = _envelopeService.CreateEnvelope(
                 model.Type,

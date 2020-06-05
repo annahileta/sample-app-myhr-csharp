@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace DocuSign.MyHR.Services
 {
+    [ExcludeFromCodeCoverage]
     public class DocuSignApiProvider : IDocuSignApiProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

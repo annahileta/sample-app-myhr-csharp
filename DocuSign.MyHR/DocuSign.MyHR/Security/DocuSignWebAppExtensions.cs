@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Http;
@@ -25,6 +26,7 @@ using Newtonsoft.Json.Linq;
 
 namespace DocuSign.MyHR.Security
 {
+    [ExcludeFromCodeCoverage]
     public static class DocuSignWebAppExtensions
     {
         public static void ConfigureDocuSign(this IApplicationBuilder applicationBuilder)
