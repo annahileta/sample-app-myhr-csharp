@@ -4,6 +4,7 @@ import * as i18nIsoCountries from 'i18n-iso-countries'
 import { EmployeeService } from '../employee.service'
 import { IMessage } from '../shared/message.model'
 import { NotificationService } from '../../shared/notification/notification.service'
+
 @Component({
     selector: 'app-profile-edit',
     templateUrl: './profile-edit.component.html'
@@ -13,6 +14,7 @@ export class ProfileEditComponent implements OnInit {
     @Output() canceled = new EventEmitter<void>()
     @Output() saved = new EventEmitter<IUser>()
     countries = [] as Array<any>
+
     constructor(private employeeService: EmployeeService, private notificationService: NotificationService) {}
 
     ngOnInit(): void {
@@ -45,7 +47,7 @@ export class ProfileEditComponent implements OnInit {
     }
 
     cancel(): void {
-        this.user = { ...this.employeeService.user }
+        this.user = { ...this.employeeService.user$.getValue() }
         this.canceled.next()
     }
 }

@@ -187,8 +187,8 @@
                                     <div class="buttons-group d-flex flex-wrap justify-content-end pt-3">
                                         <button
                                             class="btn btn-warning btn-sm"
-                                            [class.disabled]="additionalUserForm.invalid"
-                                            [disabled]="additionalUserForm.invalid"
+                                            [class.disabled]="additionalUserForm.invalid ||executingAction"
+                                            [disabled]="additionalUserForm.invalid || executingAction"
                                             translate
                                         >
                                             ManagerActions.Modal.SubmitButtom

@@ -1,9 +1,7 @@
 import { SharedModule } from './../shared/shared.module'
 import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import { EmployeeComponent } from './employee.component'
 import { EmployeeRoutingModule } from './employee-routing.module'
-import { TranslateModule } from '@ngx-translate/core'
 import { ProfileComponent } from './profile/profile.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ManagerActionsComponent } from './manager-actions/manager-actions.component'
@@ -20,6 +18,6 @@ import { EmployeeActionsComponent } from './employee-actions/employee-actions.co
         ProfileEditComponent,
         TimeCardComponent
     ],
-    imports: [CommonModule, EmployeeRoutingModule, TranslateModule.forChild(), FormsModule, ReactiveFormsModule, SharedModule]
+    imports: [EmployeeRoutingModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class EmployeeModule {}

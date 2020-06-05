@@ -6,7 +6,6 @@ import { IUser } from './shared/user.model'
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
-    user: IUser
     user$ = new BehaviorSubject<IUser>(null)
 
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {}
@@ -26,8 +25,7 @@ export class EmployeeService {
     getUser(): Observable<IUser> {
         return this.http.get<any>(this.baseUrl + 'api/user').pipe(
             tap((result) => {
-                this.user = result
-                this.user$.next({ ...this.user })
+                this.user$.next({ ...result })
             }),
             catchError((error) => {
                 console.error(error)
