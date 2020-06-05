@@ -83,7 +83,7 @@ export class TimeCardComponent implements OnInit {
         )
     }
 
-    private getWorkWeek() {
+    private getWorkWeek(): string {
         const currentDay = new Date()
         const currentWeek = getWeek(currentDay)
         const firstDay = format(
@@ -101,7 +101,7 @@ export class TimeCardComponent implements OnInit {
         return `W${currentWeek} (${firstDay} - ${lastDay})`
     }
 
-    private loadClickWrap(clickwrap: any, baseUrl: string) {
+    private loadClickWrap(clickwrap: any, baseUrl: string): void {
         const existingScript = document.getElementById('clickwrapscript')
         if (existingScript) {
             this.showClickWrap(clickwrap, baseUrl)

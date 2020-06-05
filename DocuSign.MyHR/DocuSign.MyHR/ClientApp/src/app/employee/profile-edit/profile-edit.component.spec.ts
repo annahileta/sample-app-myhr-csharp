@@ -54,7 +54,6 @@ describe('ProfileEditComponent', () => {
             address: {}
         }
         component.user = user
-        employeeService.user = user
         employeeService.user$ = new BehaviorSubject(user)
         const formElement = fixture.debugElement.query(By.css('#profileForm'))
         form = formElement.injector.get(NgForm)
