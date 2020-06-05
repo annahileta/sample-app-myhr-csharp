@@ -10,6 +10,7 @@ using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Exceptions;
 using DocuSign.MyHR.Services;
 using DocuSign.MyHR.Services.TemplateHandlers;
+using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 
 namespace DocuSign.MyHR.UnitTests
@@ -41,9 +42,9 @@ namespace DocuSign.MyHR.UnitTests
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
 
             //Assert
-            Assert.NotNull(res);
-            Assert.Equal($"accountId={_accountId}&templateId=1&userEmail={userInformation.Email}&userName={userInformation.Name}", res.RedirectUrl);
-            Assert.Equal("1", res.EnvelopeId);
+            res.Should().BeEquivalentTo(new CreateEnvelopeResponse(
+                $"accountId={_accountId}&templateId=1&userEmail={userInformation.Email}&userName={userInformation.Name}",
+                "1"));
         }
 
         [Theory]
@@ -65,14 +66,11 @@ namespace DocuSign.MyHR.UnitTests
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
 
             //Assert
-            Assert.NotNull(res);
-            Assert.Equal(string.Empty, res.RedirectUrl);
-            Assert.Equal("1", res.EnvelopeId);
+            res.Should().BeEquivalentTo(new CreateEnvelopeResponse(string.Empty, "1"));
         }
 
-
         [Theory]
-        [InlineAutoData(DocumentType.None)] 
+        [InlineAutoData(DocumentType.None)]
         public void CreateEnvelope_WhenDocumentTypeNone_ThrowsInvalidOperationException(
             DocumentType type,
             UserDetails userInformation,
@@ -99,14 +97,12 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
+            var accountsApi = new Mock<IAccountsApi>();
             var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
             var userService = new Mock<IUserService>();
             SetupApi(docuSignApiProvider, _accountId);
             userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-
-            var accountsApi = new Mock<IAccountsApi>();
-            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
-                .Returns(() =>
+            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>
@@ -124,6 +120,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             EnvelopeTemplate templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = new RecipientIdentityVerification(WorkflowId: "100");
+
             docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
         }
 
@@ -134,14 +131,12 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
+            var accountsApi = new Mock<IAccountsApi>();
             var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
             var userService = new Mock<IUserService>();
             SetupApi(docuSignApiProvider, _accountId);
             userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-
-            var accountsApi = new Mock<IAccountsApi>();
-            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
-                .Returns(() =>
+            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>
@@ -159,6 +154,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             EnvelopeTemplate templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = null;
+
             docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
         }
 
@@ -187,8 +183,7 @@ namespace DocuSign.MyHR.UnitTests
 
             //Act
             //Assert
-            Assert.Throws<IDVException>(() =>
-                sut.CreateEnvelope(DocumentType.I9, _accountId, _userId, LoginType.JWT, additionalUser, "", ""));
+            Assert.Throws<IDVException>(() => sut.CreateEnvelope(DocumentType.I9, _accountId, _userId, LoginType.JWT, additionalUser, "", ""));
         }
 
         [Theory]
@@ -285,12 +280,13 @@ namespace DocuSign.MyHR.UnitTests
             var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
 
             //Act - Assert
-            var result = sut.GetEnvelopData(_accountId, envelopeId);
+            Dictionary<string, string> result = sut.GetEnvelopData(_accountId, envelopeId);
 
             //Assert
-            Assert.NotNull(result);
-            Assert.Equal("Value1", result.First().Value);
-            Assert.Equal("Field1", result.First().Key);
+            result.Should().BeEquivalentTo(new Dictionary<string, string>()
+            {
+                {  "Field1", "Value1"}
+            });
         }
 
         [Fact]
