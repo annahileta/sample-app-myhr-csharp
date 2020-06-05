@@ -18,7 +18,7 @@ namespace DocuSign.MyHR.UnitTests
     public class ClickWrapControllerTests
     {
         [Theory, AutoData]
-        public void Index_WhenGetWithWorkLogs_ReturnsCorrectResult(
+        public void Index_WhenPostWithWorkLogs_ReturnsCorrectResult(
             Mock<IClickWrapService> clickWrapService,
             Account account,
             User user)
@@ -40,6 +40,22 @@ namespace DocuSign.MyHR.UnitTests
             Assert.True(result is OkObjectResult);
             var response = (ResponseClickWrapModel)((OkObjectResult)result).Value;
             Assert.Equal("1", (string) response.ClickWrap.clickWrapId);
+        }
+
+
+        [Fact]
+        public void Index_WhenPostWithModelStateInvalid_ReturnsBadRequestResult()
+        {
+            // Arrange
+            var clickWrapService = new Mock<IClickWrapService>();
+
+            var sut = new ClickWrapController(clickWrapService.Object);
+            // Act
+            var result = sut.Index(null);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<string>(badRequestResult.Value);
         }
 
         private void InitContext(Account account, User user)

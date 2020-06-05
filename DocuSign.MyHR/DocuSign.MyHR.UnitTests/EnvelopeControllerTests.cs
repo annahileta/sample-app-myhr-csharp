@@ -20,7 +20,7 @@ namespace DocuSign.MyHR.UnitTests
     public class EnvelopeControllerTests
     {
         [Theory, AutoData]
-        public void Index_WhenGetWithCorrectParameters_ReturnsCorrectResult(
+        public void Index_WhenPostWithCorrectParameters_ReturnsCorrectResult(
             Mock<IEnvelopeService> envelopeService,
             Account account,
             User user,
@@ -60,6 +60,22 @@ namespace DocuSign.MyHR.UnitTests
             var response = (ResponseEnvelopeModel)((OkObjectResult)result).Value;
             Assert.Equal("envelopeUrl", response.RedirectUrl);
             Assert.Equal("1", response.EnvelopeId);
+        }
+
+
+        [Fact]
+        public void Index_WhenPostWithModelStateInvalid_ReturnsBadRequestResult()
+        {
+            // Arrange
+            var envelopeService = new Mock<IEnvelopeService>();
+
+            var sut = new EnvelopeController(envelopeService.Object);
+            // Act
+            var result = sut.Index((RequestEnvelopeModel)null);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<string>(badRequestResult.Value);
         }
 
         private void InitContext(Account account, User user)

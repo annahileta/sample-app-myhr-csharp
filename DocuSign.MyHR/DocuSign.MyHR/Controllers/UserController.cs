@@ -1,4 +1,5 @@
-﻿using DocuSign.MyHR.Domain;
+﻿using System;
+using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,11 @@ namespace DocuSign.MyHR.Controllers
         [HttpPut]
         public IActionResult Index(UserDetails userDetails)
         {
+            if (userDetails == null)
+            {
+                return BadRequest("Invalid model");
+            }
+
             _userService.UpdateUserDetails(Context.Account.Id, Context.User.Id, userDetails);
             return Ok();
         }

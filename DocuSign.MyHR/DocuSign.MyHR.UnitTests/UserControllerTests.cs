@@ -40,6 +40,21 @@ namespace DocuSign.MyHR.UnitTests
             Assert.Equal(userDetails.Id, receivedUser.Id);
         }
 
+        [Fact]
+        public void Index_WhenPutWithModelStateInvalid_ReturnsBadRequestResult()
+        {
+            // Arrange
+            var userService = new Mock<IUserService>();
+            var sut = new UserController(userService.Object);
+    
+            // Act
+            var result = sut.Index(null);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<string>(badRequestResult.Value);
+        }
+
         [Theory, AutoData]
         public void Index_WhenPutWithCorrectParameters_ReturnsCorrectResult(
             Mock<IUserService> userService,
