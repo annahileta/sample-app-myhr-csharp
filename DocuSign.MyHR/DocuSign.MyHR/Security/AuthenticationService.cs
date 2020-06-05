@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using DocuSign.eSign.Client;
@@ -12,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace DocuSign.MyHR.Security
 {
+    [ExcludeFromCodeCoverage]
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _configurationService;

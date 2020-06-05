@@ -15,7 +15,7 @@ namespace DocuSign.MyHR.UnitTests
     public class UserControllerTests
     {
         [Theory, AutoData]
-        public void Index_Get_ReturnsCorrectResult(
+        public void Index_WhenGetWithCorrectParameters_ReturnsCorrectResult(
             Mock<IUserService> userService,
             UserDetails userDetails,
             Account account,
@@ -30,23 +30,23 @@ namespace DocuSign.MyHR.UnitTests
 
             //Act
             var result = sut.Index();
-            
+
             //Assert
-            Assert.True(result is OkObjectResult); 
+            Assert.True(result is OkObjectResult);
             Assert.IsType<UserDetails>(((OkObjectResult)result).Value);
-            var receivedUser = (UserDetails) ((OkObjectResult) result).Value;
+            var receivedUser = (UserDetails)((OkObjectResult)result).Value;
             Assert.Equal(userDetails.Address, receivedUser.Address);
             Assert.Equal(userDetails.Email, receivedUser.Email);
             Assert.Equal(userDetails.Id, receivedUser.Id);
         }
 
         [Theory, AutoData]
-        public void Index_Put_ReturnsCorrectResult(
+        public void Index_WhenPutWithCorrectParameters_ReturnsCorrectResult(
             Mock<IUserService> userService,
             UserDetails userDetails,
             Account account,
             User user)
-        {  
+        {
             //Arrange
             InitContext(account, user);
 
@@ -58,7 +58,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             Assert.True(result is OkResult);
         }
-         
+
         private void InitContext(Account account, User user)
         {
             var context = new Context();

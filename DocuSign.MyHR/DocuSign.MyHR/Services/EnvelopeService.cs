@@ -148,7 +148,7 @@ namespace DocuSign.MyHR.Services
                     templateHandler = new TuitionReimbursementTemplateHandler();
                     break;
                 default:
-                    throw new NotImplementedException();
+                    throw new InvalidOperationException("Document type is not set");
             }
 
             return templateHandler;

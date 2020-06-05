@@ -20,7 +20,7 @@ namespace DocuSign.MyHR.UnitTests
     public class EnvelopeControllerTests
     {
         [Theory, AutoData]
-        public void Index_Get_ReturnsCorrectResult(
+        public void Index_WhenGetWithCorrectParameters_ReturnsCorrectResult(
             Mock<IEnvelopeService> envelopeService,
             Account account,
             User user,

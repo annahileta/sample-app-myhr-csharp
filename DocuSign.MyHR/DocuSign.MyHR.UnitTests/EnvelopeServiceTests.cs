@@ -24,7 +24,7 @@ namespace DocuSign.MyHR.UnitTests
         [InlineAutoData(DocumentType.Offer)]
         [InlineAutoData(DocumentType.DirectDeposit)]
         [InlineAutoData(DocumentType.TuitionRbt)]
-        public void CreateEnvelope_ReturnsCorrectResult(
+        public void CreateEnvelope_WhenCorrectParameters_ReturnsCorrectResult(
             DocumentType type,
             UserDetails userInformation,
             UserDetails additionalUser)
@@ -48,7 +48,7 @@ namespace DocuSign.MyHR.UnitTests
 
         [Theory]
         [InlineAutoData(DocumentType.I9)]
-        public void CreateEnvelope_WhenDocumentTypeI9_ReturnsCorrectResult(
+        public void CreateEnvelope_WhenCorrectParametersAndWhenDocumentTypeI9_ReturnsCorrectResultWithRedirectUrlEmply(
             DocumentType type,
             UserDetails userInformation,
             UserDetails additionalUser)
@@ -68,6 +68,28 @@ namespace DocuSign.MyHR.UnitTests
             Assert.NotNull(res);
             Assert.Equal(string.Empty, res.RedirectUrl);
             Assert.Equal("1", res.EnvelopeId);
+        }
+
+
+        [Theory]
+        [InlineAutoData(DocumentType.None)] 
+        public void CreateEnvelope_WhenDocumentTypeNone_ThrowsInvalidOperationException(
+            DocumentType type,
+            UserDetails userInformation,
+            UserDetails additionalUser)
+        {
+            //Arrange
+            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            var userService = new Mock<IUserService>();
+            SetupApi(docuSignApiProvider, _accountId);
+            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+
+            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+
+            //Act
+            //Assert
+            Assert.Throws<InvalidOperationException>(() =>
+                sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", ""));
         }
 
         [Theory]
