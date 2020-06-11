@@ -8,6 +8,7 @@ using DocuSign.eSign.Api;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services;
+using FluentAssertions;
 
 namespace DocuSign.MyHR.UnitTests
 {
@@ -28,6 +29,9 @@ namespace DocuSign.MyHR.UnitTests
         public void GetUserDetails_WhenCorrectRequestParameters_ReturnsCorrectResult(UserInformation userInformation)
         {
             //Arrange
+            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            var usersApi = new Mock<IUsersApi>();
+
             userInformation.CreatedDateTime = DateTime.Now.ToString();
             _usersApi.Setup(x => x.GetInformation(_accountId, _userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
             _docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(_usersApi.Object);
@@ -38,27 +42,18 @@ namespace DocuSign.MyHR.UnitTests
             var userDetails = sut.GetUserDetails(_accountId, _userId);
 
             //Assert
-            Assert.NotNull(userDetails);
-             
-            Assert.Equal(userInformation.WorkAddress.Address1, userDetails.Address.Address1);
-            Assert.Equal(userInformation.WorkAddress.StateOrProvince, userDetails.Address.StateOrProvince);
-            Assert.Equal(userInformation.WorkAddress.Address2, userDetails.Address.Address2);
-            Assert.Equal(userInformation.WorkAddress.City, userDetails.Address.City);
-            Assert.Equal(userInformation.WorkAddress.Country, userDetails.Address.Country);
-            Assert.Equal(userInformation.WorkAddress.Fax, userDetails.Address.Fax);
-            Assert.Equal(userInformation.WorkAddress.Phone, userDetails.Address.Phone);
-            Assert.Equal(userInformation.WorkAddress.PostalCode, userDetails.Address.PostalCode);
+            userDetails.Should().BeEquivalentTo(Convert(userInformation));
         }
-
 
         [Theory, AutoData]
         public void GetUserDetails_WhenUserHasImage_ReturnsCorrectResult(UserInformation userInformation)
         {
             //Arrange
-            userInformation.CreatedDateTime = DateTime.Now.ToString(); 
+            userInformation.CreatedDateTime = DateTime.Now.ToString();
             _usersApi.Setup(x => x.GetInformation(_accountId, _userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
             _usersApi.Setup(x => x.GetProfileImage(_accountId, _userId, It.IsAny<UsersApi.GetProfileImageOptions>()))
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes("someimage")));
+
             _docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(_usersApi.Object);
 
             var sut = new UserService(_docuSignApiProvider.Object);
@@ -67,7 +62,6 @@ namespace DocuSign.MyHR.UnitTests
             var userDetails = sut.GetUserDetails(_accountId, _userId);
 
             //Assert
-            Assert.NotNull(userDetails); 
             Assert.NotNull(userDetails.ProfileImage);
         }
 
@@ -159,6 +153,27 @@ namespace DocuSign.MyHR.UnitTests
                     userDetails.Address.PostalCode,
                     userDetails.Address.StateOrProvince
                 ));
+        }
+        private static UserDetails Convert(UserInformation userInformation)
+        {
+            var expected = new UserDetails(
+                userInformation.UserId,
+                userInformation.UserName,
+                userInformation.Email,
+                userInformation.FirstName,
+                userInformation.LastName,
+                DateTime.Parse(userInformation.CreatedDateTime),
+                userInformation.PermissionProfileId,
+                new Address(
+                    userInformation.WorkAddress.Address1,
+                    userInformation.WorkAddress.Address2,
+                    userInformation.WorkAddress.City,
+                    userInformation.WorkAddress.Country,
+                    userInformation.WorkAddress.Fax,
+                    userInformation.WorkAddress.Phone,
+                    userInformation.WorkAddress.PostalCode,
+                    userInformation.WorkAddress.StateOrProvince));
+            return expected;
         }
     }
 }

@@ -7,6 +7,7 @@ using DocuSign.MyHR.Controllers;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
+using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,14 +29,14 @@ namespace DocuSign.MyHR.UnitTests
 
         [Theory, AutoData]
         public void Index_WhenPostWithCorrectParameters_ReturnsCorrectResult(
-            Mock<IEnvelopeService> envelopeService,
             Account account,
             User user,
             UserDetails additionalUser)
         {
-            //Arrange
+            //Arrange         
+
             InitContext(account, user);
-            envelopeService.Setup(c => c.CreateEnvelope(
+            _envelopeService.Setup(c => c.CreateEnvelope(
                     It.IsAny<DocumentType>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -45,30 +46,15 @@ namespace DocuSign.MyHR.UnitTests
                     It.IsAny<string>()))
                 .Returns(() => new CreateEnvelopeResponse("envelopeUrl", "1"));
 
-            var sut = new EnvelopeController(envelopeService.Object);
-            var urlHelperMock = new Mock<IUrlHelper>();
-            var httpContext = new Mock<HttpContext>();
-            httpContext.SetupGet(x => x.Request).Returns(() => new Mock<HttpRequest>().Object);
-
-            var actionContext = new ActionContext(
-                httpContext.Object,
-                Mock.Of<RouteData>(),
-                Mock.Of<ActionDescriptor>(),
-                new ModelStateDictionary()
-            );
-            urlHelperMock.SetupGet(x => x.ActionContext).Returns(actionContext).Verifiable();
-            sut.Url = urlHelperMock.Object;
+            var sut = new EnvelopeController(_envelopeService.Object);
+            SetupUrlHelper(sut);
 
             //Act
             var result = sut.Index(new RequestEnvelopeModel { AdditionalUser = additionalUser, RedirectUrl = "/", Type = DocumentType.I9 });
 
             //Assert
-            Assert.True(result is OkObjectResult);
-            var response = (ResponseEnvelopeModel)((OkObjectResult)result).Value;
-            Assert.Equal("envelopeUrl", response.RedirectUrl);
-            Assert.Equal("1", response.EnvelopeId);
+            result.Should().BeEquivalentTo(new OkObjectResult(new ResponseEnvelopeModel { EnvelopeId = "1", RedirectUrl = "envelopeUrl" })); 
         }
-
 
         [Fact]
         public void Index_WhenPostWithModelStateInvalid_ReturnsBadRequestResult()
@@ -79,8 +65,7 @@ namespace DocuSign.MyHR.UnitTests
             var result = sut.Index((RequestEnvelopeModel)null);
 
             // Assert
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.IsType<string>(badRequestResult.Value);
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         private void InitContext(Account account, User user)
@@ -100,6 +85,21 @@ namespace DocuSign.MyHR.UnitTests
             claimsIdentity.AddClaim(new Claim("authType", LoginType.CodeGrant.ToString()));
 
             context.Init(new ClaimsPrincipal(claimsIdentity));
+        }
+        private static void SetupUrlHelper(EnvelopeController sut)
+        {
+            var urlHelperMock = new Mock<IUrlHelper>();
+            var httpContext = new Mock<HttpContext>();
+            httpContext.SetupGet(x => x.Request).Returns(() => new Mock<HttpRequest>().Object);
+
+            var actionContext = new ActionContext(
+                httpContext.Object,
+                Mock.Of<RouteData>(),
+                Mock.Of<ActionDescriptor>(),
+                new ModelStateDictionary()
+            );
+            urlHelperMock.SetupGet(x => x.ActionContext).Returns(actionContext).Verifiable();
+            sut.Url = urlHelperMock.Object;
         }
     }
 }

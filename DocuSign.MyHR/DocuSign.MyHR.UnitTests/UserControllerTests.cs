@@ -6,6 +6,7 @@ using AutoFixture.Xunit2;
 using DocuSign.MyHR.Controllers;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services;
+using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -38,13 +39,8 @@ namespace DocuSign.MyHR.UnitTests
             //Act
             var result = sut.Index();
 
-            //Assert
-            Assert.True(result is OkObjectResult);
-            Assert.IsType<UserDetails>(((OkObjectResult)result).Value);
-            var receivedUser = (UserDetails)((OkObjectResult)result).Value;
-            Assert.Equal(userDetails.Address, receivedUser.Address);
-            Assert.Equal(userDetails.Email, receivedUser.Email);
-            Assert.Equal(userDetails.Id, receivedUser.Id);
+            //Assert 
+            result.Should().BeEquivalentTo(new OkObjectResult(userDetails)); 
         }
 
         [Fact]
@@ -57,8 +53,7 @@ namespace DocuSign.MyHR.UnitTests
             var result = sut.Index(null);
 
             // Assert
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.IsType<string>(badRequestResult.Value);
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Theory, AutoData]
@@ -78,7 +73,7 @@ namespace DocuSign.MyHR.UnitTests
 
             //Assert
             Assert.True(result is OkResult);
-        }
+        } 
 
         private void InitContext(Account account, User user)
         {

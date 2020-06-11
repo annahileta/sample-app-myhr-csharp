@@ -10,6 +10,7 @@ using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Exceptions;
 using DocuSign.MyHR.Services;
 using DocuSign.MyHR.Services.TemplateHandlers;
+using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 
 namespace DocuSign.MyHR.UnitTests
@@ -22,6 +23,7 @@ namespace DocuSign.MyHR.UnitTests
         private Mock<IUserService> _userService;
         private Mock<IEnvelopesApi> _envelopeApi;
         private Mock<ITemplatesApi> _templateApi;
+        private Mock<IAccountsApi> _accountsApi;
 
         public EnvelopeServiceTests()
         {
@@ -29,8 +31,9 @@ namespace DocuSign.MyHR.UnitTests
            _userService = new Mock<IUserService>();
            _envelopeApi = new Mock<IEnvelopesApi>();
            _templateApi = new Mock<ITemplatesApi>();
+           _accountsApi = new Mock<IAccountsApi>();
 
-           _envelopeApi.Setup(x => x.CreateEnvelope(_accountId, It.IsAny<EnvelopeDefinition>(), It.IsAny<EnvelopesApi.CreateEnvelopeOptions>()))
+            _envelopeApi.Setup(x => x.CreateEnvelope(_accountId, It.IsAny<EnvelopeDefinition>(), It.IsAny<EnvelopesApi.CreateEnvelopeOptions>()))
                 .Returns(() => new EnvelopeSummary(EnvelopeId: "1"));
 
            _envelopeApi.Setup(x => x.CreateRecipientView(_accountId, "1", It.IsAny<RecipientViewRequest>()))
@@ -66,9 +69,9 @@ namespace DocuSign.MyHR.UnitTests
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
 
             //Assert
-            Assert.NotNull(res);
-            Assert.Equal($"accountId={_accountId}&templateId=1&userEmail={userInformation.Email}&userName={userInformation.Name}", res.RedirectUrl);
-            Assert.Equal("1", res.EnvelopeId);
+            res.Should().BeEquivalentTo(new CreateEnvelopeResponse(
+                $"accountId={_accountId}&templateId=1&userEmail={userInformation.Email}&userName={userInformation.Name}",
+                "1"));
         }
 
         [Theory]
@@ -87,14 +90,11 @@ namespace DocuSign.MyHR.UnitTests
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
 
             //Assert
-            Assert.NotNull(res);
-            Assert.Equal(string.Empty, res.RedirectUrl);
-            Assert.Equal("1", res.EnvelopeId);
+            res.Should().BeEquivalentTo(new CreateEnvelopeResponse(string.Empty, "1"));
         }
 
-
         [Theory]
-        [InlineAutoData(DocumentType.None)] 
+        [InlineAutoData(DocumentType.None)]
         public void CreateEnvelope_WhenDocumentTypeNone_ThrowsInvalidOperationException(
             DocumentType type,
             UserDetails userInformation,
@@ -117,12 +117,9 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation,
             UserDetails additionalUser)
         {
-            //Arrange          
+            //Arrange           
             _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-
-            var accountsApi = new Mock<IAccountsApi>();
-            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
-                .Returns(() =>
+            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>
@@ -130,7 +127,7 @@ namespace DocuSign.MyHR.UnitTests
                             new AccountIdentityVerificationWorkflow(WorkflowId: "100")
                         }
                     });
-            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(_accountsApi.Object);
 
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
@@ -140,6 +137,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             EnvelopeTemplate templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = new RecipientIdentityVerification(WorkflowId: "100");
+
             _docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
         }
 
@@ -149,12 +147,9 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation,
             UserDetails additionalUser)
         {
-            //Arrange          
+            //Arrange  
             _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-
-            var accountsApi = new Mock<IAccountsApi>();
-            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
-                .Returns(() =>
+            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>
@@ -162,7 +157,7 @@ namespace DocuSign.MyHR.UnitTests
                             new AccountIdentityVerificationWorkflow(WorkflowId: "100")
                         }
                     });
-            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(_accountsApi.Object);
 
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
@@ -172,6 +167,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             EnvelopeTemplate templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = null;
+
             _docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
         }
 
@@ -183,22 +179,19 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange
             _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-
-            var accountsApi = new Mock<IAccountsApi>();
-            accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
+            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
                 .Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>()
                     });
-            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(_accountsApi.Object);
 
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             //Assert
-            Assert.Throws<IDVException>(() =>
-                sut.CreateEnvelope(DocumentType.I9, _accountId, _userId, LoginType.JWT, additionalUser, "", ""));
+            Assert.Throws<IDVException>(() => sut.CreateEnvelope(DocumentType.I9, _accountId, _userId, LoginType.JWT, additionalUser, "", ""));
         }
 
         [Theory]
@@ -281,12 +274,13 @@ namespace DocuSign.MyHR.UnitTests
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
-            var result = sut.GetEnvelopData(_accountId, envelopeId);
+            Dictionary<string, string> result = sut.GetEnvelopData(_accountId, envelopeId);
 
             //Assert
-            Assert.NotNull(result);
-            Assert.Equal("Value1", result.First().Value);
-            Assert.Equal("Field1", result.First().Key);
+            result.Should().BeEquivalentTo(new Dictionary<string, string>()
+            {
+                {  "Field1", "Value1"}
+            });
         }
 
         [Fact]

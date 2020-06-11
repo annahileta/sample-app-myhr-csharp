@@ -9,6 +9,7 @@ using DocuSign.MyHR.Controllers;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Models;
 using DocuSign.MyHR.Services;
+using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -31,24 +32,27 @@ namespace DocuSign.MyHR.UnitTests
             User user)
         {
             // Arrange
+            var clickWrapExpected = JsonConvert.SerializeObject(new {clickWrapId = "1"});
             InitContext(account, user);
             clickWrapService.Setup(c => c.CreateTimeTrackClickWrap(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int[]>()))
                 .Returns(() => new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent(JsonConvert.SerializeObject(new { clickWrapId = "1" }))
+                    Content = new StringContent(clickWrapExpected)
                 });
 
             var sut = new ClickWrapController(clickWrapService.Object);
 
             // Act
             var result = sut.Index(new RequestClickWrapModel { WorkLogs = new[] { 1, 2, 4 } });
-            
-            // Assert
-            Assert.True(result is OkObjectResult);
-            var response = (ResponseClickWrapModel)((OkObjectResult)result).Value;
-            Assert.Equal("1", (string) response.ClickWrap.clickWrapId);
-        }
 
+            // Assert
+            result.Should().BeEquivalentTo(new OkObjectResult
+                (new ResponseClickWrapModel
+            {
+                ClickWrap = JsonConvert.DeserializeObject(clickWrapExpected) ,
+                DocuSignBaseUrl = account.BaseUri
+            }));
+        }
 
         [Fact]
         public void Index_WhenPostWithModelStateInvalid_ReturnsBadRequestResult()
@@ -59,8 +63,7 @@ namespace DocuSign.MyHR.UnitTests
             var result = sut.Index(null);
 
             // Assert
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.IsType<string>(badRequestResult.Value);
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         private void InitContext(Account account, User user)
