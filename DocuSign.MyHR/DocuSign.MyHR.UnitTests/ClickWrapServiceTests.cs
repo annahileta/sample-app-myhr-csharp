@@ -19,20 +19,25 @@ namespace DocuSign.MyHR.UnitTests
     {
         private static string _accountId = "1";
         private static string _userId = "2";
+        private Mock<IDocuSignApiProvider> _docuSignApiProvider;
+
+        public ClickWrapServiceTests()
+        {
+            _docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+        }
 
         [Fact]
         public void CreateTimeTrackClickWrap_WithCorrectInput_ReturnsCorrectResponse()
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            //Arrange           
             dynamic createRequestObj = null;
-            IConfiguration configuration = Setup(docuSignApiProvider, HttpStatusCode.Created, (request) =>
+            IConfiguration configuration = Setup(_docuSignApiProvider, HttpStatusCode.Created, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            var sut = new ClickWrapService(docuSignApiProvider.Object, configuration);
+            var sut = new ClickWrapService(_docuSignApiProvider.Object, configuration);
             var response = sut.CreateTimeTrackClickWrap(_accountId, _userId, new[] { 1, 2, 4, 6, 6 });
 
             //Assert
@@ -45,16 +50,15 @@ namespace DocuSign.MyHR.UnitTests
         [Fact]
         public void CreateTimeTrackClickWrap_WithCorrectInput_CallsClickWrapApiWithCorrectDocument()
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            //Arrange           
             dynamic createRequestObj = null;
-            var configuration = Setup(docuSignApiProvider, HttpStatusCode.Created, (request) =>
+            var configuration = Setup(_docuSignApiProvider, HttpStatusCode.Created, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            var sut = new ClickWrapService(docuSignApiProvider.Object, configuration);
+            var sut = new ClickWrapService(_docuSignApiProvider.Object, configuration);
             sut.CreateTimeTrackClickWrap(_accountId, _userId, new[] { 1, 2, 4, 6, 6 });
 
             //Assert - verify document content
@@ -69,48 +73,45 @@ namespace DocuSign.MyHR.UnitTests
         [Fact]
         public void CreateTimeTrackClickWrap_WhenClickWrapIsNotCreatedByApi_ThrowsInvalidOperationException()
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            //Arrange          
             dynamic createRequestObj = null;
-            var configuration = Setup(docuSignApiProvider, HttpStatusCode.BadRequest, (request) =>
+            var configuration = Setup(_docuSignApiProvider, HttpStatusCode.BadRequest, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            Assert.Throws<InvalidOperationException>(() => new ClickWrapService(docuSignApiProvider.Object, configuration)
+            Assert.Throws<InvalidOperationException>(() => new ClickWrapService(_docuSignApiProvider.Object, configuration)
                 .CreateTimeTrackClickWrap(_accountId, _userId, new[] { 5, 5, 6, 8, 7 }));
         }
 
         [Fact]
         public void CreateTimeTrackClickWrap_WhenAccountIdIsNull_ThrowsArgumentNullException()
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            //Arrange           
             dynamic createRequestObj = null;
-            var configuration = Setup(docuSignApiProvider, HttpStatusCode.Created, (request) =>
+            var configuration = Setup(_docuSignApiProvider, HttpStatusCode.Created, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            Assert.Throws<ArgumentNullException>(() => new ClickWrapService(docuSignApiProvider.Object, configuration)
+            Assert.Throws<ArgumentNullException>(() => new ClickWrapService(_docuSignApiProvider.Object, configuration)
                 .CreateTimeTrackClickWrap(null, _userId, new[] { 5, 5, 6, 8, 7 }));
         }
 
         [Fact]
         public void CreateTimeTrackClickWrap_WhenUserIdIsNull_ThrowsArgumentNullException()
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            //Arrange            
             dynamic createRequestObj = null;
-            var configuration = Setup(docuSignApiProvider, HttpStatusCode.Created, (request) =>
+            var configuration = Setup(_docuSignApiProvider, HttpStatusCode.Created, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            Assert.Throws<ArgumentNullException>(() => new ClickWrapService(docuSignApiProvider.Object, configuration)
+            Assert.Throws<ArgumentNullException>(() => new ClickWrapService(_docuSignApiProvider.Object, configuration)
                 .CreateTimeTrackClickWrap(_accountId, null, new[] { 5, 5, 6, 8, 7 }));
         }
 
@@ -118,15 +119,14 @@ namespace DocuSign.MyHR.UnitTests
         public void CreateTimeTrackClickWrap_WhenWorkLogIsNull_ThrowsArgumentNullException()
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
             dynamic createRequestObj = null;
-            var configuration = Setup(docuSignApiProvider, HttpStatusCode.Created, (request) =>
+            var configuration = Setup(_docuSignApiProvider, HttpStatusCode.Created, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            Assert.Throws<ArgumentNullException>(() => new ClickWrapService(docuSignApiProvider.Object, configuration)
+            Assert.Throws<ArgumentNullException>(() => new ClickWrapService(_docuSignApiProvider.Object, configuration)
                 .CreateTimeTrackClickWrap(_accountId, _userId, null));
         }
 
@@ -134,19 +134,18 @@ namespace DocuSign.MyHR.UnitTests
         public void CreateTimeTrackClickWrap_WhenWorkLogDoesNotContainAllWorkingDays_ThrowsInvalidOperationException()
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
             dynamic createRequestObj = null;
-            var configuration = Setup(docuSignApiProvider, HttpStatusCode.Created, (request) =>
+            var configuration = Setup(_docuSignApiProvider, HttpStatusCode.Created, (request) =>
             {
                 createRequestObj = request;
             });
 
             //Act
-            Assert.Throws<InvalidOperationException>(() => new ClickWrapService(docuSignApiProvider.Object, configuration)
+            Assert.Throws<InvalidOperationException>(() => new ClickWrapService(_docuSignApiProvider.Object, configuration)
                 .CreateTimeTrackClickWrap(_accountId, _userId, new[] { 5, 5, 6 }));
         }
 
-        private IConfiguration Setup(Mock<IDocuSignApiProvider> docuSignApiProvider, HttpStatusCode createClickwrapStatusCode, Action<dynamic> setRequest)
+        private IConfiguration Setup(Mock<IDocuSignApiProvider> _docuSignApiProvider, HttpStatusCode createClickwrapStatusCode, Action<dynamic> setRequest)
         {
             var mockMessageHandler = new Mock<HttpMessageHandler>();
             mockMessageHandler.Protected()
@@ -174,7 +173,7 @@ namespace DocuSign.MyHR.UnitTests
                 .Build();
 
             var httpClient = new HttpClient(mockMessageHandler.Object) { BaseAddress = new Uri("http://localhost") };
-            docuSignApiProvider.SetupGet(c => c.DocuSignHttpClient).Returns(httpClient);
+            _docuSignApiProvider.SetupGet(c => c.DocuSignHttpClient).Returns(httpClient);
             return configuration;
         }
     }

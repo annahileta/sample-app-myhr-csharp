@@ -14,6 +14,13 @@ namespace DocuSign.MyHR.UnitTests
 {
     public class UserControllerTests
     {
+        private Mock<IUserService> _userService;
+
+        public UserControllerTests()
+        {
+            _userService = new Mock<IUserService>();
+        }
+
         [Theory, AutoData]
         public void Index_WhenGetWithCorrectParameters_ReturnsCorrectResult(
             Mock<IUserService> userService,
@@ -43,9 +50,8 @@ namespace DocuSign.MyHR.UnitTests
         [Fact]
         public void Index_WhenPutWithModelStateInvalid_ReturnsBadRequestResult()
         {
-            // Arrange
-            var userService = new Mock<IUserService>();
-            var sut = new UserController(userService.Object);
+            // Arrange        
+            var sut = new UserController(_userService.Object);
     
             // Act
             var result = sut.Index(null);

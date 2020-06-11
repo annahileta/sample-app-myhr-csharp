@@ -18,6 +18,34 @@ namespace DocuSign.MyHR.UnitTests
     {
         private static string _accountId = "1";
         private static string _userId = "2";
+        private Mock<IDocuSignApiProvider> _docuSignApiProvider;
+        private Mock<IUserService> _userService;
+        private Mock<IEnvelopesApi> _envelopeApi;
+        private Mock<ITemplatesApi> _templateApi;
+
+        public EnvelopeServiceTests()
+        {
+           _docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+           _userService = new Mock<IUserService>();
+           _envelopeApi = new Mock<IEnvelopesApi>();
+           _templateApi = new Mock<ITemplatesApi>();
+
+           _envelopeApi.Setup(x => x.CreateEnvelope(_accountId, It.IsAny<EnvelopeDefinition>(), It.IsAny<EnvelopesApi.CreateEnvelopeOptions>()))
+                .Returns(() => new EnvelopeSummary(EnvelopeId: "1"));
+
+           _envelopeApi.Setup(x => x.CreateRecipientView(_accountId, "1", It.IsAny<RecipientViewRequest>()))
+                .Returns((string a, string b, RecipientViewRequest c) =>
+                    new ViewUrl($"accountId={a}&templateId={b}&userEmail={c.Email}&userName={c.UserName}"));
+
+           _docuSignApiProvider.SetupGet(c => c.EnvelopApi).Returns(_envelopeApi.Object);
+           
+
+           _templateApi.Setup(x => x.CreateTemplate(_accountId, It.IsAny<EnvelopeTemplate>()))
+                .Returns((string a, EnvelopeTemplate b) =>
+                    new TemplateSummary(DocumentName: b.Name, TemplateId: "1"));
+
+           _docuSignApiProvider.SetupGet(c => c.TemplatesApi).Returns(_templateApi.Object);
+        }
 
         [Theory]
         [InlineAutoData(DocumentType.W4)]
@@ -30,12 +58,9 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
 
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
@@ -53,13 +78,10 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation,
             UserDetails additionalUser)
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            //Arrange                      
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
 
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             CreateEnvelopeResponse res = sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
@@ -78,13 +100,10 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation,
             UserDetails additionalUser)
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            //Arrange                      
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
 
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             //Assert
@@ -98,11 +117,8 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation,
             UserDetails additionalUser)
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            //Arrange          
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
 
             var accountsApi = new Mock<IAccountsApi>();
             accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
@@ -114,9 +130,9 @@ namespace DocuSign.MyHR.UnitTests
                             new AccountIdentityVerificationWorkflow(WorkflowId: "100")
                         }
                     });
-            docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
 
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             sut.CreateEnvelope(DocumentType.I9, _accountId, _userId, LoginType.JWT, additionalUser, "", "");
@@ -124,7 +140,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             EnvelopeTemplate templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = new RecipientIdentityVerification(WorkflowId: "100");
-            docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
+            _docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
         }
 
         [Theory]
@@ -133,11 +149,8 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation,
             UserDetails additionalUser)
         {
-            //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            //Arrange          
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
 
             var accountsApi = new Mock<IAccountsApi>();
             accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
@@ -149,9 +162,9 @@ namespace DocuSign.MyHR.UnitTests
                             new AccountIdentityVerificationWorkflow(WorkflowId: "100")
                         }
                     });
-            docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
 
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             sut.CreateEnvelope(DocumentType.I9, _accountId, _userId, LoginType.CodeGrant, additionalUser, "", "");
@@ -159,7 +172,7 @@ namespace DocuSign.MyHR.UnitTests
             //Assert
             EnvelopeTemplate templateToExpect = new I9TemplateHandler().BuildTemplate("../../../../DocuSign.MyHR/");
             templateToExpect.Recipients.Signers.First().IdentityVerification = null;
-            docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
+            _docuSignApiProvider.Verify(mock => mock.TemplatesApi.CreateTemplate(_accountId, templateToExpect), Times.Once());
         }
 
         [Theory]
@@ -169,10 +182,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
 
             var accountsApi = new Mock<IAccountsApi>();
             accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
@@ -181,9 +191,9 @@ namespace DocuSign.MyHR.UnitTests
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>()
                     });
-            docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.AccountsApi).Returns(accountsApi.Object);
 
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act
             //Assert
@@ -202,9 +212,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             Assert.Throws<ArgumentNullException>(() => sut.CreateEnvelope(type, null, _userId, LoginType.CodeGrant, additionalUser, "", ""));
@@ -221,10 +229,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             Assert.Throws<ArgumentNullException>(() => sut.CreateEnvelope(type, _accountId, null, LoginType.CodeGrant, additionalUser, "", ""));
@@ -238,11 +243,8 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             Assert.Throws<ArgumentNullException>(() => sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, null, "", ""));
@@ -257,11 +259,8 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            SetupApi(docuSignApiProvider, _accountId);
-            userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             sut.CreateEnvelope(type, _accountId, _userId, LoginType.CodeGrant, null, "", "");
@@ -272,17 +271,14 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange
             var envelopeId = "1";
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            var envelopeApi = new Mock<IEnvelopesApi>();
 
-            envelopeApi.Setup(x => x.GetFormData(_accountId, envelopeId)).Returns(() => new EnvelopeFormData(string.Empty, "1",
+            _envelopeApi.Setup(x => x.GetFormData(_accountId, envelopeId)).Returns(() => new EnvelopeFormData(string.Empty, "1",
                     new List<FormDataItem>
                     {
                         new FormDataItem { Name = "Field1", Value = "Value1" }
                     }));
-            docuSignApiProvider.SetupGet(c => c.EnvelopApi).Returns(envelopeApi.Object);
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            _docuSignApiProvider.SetupGet(c => c.EnvelopApi).Returns(_envelopeApi.Object);
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             var result = sut.GetEnvelopData(_accountId, envelopeId);
@@ -298,9 +294,7 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange
             var envelopeId = "1";
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             Assert.Throws<ArgumentNullException>(() => sut.GetEnvelopData(null, envelopeId));
@@ -310,9 +304,7 @@ namespace DocuSign.MyHR.UnitTests
         public void GetEnvelope_WhenEnvelopeIdIsNull_ThrowsArgumentException()
         {
             //Arrange 
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var userService = new Mock<IUserService>();
-            var sut = new EnvelopeService(docuSignApiProvider.Object, userService.Object, SetupConfiguration());
+            var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
             Assert.Throws<ArgumentNullException>(() => sut.GetEnvelopData(_accountId, null));
@@ -329,28 +321,6 @@ namespace DocuSign.MyHR.UnitTests
                 .AddInMemoryCollection(inMemorySettings)
                 .Build();
             return configuration;
-        }
-
-        private static void SetupApi(Mock<IDocuSignApiProvider> docuSignApiProvider, string accountId)
-        {
-            var envelopeApi = new Mock<IEnvelopesApi>();
-
-            envelopeApi.Setup(x => x.CreateEnvelope(accountId, It.IsAny<EnvelopeDefinition>(), It.IsAny<EnvelopesApi.CreateEnvelopeOptions>()))
-                .Returns(() => new EnvelopeSummary(EnvelopeId: "1"));
-
-            envelopeApi.Setup(x => x.CreateRecipientView(accountId, "1", It.IsAny<RecipientViewRequest>()))
-                .Returns((string a, string b, RecipientViewRequest c) =>
-                    new ViewUrl($"accountId={a}&templateId={b}&userEmail={c.Email}&userName={c.UserName}"));
-
-            docuSignApiProvider.SetupGet(c => c.EnvelopApi).Returns(envelopeApi.Object);
-
-            var templateApi = new Mock<ITemplatesApi>();
-
-            templateApi.Setup(x => x.CreateTemplate(accountId, It.IsAny<EnvelopeTemplate>()))
-                .Returns((string a, EnvelopeTemplate b) =>
-                    new TemplateSummary(DocumentName: b.Name, TemplateId: "1"));
-
-            docuSignApiProvider.SetupGet(c => c.TemplatesApi).Returns(templateApi.Object);
         }
     }
 }

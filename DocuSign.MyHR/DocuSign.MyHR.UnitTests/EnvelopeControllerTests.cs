@@ -19,6 +19,13 @@ namespace DocuSign.MyHR.UnitTests
 {
     public class EnvelopeControllerTests
     {
+        private Mock<IEnvelopeService> _envelopeService;
+
+        public EnvelopeControllerTests()
+        {
+            _envelopeService = new Mock<IEnvelopeService>();
+        }
+
         [Theory, AutoData]
         public void Index_WhenPostWithCorrectParameters_ReturnsCorrectResult(
             Mock<IEnvelopeService> envelopeService,
@@ -67,9 +74,7 @@ namespace DocuSign.MyHR.UnitTests
         public void Index_WhenPostWithModelStateInvalid_ReturnsBadRequestResult()
         {
             // Arrange
-            var envelopeService = new Mock<IEnvelopeService>();
-
-            var sut = new EnvelopeController(envelopeService.Object);
+            var sut = new EnvelopeController(_envelopeService.Object);
             // Act
             var result = sut.Index((RequestEnvelopeModel)null);
 

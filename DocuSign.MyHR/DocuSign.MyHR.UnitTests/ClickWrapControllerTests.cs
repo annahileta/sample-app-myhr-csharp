@@ -17,6 +17,13 @@ namespace DocuSign.MyHR.UnitTests
 {
     public class ClickWrapControllerTests
     {
+        private Mock<IClickWrapService> _clickWrapService;
+
+        public ClickWrapControllerTests()
+        {
+            _clickWrapService = new Mock<IClickWrapService>();
+        }
+
         [Theory, AutoData]
         public void Index_WhenPostWithWorkLogs_ReturnsCorrectResult(
             Mock<IClickWrapService> clickWrapService,
@@ -47,9 +54,7 @@ namespace DocuSign.MyHR.UnitTests
         public void Index_WhenPostWithModelStateInvalid_ReturnsBadRequestResult()
         {
             // Arrange
-            var clickWrapService = new Mock<IClickWrapService>();
-
-            var sut = new ClickWrapController(clickWrapService.Object);
+            var sut = new ClickWrapController(_clickWrapService.Object);
             // Act
             var result = sut.Index(null);
 

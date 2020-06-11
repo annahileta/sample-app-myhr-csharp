@@ -15,18 +15,24 @@ namespace DocuSign.MyHR.UnitTests
     {
         private static string _accountId = "1";
         private static string _userId = "2";
+        private Mock<IDocuSignApiProvider> _docuSignApiProvider;
+        private Mock<IUsersApi> _usersApi;
+
+        public UserServiceTests()
+        {
+            _docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            _usersApi = new Mock<IUsersApi>();
+        }
 
         [Theory, AutoData]
         public void GetUserDetails_WhenCorrectRequestParameters_ReturnsCorrectResult(UserInformation userInformation)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var usersApi = new Mock<IUsersApi>();
             userInformation.CreatedDateTime = DateTime.Now.ToString();
-            usersApi.Setup(x => x.GetInformation(_accountId, _userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
-            docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(usersApi.Object);
+            _usersApi.Setup(x => x.GetInformation(_accountId, _userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
+            _docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(_usersApi.Object);
 
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act
             var userDetails = sut.GetUserDetails(_accountId, _userId);
@@ -49,15 +55,13 @@ namespace DocuSign.MyHR.UnitTests
         public void GetUserDetails_WhenUserHasImage_ReturnsCorrectResult(UserInformation userInformation)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var usersApi = new Mock<IUsersApi>();
             userInformation.CreatedDateTime = DateTime.Now.ToString(); 
-            usersApi.Setup(x => x.GetInformation(_accountId, _userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
-            usersApi.Setup(x => x.GetProfileImage(_accountId, _userId, It.IsAny<UsersApi.GetProfileImageOptions>()))
+            _usersApi.Setup(x => x.GetInformation(_accountId, _userId, It.IsAny<UsersApi.GetInformationOptions>())).Returns(userInformation);
+            _usersApi.Setup(x => x.GetProfileImage(_accountId, _userId, It.IsAny<UsersApi.GetProfileImageOptions>()))
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes("someimage")));
-            docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(usersApi.Object);
+            _docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(_usersApi.Object);
 
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act
             var userDetails = sut.GetUserDetails(_accountId, _userId);
@@ -71,8 +75,7 @@ namespace DocuSign.MyHR.UnitTests
         public void GetUserDetails_WhenAccountIdNull_ThrowsArgumentException()
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act 
             //Assert
@@ -83,8 +86,8 @@ namespace DocuSign.MyHR.UnitTests
         public void GetUserDetails_WhenUserIdNull_ThrowsArgumentException()
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var sut = new UserService(docuSignApiProvider.Object);
+            var _docuSignApiProvider = new Mock<IDocuSignApiProvider>();
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act 
             //Assert
@@ -95,27 +98,24 @@ namespace DocuSign.MyHR.UnitTests
         public void UpdateUserDetails_WhenCorrectRequestParameters_CallsUpdateUserApiCorrectly(UserDetails newUserDetails)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var usersApi = new Mock<IUsersApi>();
             var updatedUserInfo = Convert(newUserDetails);
-            usersApi.Setup(x => x.UpdateUser(_accountId, _userId, It.IsAny<UserInformation>())).Returns(updatedUserInfo);
-            docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(usersApi.Object);
+            _usersApi.Setup(x => x.UpdateUser(_accountId, _userId, It.IsAny<UserInformation>())).Returns(updatedUserInfo);
+            _docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(_usersApi.Object);
 
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act
             sut.UpdateUserDetails(_accountId, _userId, newUserDetails);
 
             //Assert
-            usersApi.Verify(mock => mock.UpdateUser(_accountId, _userId, updatedUserInfo), Times.Once());
+            _usersApi.Verify(mock => mock.UpdateUser(_accountId, _userId, updatedUserInfo), Times.Once());
         }
 
         [Theory, AutoData]
         public void UpdateUserDetails_WhenAccountIdNull_ThrowsArgumentException(UserDetails newUserDetails)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act 
             //Assert
@@ -126,8 +126,7 @@ namespace DocuSign.MyHR.UnitTests
         public void UpdateUserDetails_WhenUserIdNull_ThrowsArgumentException(UserDetails newUserDetails)
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act 
             //Assert
@@ -138,8 +137,7 @@ namespace DocuSign.MyHR.UnitTests
         public void UpdateUserDetails_WhenUserDetailsNull_ThrowsArgumentException()
         {
             //Arrange
-            var docuSignApiProvider = new Mock<IDocuSignApiProvider>();
-            var sut = new UserService(docuSignApiProvider.Object);
+            var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act 
             //Assert
