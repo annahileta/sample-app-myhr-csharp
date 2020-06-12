@@ -12,4 +12,8 @@ export class ProfileComponent {
     editProfile(): void {
         this.editUserClicked.next()
     }
+
+    getCityandState(city: string, state: string): string {
+        return state ? `${city}, ${state}` : city
+    }
 }

@@ -34,10 +34,9 @@
                 </div>
                 <div class="profile-description col-lg-9">
                     <span>{{ user?.address?.address1 }}</span>
-                    <span>{{ user?.address?.city }}</span>
-                    <span *ngIf="user?.address?.stateOrProvince != null || user?.address.postalCode != null"
-                        >{{ user?.address?.stateOrProvince }}, {{ user?.address?.postalCode }}</span
-                    >
+                    <span > {{getCityandState(user?.address?.city, user?.address?.stateOrProvince)}}</span>
+                    <span *ngIf="user?.address.postalCode != null">{{ user?.address?.postalCode }}</span>
+                    <span >{{ user?.address?.country }}</span>
                 </div>
             </div>
         </div>
