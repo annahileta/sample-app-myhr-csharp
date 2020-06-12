@@ -23,12 +23,11 @@ export class ProfileEditComponent implements OnInit {
             require('i18n-iso-countries/langs/en.json')
         )
 
-        const indexedArray = i18nIsoCountries.getNames('en')
-        this.countries = []
-        for (const key in indexedArray) {
-            const value = indexedArray[key]
-            this.countries.push({ key: key, value: value })
-        }
+        const countriesDictionary = i18nIsoCountries.getNames('en')
+        const usIsoCode = 'US'
+        countriesDictionary[usIsoCode] = 'United States'
+        this.countries = Object.entries(countriesDictionary).map(([key, value]) => ({ key, value }))
+        console.log(this.countries)
     }
 
     saveUser(user: IUser): void {
