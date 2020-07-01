@@ -112,6 +112,7 @@ namespace DocuSign.MyHR.Security
             {
                 config.Cookie.Name = "UserLoginCookie";
                 config.Cookie.HttpOnly = true;
+                config.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 config.LoginPath = "/Account/Login";
                 config.SlidingExpiration = true;
                 config.ExpireTimeSpan = TimeSpan.FromMinutes(60);
