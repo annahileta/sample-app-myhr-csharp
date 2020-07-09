@@ -10,7 +10,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     {
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/Tuition Reimbursement.docx";
-
+        public string TemplateName => "Tuition Reimbursement";
         public EnvelopeTemplate BuildTemplate(string rootDir)
         {
             var envelopeTemplate = new EnvelopeTemplate

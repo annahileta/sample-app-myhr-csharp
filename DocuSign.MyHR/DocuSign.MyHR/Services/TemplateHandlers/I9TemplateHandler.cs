@@ -10,6 +10,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     public class I9TemplateHandler : ITemplateHandler
     {
         private string _templatePath = "/Templates/I-9_2020.json";
+        public string TemplateName => "I-9 2020 Sample";
 
         public EnvelopeTemplate BuildTemplate(string rootDir)
         {

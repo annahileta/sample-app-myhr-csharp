@@ -10,6 +10,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     {
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/Direct Deposit.docx";
+        public string TemplateName => "Direct Deposit";
 
         public EnvelopeTemplate BuildTemplate(string rootDir)
         {

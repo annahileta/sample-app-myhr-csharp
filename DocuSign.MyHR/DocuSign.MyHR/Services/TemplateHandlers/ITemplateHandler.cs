@@ -7,5 +7,6 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     {
         EnvelopeTemplate BuildTemplate(string rootDir);
         EnvelopeDefinition BuildEnvelope(UserDetails currentUser, UserDetails additionalUser);
+        string TemplateName { get; }
     }
 }
