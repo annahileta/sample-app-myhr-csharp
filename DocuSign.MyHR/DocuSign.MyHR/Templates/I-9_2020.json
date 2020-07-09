@@ -26,7 +26,7 @@
     ]
   },
   "disableResponsiveDocument": "true",
-  "emailBlurb": "Please review and sign your documents. To begin the process of reviewing and signing your documents, please click the button below. Signing will not be complete until you have reviewed the agreement and you have confirmed your signature.\u000a\u000a\u000aDisclaimer - \u000aCopyright @2019 by DocuSign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. DocuSign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of DocuSign, Inc.",
+  "emailBlurb": "Please review and sign your documents. To begin the process, please select the button below. Signing will not be complete until you have reviewed the agreement and you have confirmed your signature.\u000a\u000a\u000aDisclaimer - \u000aCopyright @2019 by DocuSign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. DocuSign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of DocuSign, Inc.",
   "emailSubject": "Please complete the following forms: I-9 - SAMPLE",
   "enableWetSign": "true",
   "enforceSignerVisibility": "false",

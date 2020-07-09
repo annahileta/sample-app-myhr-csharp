@@ -171,11 +171,11 @@
                         </div>
                         <div class="card-content collapse" id="collapse-1" aria-labelledby="heading-1" data-parent="#accordion">
                             <div class="card-body">
-                                <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
+                                <span class="card-body-title">This action demonstrates the following DocuSign API functions:</span>
                                 <ul>
                                     <li>Templates</li>
                                     <li>Calculatd fields</li>
-                                    <li>ets.</li>
+                                    <li>etc.</li>
                                 </ul>
                                 <div class="collapse-inset-wrapper">
                                     <button class="btn btn-link link-with-arrow link-with-arrow-orange collapsed" data-toggle="collapse" data-target="#collapse-inset-1" aria-expanded="false" aria-controls="collapse-inset-1">
@@ -183,16 +183,16 @@
                                     <div class="collapse-inset-body collapse" id="collapse-inset-1" aria-labelledby="heading-1">
                                         <h6>Code flow:</h6>
                                         <span><b>Step 1</b></span>
-                                        <p>When the form is submitted, we use the Envelopes: create method to send the signature request with the corresponding form information. The envelope we construct contains a document object, a recipient object of type signer, and tabs, which contain the form fields information. Since we are using embedded signing, we must also set the clientUserId property on the recipient.</p>
-                                        <p>We place the tabs on the document by specifying a SignHereTab element and a PaymentTab element as part of the signer element. The tab elements are positioned using x/y coordinates on the document.</p>
-                                        <p>The PaymentTab serves two purposes. It is used both to display the amount due in the document and to instruct DocuSign to proceed to collect payments after the document is signed.</p>
-                                        <p>Lastly, we include the status "sent" in the request so that the envelope is sent for signing. The eSignature REST API request is sent to the following endpoint:</p>
-                                        <p>POST /v2.1/accounts/{accountId}/envelopes</p>
+                                        <p>When the form is submitted, we use the <code>Envelopes: create</code> method to send the signature request with the corresponding form information. The envelope we construct contains a <code>document</code> object, a recipient object of type <code>signer</code>, and tabs, which contain the form fields information. Since we are using embedded signing, we must also set the <code>clientUserId</code> property on the recipient.</p>
+                                        <p>We place the tabs on the document by specifying a <code>SignHereTab</code> element and a <code>PaymentTab</code> element as part of the <code>signer</code> element. The tab elements are positioned using <em>x/y</em> coordinates on the document.</p>
+                                        <p>The <code>PaymentTab</code> serves two purposes. It is used both to display the amount due in the document and to instruct DocuSign to proceed to collect payments after the document is signed.</p>
+                                        <p>Lastly, we include the status \"sent\" in the request so that the envelope is sent for signing. The eSignature REST API request is sent to the following endpoint:</p>
+                                        <pre>POST /v2.1/accounts/{accountId}/envelopes</pre>
                                         <span><b>Step 2</b></span>
-                                        <p>To enable embedded signing of the envelope inside our application, we next use the <span class="text-warning">EnvelopeViews</span>: createRecipient method to generate a signing URL for the recipient. For this to work, the clientUserId property must be set on the recipient when the envelope is sent during step 1 above.</p>
+                                        <p>To enable embedded signing of the envelope inside our application, we next use the <code><span class='text-warning'>EnvelopeViews</span>: createRecipient</code> method to generate a signing URL for the recipient. For this to work, the <code>clientUserId</code> property must be set on the recipient when the envelope is sent during step 1 above.</p>
                                         <p>Once the envelope is sent, we save the envelope ID and recipient information to our session. Then, we retrieve the envelope ID and recipient info from our session and create the recipient view by generating the URL and displaying the recipient view in a full-width and full-height iframe inside our page.</p>
                                         <p>To create the recipient view of the envelope, we send an API request to:</p>
-                                        <p>POST /v2.1/accounts/{accountId}/envelopes/{envelopeId}/views/recipient</p>
+                                        <pre>POST /v2.1/accounts/{accountId}/envelopes/{envelopeId}/views/recipient</pre>
                                     </div>
                                 </div>
                             </div>
@@ -213,11 +213,11 @@
                         </div>
                         <div class="card-content collapse" id="collapse-2" aria-labelledby="heading-2" data-parent="#accordion">
                             <div class="card-body">
-                                <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
+                                <span class="card-body-title">This action demonstrates the following DocuSign API functions:</span>
                                 <ul>
                                     <li>Templates1111</li>
                                     <li>Calculatd fields</li>
-                                    <li>ets.</li>
+                                    <li>etc.</li>
                                 </ul>
                             </div>
                         </div>
@@ -237,11 +237,11 @@
                         </div>
                         <div class="card-content collapse" id="collapse-3" aria-labelledby="heading-3" data-parent="#accordion">
                             <div class="card-body">
-                                <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
+                                <span class="card-body-title">This action demonstrates the following DocuSign API functions:</span>
                                 <ul>
                                     <li>Templates1111</li>
                                     <li>Calculatd fields</li>
-                                    <li>ets.</li>
+                                    <li>etc.</li>
                                 </ul>
                             </div>
                         </div>
@@ -261,11 +261,11 @@
                         </div>
                         <div class="card-content collapse" id="collapse-4" aria-labelledby="heading-4" data-parent="#accordion">
                             <div class="card-body">
-                                <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
+                                <span class="card-body-title">This action demonstrates the following DocuSign API functions:</span>
                                 <ul>
                                     <li>Templates1111</li>
                                     <li>Calculatd fields</li>
-                                    <li>ets.</li>
+                                    <li>etc.</li>
                                 </ul>
                             </div>
                         </div>
@@ -279,7 +279,7 @@
                 </h4>
                 <div class="card-content collapse" id="collapse-5" aria-labelledby="heading-5">
                     <div class="card-body">
-                        <p>You can see this  because you have admin premissions</p>
+                        <p>You can see this because you have admin premissions</p>
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="section-card">
@@ -288,7 +288,7 @@
                                             <div class="card-icon">
                                                 <img src="assets/img/icon-6.svg" alt="icon">
                                             </div>
-                                            <span class="card-description">A Candidate offer letter</span>
+                                            <span class="card-description">Candidate offer letter</span>
                                         </div>
                                         <div class="card-actions">
                                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-1">Send</button>
@@ -297,11 +297,11 @@
                                     </div>
                                     <div class="card-content collapse" id="collapse-6" aria-labelledby="heading-6">
                                         <div class="card-body">
-                                            <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
+                                            <span class="card-body-title">This action demonstrates the following DocuSign API functions:</span>
                                             <ul>
                                                 <li>Templates1111</li>
                                                 <li>Calculatd fields</li>
-                                                <li>ets.</li>
+                                                <li>etc.</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -314,7 +314,7 @@
                                             <div class="card-icon">
                                                 <img src="assets/img/icon-7.svg" alt="icon">
                                             </div>
-                                            <span class="card-description">An I-9 verification request</span>
+                                            <span class="card-description">I-9 verification request</span>
                                         </div>
                                         <div class="card-actions">
                                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-2">Send</button>
@@ -323,11 +323,11 @@
                                     </div>
                                     <div class="card-content collapse" id="collapse-7" aria-labelledby="heading-7">
                                         <div class="card-body">
-                                            <span class="card-body-title">Tрis action demonstrates the following DocuSign API functions:</span>
+                                            <span class="card-body-title">This action demonstrates the following DocuSign API functions:</span>
                                             <ul>
                                                 <li>Templates1111</li>
                                                 <li>Calculatd fields</li>
-                                                <li>ets.</li>
+                                                <li>etc.</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -353,8 +353,8 @@
                 </button>
                 <div class="modal-body">
                     <h4 class="modal-title" id="modalLabel-1">Add recipient</h4>
-                    <span class="modal-subtitle">Enter the name and email addresses<br>
-                        of the person you want to e-sign the document. </span>
+                    <span class="modal-subtitle">Enter the name and email address<br>
+                        of the person you want to eSign the document. </span>
 
                     <form action="" class="was-validated">
                         <div class="form-group">
@@ -386,7 +386,7 @@
                 <div class="modal-body">
                     <h4 class="modal-title" id="modalLabel-2">Add recipient</h4>
                     <span class="modal-subtitle">Enter the name and email addresses<br>
-                        of the person you want to e-sign the document. </span>
+                        of the person you want to eSign the document. </span>
 
                     <form action="" class="was-validated">
                         <div class="form-group">
