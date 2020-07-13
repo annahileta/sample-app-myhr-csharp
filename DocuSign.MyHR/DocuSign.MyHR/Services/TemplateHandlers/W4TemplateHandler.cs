@@ -11,7 +11,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     {
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/W-4_2020.json";
-        public string TemplateName => "Please complete the following forms: W-4 - SAMPLE";
+        public string TemplateName => "W-4 2020 Sample";
 
         public EnvelopeTemplate BuildTemplate(string rootDir)
         {
