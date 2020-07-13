@@ -54,8 +54,18 @@ namespace DocuSign.MyHR.Services
                 EnableIDV(accountId, envelopeTemplate, "New Hire");
             }
 
-            TemplateSummary templateSummary = _docuSignApiProvider.TemplatesApi.CreateTemplate(accountId, envelopeTemplate);
-            envelope.TemplateId = templateSummary.TemplateId;
+            var listTemplates = _docuSignApiProvider.TemplatesApi.ListTemplates(accountId);   
+            EnvelopeTemplate template = listTemplates?.EnvelopeTemplates?.FirstOrDefault(x => x.Name == templateHandler.TemplateName);
+
+            if (template != null)
+            {
+                envelope.TemplateId = template.TemplateId;
+            }
+            else
+            {
+                TemplateSummary templateSummary = _docuSignApiProvider.TemplatesApi.CreateTemplate(accountId, envelopeTemplate);
+                envelope.TemplateId = templateSummary.TemplateId;
+            }
             EnvelopeSummary envelopeSummary = _docuSignApiProvider.EnvelopApi.CreateEnvelope(accountId, envelope);
 
             if (type != DocumentType.I9)

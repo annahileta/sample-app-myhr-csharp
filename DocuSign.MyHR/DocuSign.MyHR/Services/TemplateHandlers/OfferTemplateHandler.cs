@@ -11,7 +11,7 @@ namespace DocuSign.MyHR.Services.TemplateHandlers
     {
         private string _signerClientId = "1000";
         private string _templatePath = "/Templates/EmploymentOfferLetter.json";
-
+        public string TemplateName => "Employment Offer Letter Sample";
         public EnvelopeTemplate BuildTemplate(string rootDir)
         {
             using var reader = new StreamReader(rootDir + _templatePath);
