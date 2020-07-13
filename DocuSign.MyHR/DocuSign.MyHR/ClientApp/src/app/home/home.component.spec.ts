@@ -37,7 +37,7 @@ describe('HomeComponent', () => {
     })
 
     describe('login', () => {
-        it('should call saveAuthType method from authentication service with appropriate parameter', () => {
+        it('You should call the saveAuthType method from the authentication service with the appropriate parameter', () => {
             // arrange
             const authType = AuthType.CodeGrant
             // act
