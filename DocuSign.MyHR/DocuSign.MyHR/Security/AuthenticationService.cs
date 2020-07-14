@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using DocuSign.eSign.Client;
@@ -32,7 +33,7 @@ namespace DocuSign.MyHR.Security
                     _configurationService["DocuSign:IntegrationKey"],
                     _configurationService["DocuSign:UserId"],
                     _configurationService["DocuSign:AuthServer"],
-                    Convert.FromBase64String(_configurationService["DocuSign:RSAPrivateKey"]),
+                        File.ReadAllBytes(_configurationService["DocuSign:RSAPrivateKeyFile"]),
                     int.Parse(_configurationService["DocuSign:JWTLifeTime"]),
                     new List<string> { "click.manage", "signature" });
 
