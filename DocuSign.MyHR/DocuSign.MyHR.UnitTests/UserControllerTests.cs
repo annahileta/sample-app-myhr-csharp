@@ -31,7 +31,7 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange
             InitContext(account, user);
-            userService.Setup(c => c.GetUserDetails(It.IsAny<string>(), It.IsAny<string>()))
+            userService.Setup(c => c.GetUserDetails(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<LoginType>()))
                 .Returns(userDetails);
 
             var sut = new UserController(userService.Object);

@@ -2,7 +2,7 @@
     <h4 translate>Profile.Header</h4>
     <div class="user-profile">
         <div class="static">
-            <div class="edit" *ngIf="user != null">
+            <div class="edit" *ngIf="user?.loginType == 0">
                 <button class="edit-icon" (click)="editProfile()">
                     <img src="assets/img/edit.svg" alt="" />
                 </button>

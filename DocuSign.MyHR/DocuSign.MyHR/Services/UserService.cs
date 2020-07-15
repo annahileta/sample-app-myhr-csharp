@@ -15,7 +15,7 @@ namespace DocuSign.MyHR.Services
             _docuSignApiProvider = docuSignApiProvider;
         }
 
-        public UserDetails GetUserDetails(string accountId, string userId)
+        public UserDetails GetUserDetails(string accountId, string userId, LoginType loginType)
         {
             if (accountId == null)
             {
@@ -29,6 +29,7 @@ namespace DocuSign.MyHR.Services
 
             UserInformation userInfo = _docuSignApiProvider.UsersApi.GetInformation(accountId, userId);
             UserDetails userDetails = GetUserDetails(userInfo);
+            userDetails.LoginType = loginType;
            
             Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
             if (image != null)
