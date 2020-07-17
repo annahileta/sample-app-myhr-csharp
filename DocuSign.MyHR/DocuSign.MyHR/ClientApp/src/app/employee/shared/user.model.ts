@@ -1,5 +1,6 @@
 export interface IUser {
     id: number
+    loginType: number
     name: string
     firstName: string
     lastName: string

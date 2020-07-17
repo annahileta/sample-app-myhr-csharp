@@ -9,6 +9,7 @@ using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services;
 using FluentAssertions;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 
 namespace DocuSign.MyHR.UnitTests
 {
@@ -16,6 +17,7 @@ namespace DocuSign.MyHR.UnitTests
     {
         private static string _accountId = "1";
         private static string _userId = "2";
+        private static LoginType _loginType = LoginType.CodeGrant;
         private Mock<IDocuSignApiProvider> _docuSignApiProvider;
         private Mock<IUsersApi> _usersApi;
 
@@ -39,7 +41,7 @@ namespace DocuSign.MyHR.UnitTests
             var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act
-            var userDetails = sut.GetUserDetails(_accountId, _userId);
+            var userDetails = sut.GetUserDetails(_accountId, _userId, _loginType);
 
             //Assert
             userDetails.Should().BeEquivalentTo(Convert(userInformation));
@@ -59,7 +61,7 @@ namespace DocuSign.MyHR.UnitTests
             var sut = new UserService(_docuSignApiProvider.Object);
 
             //Act
-            var userDetails = sut.GetUserDetails(_accountId, _userId);
+            var userDetails = sut.GetUserDetails(_accountId, _userId, _loginType);
 
             //Assert
             Assert.NotNull(userDetails.ProfileImage);
@@ -73,7 +75,7 @@ namespace DocuSign.MyHR.UnitTests
 
             //Act 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => sut.GetUserDetails(null, _userId));
+            Assert.Throws<ArgumentNullException>(() => sut.GetUserDetails(null, _userId, _loginType));
         }
 
         [Fact]
@@ -85,7 +87,7 @@ namespace DocuSign.MyHR.UnitTests
 
             //Act 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => sut.GetUserDetails(_userId, null));
+            Assert.Throws<ArgumentNullException>(() => sut.GetUserDetails(_userId, null, _loginType));
         }
 
         [Theory, AutoData]
