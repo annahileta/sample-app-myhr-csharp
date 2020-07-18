@@ -43,7 +43,7 @@ namespace DocuSign.MyHR.Services
             }
 
             string rootDir = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
-            UserDetails userDetails = _userService.GetUserDetails(accountId, userId);
+            UserDetails userDetails = _userService.GetUserDetails(accountId, userId, loginType);
 
             var templateHandler = GetTemplateHandler(type);
             EnvelopeTemplate envelopeTemplate = templateHandler.BuildTemplate(rootDir);

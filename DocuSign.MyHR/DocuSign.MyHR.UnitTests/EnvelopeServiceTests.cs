@@ -19,6 +19,7 @@ namespace DocuSign.MyHR.UnitTests
     {
         private static string _accountId = "1";
         private static string _userId = "2";
+        private static LoginType _loginType = LoginType.CodeGrant;
         private Mock<IDocuSignApiProvider> _docuSignApiProvider;
         private Mock<IUserService> _userService;
         private Mock<IEnvelopesApi> _envelopeApi;
@@ -61,7 +62,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
 
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
@@ -82,7 +83,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange                      
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
 
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
@@ -101,7 +102,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange                      
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
 
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
@@ -118,7 +119,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange           
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
             _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
@@ -148,7 +149,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange  
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
             _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
@@ -178,7 +179,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
             _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
                 .Returns(() =>
                     new AccountIdentityVerificationResponse
@@ -236,7 +237,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation)
         {
             //Arrange
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
@@ -252,7 +253,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails userInformation)
         {
             //Arrange
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
             var sut = new EnvelopeService(_docuSignApiProvider.Object, _userService.Object, SetupConfiguration());
 
             //Act - Assert
