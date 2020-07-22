@@ -15,8 +15,8 @@
     "Part2": "It’s time to agree better"
   },
   "InfoDescription": "DocuSign helps organizations connect and automate how they prepare, sign, act on and manage agreements.",
-  "SandBoxButton": "Create Sandbox",
-  "LearnMoreButton": "Learn More",
+  "SandBoxButton": "Create demo account",
+  "LearnMoreButton": "Learn more",
   "Employee": {
     "Header": "Welcome to MyHR",
     "Description": "Self-service Human Resources Portal"
@@ -62,7 +62,7 @@
     "Total": "Total",
     "Hours": "{{hours}} h",
     "SubmitButton": "Submit time report",
-    "ValidationMessage":"Please fill out the form"
+    "ValidationMessage": "Please fill out the form"
   },
   "ManagerActions": {
     "Header": "Manager Actions",
@@ -72,7 +72,7 @@
       "Description": "This action demonstrates the following DocuSign features:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Routing order</li>",
       "SendButton": "Send",
-      "ViewInfoButton": "View Info",
+      "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
       "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the button is selected, we ask the user to provide a name and email address for the candidate. The information will be used to fill in a placeholder recipient that is in the template. We then call the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/list'>Templates:list</a> method on the account to check if a template exists. If it does, we find the templateId; if not, we call the <a class='text-warning' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/create'>Templates:Create</a> method to create a new template with the required fields and documents and a single placeholder recipient. </p><span><b>Step 2</b></span><p>We proceed to create an envelope from the template by using the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create'>Envelopes:create</a> method, providing the logged-in user's email address and name for the recipient. </p><span><b>Step 3</b></span><p>We make an API call to the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createRecipient'>EnvelopeViews:createRecipient</a> method with a redirectUri back into the app. We redirect the browser to go to the URL that we get back from the aforementioned API call. At this point the manager, who is the first recipient (routing order 1), signs the document. Once the manager finishes signing the document, an email will be sent to the candidate for remote signing (routing order 2).</p>"
     },
@@ -81,7 +81,7 @@
       "Description": "This action demonstrates the following DocuSign features:",
       "FunctionsList": "<li>Remote signing</li><li>Templates</li><li>IDV (recipient authentication)</li>",
       "SendButton": "Send",
-      "ViewInfoButton": "View Info",
+      "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
       "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the button is selected, we ask the user to provide a name and email address for the new employee. The information will be used to fill in a placeholder recipient that is in the template. We then call the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/list'>Templates:list</a> method on the account to check if a template exists. If it does, we find the templateId; if not, we call the <a class='text-warning' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/create'>Templates:Create</a> method to create a new template with the required fields and documents and a single placeholder recipient. </p><span><b>Step 2</b></span><p>We proceed to create an envelope from the template by using the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create'>Envelopes:create</a> method, providing the logged-in user's email address and name for the recipient. The envelope is created and immidiately sent out for remote signing by the single recipient. The recipient recieves an email that includes instructions for how to proceed with the IDV process and eventually sign the document.</p>"
     },
@@ -101,7 +101,7 @@
       "Description": "This action demonstrates the following DocuSign features:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Formula fields</li><li>Tab validation</li>",
       "UpdateButton": "Update",
-      "ViewInfoButton": "View Info",
+      "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
       "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the button is selected, we call the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/list'>Templates:list</a> method on the account to check if a template exists. If it does, we find the templateId; if not, we call the <a class='text-warning' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/create'>Templates:Create</a> method to create a new template with the required fields and documents and a single placeholder recipient. </p><span><b>Step 2</b></span><p>We proceed to create an envelope from the template by using the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create'>Envelopes:create</a> method, providing the logged-in user's email address and name for the recipient. </p><span><b>Step 3</b></span><p>We make an API call to the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createRecipient'>EnvelopeViews:createRecipient</a> method with a redirectUri back into the app. We redirect the browser to go to the URL that we get back from the aforementioned API call.</p><span><b>Step 4</b></span><p>After signing is complete, we make another call to the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/get'>Envelopes:get</a> method to retrieve the information from the envelope."
     },
@@ -110,16 +110,16 @@
       "Description": "This action demonstrates the following DocuSign API functions:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Formula fields</li><li>Tab validation</li>",
       "SelectButton": "Select",
-      "ViewInfoButton": "View Info",
+      "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
       "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the button is selected, we call the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/list'>Templates:list</a> method on the account to check if a template exists. If it does, we find the templateId; if not, we call the <a class='text-warning' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/create'>Templates:Create</a> method to create a new template with the required fields and documents and a single placeholder recipient. </p><span><b>Step 2</b></span><p>We proceed to create an envelope from the template by using the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create'>Envelopes:create</a> method, providing the logged-in user's email address and name for the recipient. </p><span><b>Step 3</b></span><p>We make an API call to the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createRecipient'>EnvelopeViews:createRecipient</a> method with a redirectUri back into the app. We redirect the browser to go to the URL that we get back from the aforementioned API call.</p>"
     },
     "TimeCard": {
-      "Title": "Time Card",
+      "Title": "Time card",
       "Description": "This action demonstrates the following DocuSign features:",
       "FunctionsList": "<li>Create a custom clickwrap</li><li>Activate a clickwrap</li><li>Display a modal clickwrap</li>",
       "EnterButton": "Enter",
-      "ViewInfoButton": "View Info",
+      "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
       "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the form is submitted, we use the Click API to create a clickwrap that is using a document that contains the hours worked this week.</p><span><b>Step 2</b></span><p> We then call another Click API endpoint to activate the newly created clickwrap.</p><span><b>Step 3</b></span><p> Lastly, we embed the clickwrap HTML and Javascript to the page and show it to the user so that they can consent to it.</p>"
     },
@@ -128,7 +128,7 @@
       "Description": "This action demonstrates the following DocuSign API functions:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Attachment tab</li><li>Tab validation</li>",
       "ApplyButton": "Apply",
-      "ViewInfoButton": "View Info",
+      "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
       "CodeFlow": "<h6>Code flow:</h6><span><b>Step 1</b></span><p>When the button is selected, we call the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/list'>Templates:list</a> method on the account to check if a template exists. If it does, we find the templateId; if not, we call the <a class='text-warning' href='https://developers.docusign.com/esign-rest-api/reference/Templates/Templates/create'>Templates:Create</a> method to create a new template with the required fields and documents and a single placeholder recipient. </p><span><b>Step 2</b></span><p>We proceed to create an envelope from the template by using the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/Envelopes/create'>Envelopes:create</a> method, providing the logged-in user's email address and name for the recipient. </p><span><b>Step 3</b></span><p>We make an API call to the <a class='text-warning' target='_blank' href='https://developers.docusign.com/esign-rest-api/reference/Envelopes/EnvelopeViews/createRecipient'>EnvelopeViews:createRecipient</a> method with a redirectUri back into the app. We redirect the browser to go to the URL that we get back from the aforementioned API call.</p>"
     }
