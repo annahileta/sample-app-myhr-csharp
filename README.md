@@ -42,7 +42,7 @@ The examples with templates were created using these DocuSign APIs and features:
 **Manual**
 1. Download or clone this repository to your workstation in a new folder named **MyHRSampleApp**.
 2. The repository includes a Visual Studio 2019 solution file and NuGet package references in the project file.
-3. Modify the appsettings.json (the configuration file) with the integration key and other settings from your DocuSign Developer demo account.
+3. Copy appsettings-example.json to create appsettings.json (the configuration file) and udate the integration key and other settings from your DocuSign Developer demo account.
     > **Note:** Protect your integration key and client secret. You should make sure that the **.env** file will not be stored in your source code repository.
 4. Navigate to that folder: **cd sample-app-myhr-csharp**
 5. Install client-side dependencies using the npm package manager: **npm install**
