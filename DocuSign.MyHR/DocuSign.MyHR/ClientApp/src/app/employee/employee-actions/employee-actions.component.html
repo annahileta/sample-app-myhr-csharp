@@ -223,37 +223,37 @@
 <ng-template #directDepositTemplate>
     <ul>
         <li translate>
-            Notifications.DirectDepositTemplate.PrimaryAccountNumber<span class="modal-success-value">{{
+            Notifications.DirectDepositTemplate.PrimaryAccountNumber<span class="modal-success-value" ng-bind="safe">{{
                 directDepositPayload.PrimaryAccountNumber
             }}</span>
         </li>
         <li translate>
-            Notifications.DirectDepositTemplate.PrimaryRoutingNumber<span class="modal-success-value">{{
+            Notifications.DirectDepositTemplate.PrimaryRoutingNumber<span class="modal-success-value" ng-bind="safe">{{
                 directDepositPayload.PrimaryRoutingNumber
             }}</span>
         </li>
         <li translate>
-            Notifications.DirectDepositTemplate.PercentageAllocationFirstAccount<span class="modal-success-value">{{
+            Notifications.DirectDepositTemplate.PercentageAllocationFirstAccount<span class="modal-success-value" ng-bind="safe">{{
                 directDepositPayload.PercentageFirstAccount
             }}</span>
         </li>
         <li translate>
-            Notifications.DirectDepositTemplate.SecondaryRoutingNumber<span class="modal-success-value">{{
+            Notifications.DirectDepositTemplate.SecondaryRoutingNumber<span class="modal-success-value" ng-bind="safe">{{
                 directDepositPayload.SecondaryRoutingNumber
             }}</span>
         </li>
         <li translate>
-            Notifications.DirectDepositTemplate.SecondaryAccountNumber<span class="modal-success-value">{{
+            Notifications.DirectDepositTemplate.SecondaryAccountNumber<span class="modal-success-value" ng-bind="safe">{{
                 directDepositPayload.SecondaryAccountNumber
             }}</span>
         </li>
         <li translate>
-            Notifications.DirectDepositTemplate.PercentageAllocationSecondAccount<span class="modal-success-value">{{
+            Notifications.DirectDepositTemplate.PercentageAllocationSecondAccount<span class="modal-success-value" ng-bind="safe">{{
                 directDepositPayload.PercentageSecondAccount
             }}</span>
         </li>
         <li translate>
-            Notifications.DirectDepositTemplate.Date<span class="modal-success-value">{{ directDepositPayload['DateSigned'] }}</span>
+            Notifications.DirectDepositTemplate.Date<span class="modal-success-value" ng-bind="safe">{{ directDepositPayload['DateSigned'] }}</span>
         </li>
     </ul>
 </ng-template>
