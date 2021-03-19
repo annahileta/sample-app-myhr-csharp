@@ -11,7 +11,7 @@
             >
                 <div class="user-avatar">
                     <div class="user-image">
-                        <img src="{{ 'data:image/jpg;base64,' + user.profileImage }}" alt="avatar" />
+                        <img ng-bind="safe" src="{{ 'data:image/jpg;base64,' + user.profileImage }}" alt="avatar" />
                     </div>
                     <div>
                         <div class="form-group">
@@ -60,7 +60,7 @@
                             <div class="profile-title col-lg-2" translate>
                                 Profile.Edit.Id
                             </div>
-                            <div class="profile-description col-lg-10">
+                            <div class="profile-description col-lg-10" ng-bind="safe">
                                 {{ user.profileId }}
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <div class="profile-title col-lg-4" translate>
                                 Profile.Edit.HireDate
                             </div>
-                            <div class="profile-description col-lg-8">
+                            <div class="profile-description col-lg-8" ng-bind="safe">
                                 {{ user?.hireDate | date: 'shortDate' }}
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                     <div class="form-group">
                         <label for="country" translate>Profile.Edit.Country</label>
                         <select class="form-control" id="country" name="country" [(ngModel)]="user.address.country">
-                            <option *ngFor="let country of countries" [value]="country.value">{{ country.value }}</option>
+                            <option *ngFor="let country of countries" [value]="country.value" ng-bind="safe">{{ country.value }}</option>
                         </select>
                     </div>
                 </div>

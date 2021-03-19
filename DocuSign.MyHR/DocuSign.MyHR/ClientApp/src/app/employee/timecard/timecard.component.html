@@ -15,11 +15,11 @@
                 <div class="editable">
                     <div class="user-avatar">
                         <div class="user-image">
-                            <img src="{{ 'data:image/jpg;base64,' + user?.profileImage }}" alt="avatar" />
+                            <img ng-bind="safe" src="{{ 'data:image/jpg;base64,' + user?.profileImage }}" alt="avatar" />
                         </div>
                         <div class="user-info">
-                            <span>{{ user?.firstName }}</span>
-                            <span>{{ user?.lastName }} </span>
+                            <span ng-bind="safe">{{ user?.firstName }}</span>
+                            <span ng-bind="safe">{{ user?.lastName }}</span>
                         </div>
                     </div>
                     <form action="" class="timecard-form needs-validation" [class.was-validated]="timecardForm.invalid" novalidate [formGroup]="timecardForm" (ngSubmit)="timecardForm.valid && sendTimeCard()">
