@@ -74,6 +74,9 @@ namespace DocuSign.MyHR.Security
                     {
                         var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
                         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        request.Headers.Add("X-Content-Type-Options", "nosniff");
+                        request.Headers.Add("X-Frame-Options", "deny");
+                        request.Headers.Add("Cache-Control", "no-cache");
                         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
 
                         var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
