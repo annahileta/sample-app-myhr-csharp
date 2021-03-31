@@ -32,7 +32,7 @@ The examples with templates were created using these DocuSign APIs and features:
 ## Installation
 
 ### Prerequisites
-* A DocuSign Developer demo account (email and password) on [demo.docusign.net](https://demo.docusign.net). If you don't already have a developer demo account, create a [free account](https://go.docusign.com/sandbox/productshot/?elqCampaignId=16535).
+* A DocuSign Developer demo account (email and password) on [demo.docusign.net](https://demo.docusign.net). If you don't already have a developer demo account, create a [free account](https://go.docusign.com/o/sandbox/).
 * A DocuSign integration key (a client ID) that is configured to use **JSON Web Token (JWT) Grant** authentication.
    You will need the **integration key** itself and its **RSA key pair**. To use this application, you must add your application's **Redirect URI** to your integration key. This [**video**](https://www.youtube.com/watch?v=GgDqa7-L0yo) demonstrates how to create an integration key (client ID) for a user application such as this example.
 * C# .NET Core version 3.1 or later
