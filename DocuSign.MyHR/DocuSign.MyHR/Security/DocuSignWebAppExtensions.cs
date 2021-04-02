@@ -92,7 +92,11 @@ namespace DocuSign.MyHR.Security
                     OnRemoteFailure = context =>
                     {
                         context.HandleResponse();
-                        context.Response.Redirect("/Error?message=" + context.Failure.Message);
+                        context.Response.WriteAsync(new ErrorDetails
+                        {
+                            StatusCode = context.Response.StatusCode,
+                            Message = $"Internal Server Error: {context.Failure.Message}"
+                        }.ToString());
                         return Task.FromResult(0);
                     },
                     OnRedirectToAuthorizationEndpoint = context =>
