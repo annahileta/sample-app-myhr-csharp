@@ -51,13 +51,16 @@ namespace DocuSign.MyHR.Security
             })
             .AddOAuth("DocuSign", options =>
             {
+                options.CorrelationCookie.SameSite = SameSiteMode.Lax;
+                options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+
                 options.ClientId = configuration["DocuSign:IntegrationKey"];
                 options.ClientSecret = configuration["DocuSign:SecretKey"];
                 options.CallbackPath = new PathString("/ds/callback");
                 options.AuthorizationEndpoint = configuration["DocuSign:AuthorizationEndpoint"];
                 options.TokenEndpoint = configuration["DocuSign:TokenEndpoint"];
                 options.UserInformationEndpoint = configuration["DocuSign:UserInformationEndpoint"];
-
+    
                 options.Scope.Add("signature");
                 options.Scope.Add("click.manage");
                 options.SaveTokens = true;
