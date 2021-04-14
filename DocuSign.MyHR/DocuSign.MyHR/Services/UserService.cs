@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using DocuSign.eSign.Client;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
 using RestSharp.Extensions;
@@ -30,13 +32,23 @@ namespace DocuSign.MyHR.Services
             UserInformation userInfo = _docuSignApiProvider.UsersApi.GetInformation(accountId, userId);
             UserDetails userDetails = GetUserDetails(userInfo);
             userDetails.LoginType = loginType;
-           
-            Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
-            if (image != null)
+
+            try
             {
-                userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
+                Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
+                if (image != null)
+                {
+                    userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
+                }
             }
-            
+            catch (ApiException ex)
+            {
+                if (ex.ErrorCode == (int)HttpStatusCode.NotFound)
+                {
+                    return userDetails;
+                }
+                throw;
+            }
             return userDetails;
         }
 
