@@ -16,14 +16,14 @@ namespace DocuSign.MyHR.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _clientFactory;
 
-        private Lazy<IUsersApi> _usersApi => new Lazy<IUsersApi>(() => new UsersApi(_docuSignConfig.Value));
-        private Lazy<IEnvelopesApi> _envelopApi => new Lazy<IEnvelopesApi>(() => new EnvelopesApi(_docuSignConfig.Value));
-        private Lazy<ITemplatesApi> _templatesApi => new Lazy<ITemplatesApi>(() => new TemplatesApi(_docuSignConfig.Value));
-        private Lazy<IAccountsApi> _accountsApi => new Lazy<IAccountsApi>(() => new AccountsApi(_docuSignConfig.Value));
+        private Lazy<IUsersApi> _usersApi => new Lazy<IUsersApi>(() => new UsersApi(_apiClient.Value));
+        private Lazy<IEnvelopesApi> _envelopApi => new Lazy<IEnvelopesApi>(() => new EnvelopesApi(_apiClient.Value));
+        private Lazy<ITemplatesApi> _templatesApi => new Lazy<ITemplatesApi>(() => new TemplatesApi(_apiClient.Value));
+        private Lazy<IAccountsApi> _accountsApi => new Lazy<IAccountsApi>(() => new AccountsApi(_apiClient.Value));
         private Lazy<HttpClient> _docuSignHttpClient => new Lazy<HttpClient>(() =>
         {
             HttpClient client = _clientFactory.CreateClient();
-            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _docuSignConfig.Value.AccessToken);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _apiClient.Value.Configuration.AccessToken);
             client.BaseAddress = new Uri(Context.Account.BaseUri);
             client.DefaultRequestHeaders
                 .Accept
@@ -31,10 +31,9 @@ namespace DocuSign.MyHR.Services
             return client;
         });
          
-        private Lazy<Configuration> _docuSignConfig => new Lazy<Configuration>(() =>
+        private Lazy<ApiClient> _apiClient => new Lazy<ApiClient>(() =>
             {
-                var apiClient = new ApiClient(Context.Account.BaseUri + "/restapi");
-                var docuSignConfig = new Configuration(apiClient);
+                var docuSignConfig = new Configuration(Context.Account.BaseUri + "/restapi");
                 var token = _httpContextAccessor.HttpContext.GetTokenAsync("access_token").Result;
                 if (string.IsNullOrEmpty(token))
                 {
@@ -42,7 +41,9 @@ namespace DocuSign.MyHR.Services
                 }
                 docuSignConfig.AddDefaultHeader("Authorization", "Bearer " + token);
                 docuSignConfig.AccessToken = token;
-                return docuSignConfig;
+                var apiClient = new ApiClient(docuSignConfig);
+                apiClient.SetBasePath(docuSignConfig.BasePath);
+                return apiClient;
             });
 
         public DocuSignApiProvider(IHttpContextAccessor httpContextAccessor, IHttpClientFactory clientFactory)
