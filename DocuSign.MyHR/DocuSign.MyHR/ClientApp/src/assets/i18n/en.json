@@ -2,7 +2,7 @@
   "Title": "MyHR",
   "Logout": "Log Out",
   "GitHubSource": "GitHub Source",
-  "Copyright": "© 2021 DocuSign Inc.",
+  "Copyright": "© 2022 DocuSign Inc.",
   "WelcomeHeader": "Welcome to MyHR",
   "WelcomeDescription": "Self-service Human Resources Portal",
   "LoginWithDocuSignAccountButton": "Log in with your DocuSign account",
@@ -142,7 +142,7 @@
       "I9":"SUCCESS: I-9 VERIFICATION SENT",
       "Offer":"SUCCESS: OFFER LETTER SENT"
     },
-    "SuccessMessageBody":{     
+    "SuccessMessageBody":{
       "W4":"Document was signed succesfully",
       "Timecard":"Time card was sent succesfully",
       "TuitionRbt":"Document was signed succesfully",
