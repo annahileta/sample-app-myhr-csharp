@@ -77,7 +77,6 @@ namespace DocuSign.MyHR.Services
                     format = "modal",
                     hasAccep = true,
                     mustRead = true,
-                    mustView = true,
                     requireAccept = true,
                     documentDisplay = "document",
                     Size = "small"
