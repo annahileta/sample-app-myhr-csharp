@@ -117,11 +117,11 @@
     "TimeCard": {
       "Title": "Time card",
       "Description": "This action demonstrates the following DocuSign features:",
-      "FunctionsList": "<li>Create a custom clickwrap</li><li>Activate a clickwrap</li><li>Display a modal clickwrap</li>",
+      "FunctionsList": "<li>Create a custom elastic template</li><li>Activate an elastic template</li><li>Display a modal elastic template</li>",
       "EnterButton": "Enter",
       "ViewInfoButton": "View info",
       "BehindTheSceneButton": "Behind the scenes",
-      "CodeFlow": "View source file <a target='_blank' rel='noopener noreferrer' href='https://github.com/docusign/sample-app-myhr-csharp/blob/master/DocuSign.MyHR/DocuSign.MyHR/Services/ClickWrapService.cs'>ClickWrapService.cs</a> on GitHub.<br><br><h6>Code flow:</h6><span><b>Step 1</b></span><p>When the form is submitted, we use the Click API to create a clickwrap that is using a document that contains the hours worked this week.</p><span><b>Step 2</b></span><p> We then call another Click API endpoint to activate the newly created clickwrap.</p><span><b>Step 3</b></span><p> Lastly, we embed the clickwrap HTML and Javascript to the page and show it to the user so that they can consent to it.</p>"
+      "CodeFlow": "View source file <a target='_blank' rel='noopener noreferrer' href='https://github.com/docusign/sample-app-myhr-csharp/blob/master/DocuSign.MyHR/DocuSign.MyHR/Services/ClickWrapService.cs'>ClickWrapService.cs</a> on GitHub.<br><br><h6>Code flow:</h6><span><b>Step 1</b></span><p>When the form is submitted, we use the Click API to create an elastic template that is using a document that contains the hours worked this week.</p><span><b>Step 2</b></span><p> We then call another Click API endpoint to activate the newly created elastic template.</p><span><b>Step 3</b></span><p> Lastly, we embed the elastic template HTML and Javascript to the page and show it to the user so that they can consent to it.</p>"
     },
     "TuitionReimbursement": {
       "Title": "Tuition reimbursement",
