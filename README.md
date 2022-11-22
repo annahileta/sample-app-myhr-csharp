@@ -5,8 +5,8 @@ MyHR is a DocuSign sample application demonstrating how the DocuSign APIs can be
 
 MyHR demonstrates the following:
 1. Authentication with two different methods
-    * [Authentication Code Grant](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-code-grant)
-    * [JSON Web Token (JWT) Grant](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-jsonwebtoken)
+    * [Authentication Code Grant](https://developers.docusign.com/platform/auth/authcode/)
+    * [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/)
 
 2. User information is shown from the DocuSign account. This example demonstrates [Users API endpoint](https://developers.docusign.com/esign-rest-api/guides/authentication/user-info-endpoints) functionality.
 
@@ -15,7 +15,7 @@ MyHR demonstrates the following:
 4. W-4 Tax withholding. This example demonstrates filling in a standard W-4 form required by the IRS from all US employees.
 
 5. Time tracking. This example shows how to use the Click API to create an elastic template programmatically, render it in your UI, and then submit it. It also tracks the submission event and, just after submission, redirects the user back to the start page.  
-   * [More information about the Click API](https://developers.docusign.com/click-api)
+   * [More information about the Click API](https://developers.docusign.com/docs/click-api/)
 6.	Tuition reimbursement. To prove that a class was completed, users can also attach some written proof before submitting their request for reimbursement. Adding attachments lets users add additional documents for verification.
    * [More information about adding attachments](https://support.docusign.com/en/guides/signer-guide-signing-adding-attachments-new)
 7. Send an offer letter to a job candidate. The offer is approved internally first by the user and then sent to a candidate for signing.
