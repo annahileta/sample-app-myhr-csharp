@@ -5,10 +5,10 @@ MyHR is a DocuSign sample application demonstrating how the DocuSign APIs can be
 
 MyHR demonstrates the following:
 1. Authentication with two different methods
-    * [Authentication Code Grant](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-code-grant)
-    * [JSON Web Token (JWT) Grant](https://developers.docusign.com/esign-rest-api/guides/authentication/oauth2-jsonwebtoken)
+    * [Authentication Code Grant](https://developers.docusign.com/docs/esign-rest-api/guides/authentication/oauth2-code-grant)
+    * [JSON Web Token (JWT) Grant](https://developers.docusign.com/docs/esign-rest-api/guides/authentication/oauth2-jsonwebtoken)
 
-2. User information is shown from the DocuSign account. This example demonstrates [Users API endpoint](https://developers.docusign.com/esign-rest-api/guides/authentication/user-info-endpoints) functionality.
+2. User information is shown from the DocuSign account. This example demonstrates [Users API endpoint](https://developers.docusign.com/docs/esign-rest-api/guides/authentication/user-info-endpoints) functionality.
 
 3. Direct Deposit update. This example demonstrates filling in bank account information for direct deposit and submitting it to be processed by payroll.
 
@@ -21,11 +21,11 @@ MyHR demonstrates the following:
 7. Send an offer letter to a job candidate. The offer is approved internally first by the user and then sent to a candidate for signing.
 
 8. Send an I-9 verification request to a job candidate using IDV. This example demonstrates sending the Federal I-9 form to a new hire.
-   * [More information about ID Verification](https://developers.docusign.com/esign-rest-api/guides/concepts/recipient-authentication#id-verification-idv)
+   * [More information about ID Verification](https://developers.docusign.com/docs/esign-rest-api/guides/concepts/recipient-authentication#id-verification-idv)
 
 The examples with templates were created using these DocuSign APIs and features:
-   * The Docusign [Template API](https://developers.docusign.com/esign-rest-api/code-examples/code-example-create-template) functionality.
-   * The signing ceremony is implemented with [embedded signing](https://developers.docusign.com/esign-rest-api/code-examples/code-example-embedded-signing) for a single signer.
+   * The Docusign [Template API](https://developers.docusign.com/docs/esign-rest-api/code-examples/code-example-create-template) functionality.
+   * The signing ceremony is implemented with [embedded signing](https://developers.docusign.com/docs/esign-rest-api/code-examples/code-example-embedded-signing) for a single signer.
    * The DocuSign signing ceremony is initiated from your website.  
    * ([AutoPlace anchor text](https://support.docusign.com/en/guides/AutoPlace-New-DocuSign-Experience)) is used to position the signing fields in the document.
 
