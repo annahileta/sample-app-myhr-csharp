@@ -8,7 +8,7 @@ MyHR demonstrates the following:
     * [Authentication Code Grant](https://developers.docusign.com/platform/auth/authcode/)
     * [JSON Web Token (JWT) Grant](https://developers.docusign.com/platform/auth/jwt/)
 
-2. User information is shown from the DocuSign account. This example demonstrates [Users API endpoint](https://developers.docusign.com/esign-rest-api/guides/authentication/user-info-endpoints) functionality.
+2. User information is shown from the DocuSign account. This example demonstrates [Users API endpoint](https://developers.docusign.com/platform/auth/reference/user-info/) functionality.
 
 3. Direct Deposit update. This example demonstrates filling in bank account information for direct deposit and submitting it to be processed by payroll.
 
@@ -21,13 +21,13 @@ MyHR demonstrates the following:
 7. Send an offer letter to a job candidate. The offer is approved internally first by the user and then sent to a candidate for signing.
 
 8. Send an I-9 verification request to a job candidate using IDV. This example demonstrates sending the Federal I-9 form to a new hire.
-   * [More information about ID Verification](https://developers.docusign.com/esign-rest-api/guides/concepts/recipient-authentication#id-verification-idv)
+   * [More information about ID Verification](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/recipients/auth/#idv)
 
 The examples with templates were created using these DocuSign APIs and features:
-   * The Docusign [Template API](https://developers.docusign.com/esign-rest-api/code-examples/code-example-create-template) functionality.
-   * The signing ceremony is implemented with [embedded signing](https://developers.docusign.com/esign-rest-api/code-examples/code-example-embedded-signing) for a single signer.
+   * The Docusign [Template API](https://developers.docusign.com/docs/esign-rest-api/how-to/create-template/) functionality.
+   * The signing ceremony is implemented with [embedded signing](https://developers.docusign.com/docs/esign-rest-api/how-to/request-signature-in-app-embedded/) for a single signer.
    * The DocuSign signing ceremony is initiated from your website.  
-   * ([AutoPlace anchor text](https://support.docusign.com/en/guides/AutoPlace-New-DocuSign-Experience)) is used to position the signing fields in the document.
+   * ([AutoPlace anchor text](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/)) is used to position the signing fields in the document.
 
 ## Installation
 
@@ -47,14 +47,10 @@ The examples with templates were created using these DocuSign APIs and features:
 4. Navigate to that folder: **cd sample-app-myhr-csharp**
 5. Install client-side dependencies using the npm package manager: **npm install**
 
-**Using installation scripts**
-
 ## Running MyHR
 **Manual**
 1. Build and then start the solution.
 2. Your default browser will be opened to https://localhost:5001/ and you will see the application's home page.
-
-**Using installation scripts**
 
 ## License information
 This repository uses the MIT License. See the [LICENSE](./LICENSE) file for more information.
