@@ -27,7 +27,7 @@ The examples with templates were created using these DocuSign APIs and features:
    * The Docusign [Template API](https://developers.docusign.com/docs/esign-rest-api/how-to/create-template/) functionality.
    * The signing ceremony is implemented with [embedded signing](https://developers.docusign.com/docs/esign-rest-api/how-to/request-signature-in-app-embedded/) for a single signer.
    * The DocuSign signing ceremony is initiated from your website.  
-   * ([AutoPlace anchor text](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/)) is used to position the signing fields in the document.
+   * [AutoPlace anchor text](https://developers.docusign.com/docs/esign-rest-api/esign101/concepts/tabs/auto-place/) is used to position the signing fields in the document.
 
 ## Installation
 
