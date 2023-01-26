@@ -136,7 +136,7 @@ h4,
         top: 0;
 
         &:after {
-            content: url(~/assets/img/arrow-right-bold.svg);
+            content: url(./../../../assets/img/arrow-right-bold.svg);
             margin-left: 15px;
             top: 0;
             right: -15px;
@@ -222,7 +222,7 @@ ul {
 
     &:after {
         transition: transform 0.3s;
-        content: url('~/assets/img/arrow-right.svg');
+        content: url('./../../../assets/img/arrow-right.svg');
         position: absolute;
         transform: rotate(-90deg);
         margin-left: 15px;
@@ -250,7 +250,7 @@ ul {
         margin-right: 20px;
 
         &:after {
-            content: url('~/assets/img/arrow-right-orange.svg');
+            content: url('./../../../assets/img/arrow-right-orange.svg');
             margin-left: 10px;
             top: 0;
             right: -15px;

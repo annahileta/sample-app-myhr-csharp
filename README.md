@@ -49,8 +49,9 @@ The examples with templates were created using these DocuSign APIs and features:
 
 ## Running MyHR
 **Manual**
+1. Navigate to **DocuSign.MyHR/DocuSign.MyHR/ClientApp** folder and run **npm start** command.
 1. Build and then start the solution.
-2. Your default browser will be opened to https://localhost:5001/ and you will see the application's home page.
+1. Your default browser will be opened to https://localhost:5001/ and you will see the application's home page.
 
 ## License information
 This repository uses the MIT License. See the [LICENSE](./LICENSE) file for more information.
