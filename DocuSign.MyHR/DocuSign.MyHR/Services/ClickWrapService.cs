@@ -138,7 +138,7 @@ namespace DocuSign.MyHR.Services
             }
 
             using var memoryStream = new MemoryStream(File.ReadAllBytes(tempDocPath));
-            var docBase64 = Convert.ToBase64String(memoryStream.ReadAsBytes());
+            var docBase64 = Convert.ToBase64String(memoryStream.ToArray());
             File.Delete(tempDocPath);
             return docBase64;
         }

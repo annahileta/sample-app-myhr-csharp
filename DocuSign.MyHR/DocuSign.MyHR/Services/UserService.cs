@@ -38,7 +38,9 @@ namespace DocuSign.MyHR.Services
                 Stream image = _docuSignApiProvider.UsersApi.GetProfileImage(accountId, userId);
                 if (image != null)
                 {
-                    userDetails.ProfileImage = Convert.ToBase64String(image.ReadAsBytes());
+                    byte[] imageBytes = new byte[image.Length];
+                    image.ReadAsync(imageBytes, 0, unchecked((int)image.Length));
+                    userDetails.ProfileImage = Convert.ToBase64String(imageBytes);
                 }
             }
             catch (ApiException ex)
