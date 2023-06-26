@@ -10,6 +10,7 @@ using DocuSign.MyHR.Domain;
 using DocuSign.MyHR.Services;
 using FluentAssertions;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Address = DocuSign.MyHR.Domain.Address;
 
 namespace DocuSign.MyHR.UnitTests
 {
@@ -95,7 +96,7 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange
             var updatedUserInfo = Convert(newUserDetails);
-            _usersApi.Setup(x => x.UpdateUser(_accountId, _userId, It.IsAny<UserInformation>())).Returns(updatedUserInfo);
+            _usersApi.Setup(x => x.UpdateUser(_accountId, _userId, It.IsAny<UserInformation>(), null)).Returns(updatedUserInfo);
             _docuSignApiProvider.SetupGet(c => c.UsersApi).Returns(_usersApi.Object);
 
             var sut = new UserService(_docuSignApiProvider.Object);
@@ -104,7 +105,7 @@ namespace DocuSign.MyHR.UnitTests
             sut.UpdateUserDetails(_accountId, _userId, newUserDetails);
 
             //Assert
-            _usersApi.Verify(mock => mock.UpdateUser(_accountId, _userId, updatedUserInfo), Times.Once());
+            _usersApi.Verify(mock => mock.UpdateUser(_accountId, _userId, updatedUserInfo, null), Times.Once());
         }
 
         [Theory, AutoData]

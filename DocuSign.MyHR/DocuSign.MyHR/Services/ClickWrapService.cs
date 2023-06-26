@@ -10,7 +10,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using RestSharp.Extensions;
+using DocuSign.MyHR.Extensions;
 
 namespace DocuSign.MyHR.Services
 {
