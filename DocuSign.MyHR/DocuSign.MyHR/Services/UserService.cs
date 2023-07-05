@@ -4,7 +4,7 @@ using System.Net;
 using DocuSign.eSign.Client;
 using DocuSign.eSign.Model;
 using DocuSign.MyHR.Domain;
-using RestSharp.Extensions;
+using DocuSign.MyHR.Extensions;
 
 namespace DocuSign.MyHR.Services
 {

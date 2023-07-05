@@ -3,8 +3,8 @@
     <h4>
         <button
             class="link-with-arrow collapsed"
-            data-toggle="collapse"
-            data-target="#collapse-5"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse-5"
             aria-expanded="false"
             aria-controls="collapse-5"
             translate
@@ -28,8 +28,8 @@
                             <div class="card-actions">
                                 <button
                                     class="btn btn-warning btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#modal-1"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal-1"
                                     (click)="setDocumentType(documentType.Offer)"
                                     [class.disabled]="executingAction"
                                     translate
@@ -38,8 +38,8 @@
                                 </button>
                                 <button
                                     class="btn btn-link link-with-arrow collapsed"
-                                    data-toggle="collapse"
-                                    data-target="#collapse-6"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-6"
                                     aria-expanded="false"
                                     aria-controls="collapse-6"
                                     translate
@@ -57,8 +57,8 @@
                                 <div class="collapse-inset-wrapper">
                                     <button
                                         class="btn btn-link link-with-arrow link-with-arrow-orange collapsed"
-                                        data-toggle="collapse"
-                                        data-target="#collapse-inset-offer-letter"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapse-inset-offer-letter"
                                         aria-expanded="false"
                                         aria-controls="collapse-inset-offer-letter"
                                         translate
@@ -89,8 +89,8 @@
                             <div class="card-actions">
                                 <button
                                     class="btn btn-warning btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#modal-1"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal-1"
                                     (click)="setDocumentType(documentType.I9)"
                                     [class.disabled]="executingAction"
                                     translate
@@ -99,8 +99,8 @@
                                 </button>
                                 <button
                                     class="btn btn-link link-with-arrow collapsed"
-                                    data-toggle="collapse"
-                                    data-target="#collapse-7"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-7"
                                     aria-expanded="false"
                                     aria-controls="collapse-7"
                                     translate
@@ -118,8 +118,8 @@
                                 <div class="collapse-inset-wrapper">
                                     <button
                                         class="btn btn-link link-with-arrow link-with-arrow-orange collapsed"
-                                        data-toggle="collapse"
-                                        data-target="#collapse-inset-i9"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapse-inset-i9"
                                         aria-expanded="false"
                                         aria-controls="collapse-inset-i9"
                                         translate
@@ -142,7 +142,7 @@
                 <div class="modal fade" id="modal-1" tabindex="-1" role="dialog" aria-labelledby="modalLabel-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModalButton (click)="resetForm()">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" #closeModalButton (click)="resetForm()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <div class="modal-body">
