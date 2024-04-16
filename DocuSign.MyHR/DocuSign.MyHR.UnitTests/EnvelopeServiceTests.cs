@@ -119,7 +119,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange           
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, LoginType.JWT)).Returns(userInformation);
             _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
@@ -179,7 +179,7 @@ namespace DocuSign.MyHR.UnitTests
             UserDetails additionalUser)
         {
             //Arrange
-            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
+            _userService.Setup(x => x.GetUserDetails(_accountId, _userId, LoginType.JWT)).Returns(userInformation);
             _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
                 .Returns(() =>
                     new AccountIdentityVerificationResponse
