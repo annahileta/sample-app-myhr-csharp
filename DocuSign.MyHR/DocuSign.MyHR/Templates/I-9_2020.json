@@ -26,7 +26,7 @@
     ]
   },
   "disableResponsiveDocument": "true",
-  "emailBlurb": "Please review and sign your documents. To begin the process, please select the button below. Signing will not be complete until you have reviewed the agreement and you have confirmed your signature.\u000a\u000a\u000aDisclaimer - \u000aCopyright @2019 by DocuSign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. DocuSign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of DocuSign, Inc.",
+  "emailBlurb": "Please review and sign your documents. To begin the process, please select the button below. Signing will not be complete until you have reviewed the agreement and you have confirmed your signature.\u000a\u000a\u000aDisclaimer - \u000aCopyright @2019 by Docusign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. Docusign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of Docusign, Inc.",
   "emailSubject": "Please complete the following forms: I-9 - SAMPLE",
   "enableWetSign": "true",
   "enforceSignerVisibility": "false",
@@ -2127,9 +2127,9 @@
               "disableAutoSize": "true",
               "locked": "true",
               "maxLength": "4000",
-              "originalValue": "Copyright @2019 by DocuSign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. DocuSign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of DocuSign, Inc.",
+              "originalValue": "Copyright @2024 by Docusign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. Docusign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of Docusign, Inc.",
               "required": "true",
-              "value": "Copyright @2019 by DocuSign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. DocuSign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of DocuSign, Inc.",
+              "value": "Copyright @2019 by Docusign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. Docusign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of Docusign, Inc.",
               "requireAll": "false",
               "requireInitialOnSharedChange": "false",
               "shared": "false",
@@ -2898,7 +2898,7 @@
   "autoMatch": "true",
   "autoMatchSpecifiedByUser": "false",
   "created": "2020-04-24T10:15:42.1970000Z",
-  "description": "Copyright @2019 by DocuSign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. DocuSign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of DocuSign, Inc.",
+  "description": "Copyright @2024 by Docusign, Inc. All rights reserved. This document is provided “AS IS” without any express or implied warranty. Docusign, Inc. provides general information and software only. This document does not constitute legal advice and if you require legal advice you should consult with a licensed attorney. Reproduction or use of this document for commercial purposes requires the prior written permission of Docusign, Inc.",
   "documents": [
     {
       "display": "inline",
