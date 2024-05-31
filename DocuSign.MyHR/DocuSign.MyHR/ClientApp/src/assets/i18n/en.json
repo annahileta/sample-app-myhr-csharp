@@ -2,19 +2,19 @@
   "Title": "MyHR",
   "Logout": "Log Out",
   "GitHubSource": "GitHub Source",
-  "Copyright": "© 2023 DocuSign Inc.",
+  "Copyright": "© 2024 Docusign Inc.",
   "WelcomeHeader": "Welcome to MyHR",
   "WelcomeDescription": "Self-service Human Resources Portal",
-  "LoginWithDocuSignAccountButton": "Log in with your DocuSign account",
+  "LoginWithDocuSignAccountButton": "Log in with your Docusign account",
   "LoginWithTestAccountButton": "Log in with a test account",
   "Note": "Note: This sample app is written in C#",
   "VSExtentionLink": "Get the Visual Studio Extension",
   "VSCodeExtentionLink": "Get the Visual Studio Code Extension",
   "InfoHeader": {
-    "Part1": "DocuSign:",
+    "Part1": "Docusign:",
     "Part2": "It’s time to agree better"
   },
-  "InfoDescription": "DocuSign helps organizations connect and automate how they prepare, sign, act on and manage agreements.",
+  "InfoDescription": "Docusign helps organizations connect and automate how they prepare, sign, act on and manage agreements.",
   "SandBoxButton": "Create developer account",
   "LearnMoreButton": "Learn more",
   "Employee": {
@@ -69,7 +69,7 @@
     "Description": "You can see this because you have admin permissions",
     "OfferLetter": {
       "Title": "A Candidate offer letter",
-      "Description": "This action demonstrates the following DocuSign features:",
+      "Description": "This action demonstrates the following Docusign features:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Routing order</li>",
       "SendButton": "Send",
       "ViewInfoButton": "View info",
@@ -78,7 +78,7 @@
     },
     "I9Request": {
       "Title": "An I-9 verification request",
-      "Description": "This action demonstrates the following DocuSign features:",
+      "Description": "This action demonstrates the following Docusign features:",
       "FunctionsList": "<li>Remote signing</li><li>Templates</li><li>IDV (recipient authentication)</li>",
       "SendButton": "Send",
       "ViewInfoButton": "View info",
@@ -98,7 +98,7 @@
     "Header": "Employee Actions",
     "DirectDeposit": {
       "Title": "Direct deposit information",
-      "Description": "This action demonstrates the following DocuSign features:",
+      "Description": "This action demonstrates the following Docusign features:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Formula fields</li><li>Tab validation</li>",
       "UpdateButton": "Update",
       "ViewInfoButton": "View info",
@@ -107,7 +107,7 @@
     },
     "W4TaxWithholding": {
       "Title": "W-4 tax withholding <span>Relevant for USA only</span>",
-      "Description": "This action demonstrates the following DocuSign API functions:",
+      "Description": "This action demonstrates the following Docusign API functions:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Formula fields</li><li>Tab validation</li>",
       "SelectButton": "Select",
       "ViewInfoButton": "View info",
@@ -116,7 +116,7 @@
     },
     "TimeCard": {
       "Title": "Time card",
-      "Description": "This action demonstrates the following DocuSign features:",
+      "Description": "This action demonstrates the following Docusign features:",
       "FunctionsList": "<li>Create a custom elastic template</li><li>Activate an elastic template</li><li>Display a modal elastic template</li>",
       "EnterButton": "Enter",
       "ViewInfoButton": "View info",
@@ -125,7 +125,7 @@
     },
     "TuitionReimbursement": {
       "Title": "Tuition reimbursement",
-      "Description": "This action demonstrates the following DocuSign API functions:",
+      "Description": "This action demonstrates the following Docusign API functions:",
       "FunctionsList": "<li>Embedded signing</li><li>Templates</li><li>Attachment tab</li><li>Tab validation</li>",
       "ApplyButton": "Apply",
       "ViewInfoButton": "View info",

@@ -54,7 +54,7 @@ namespace DocuSign.MyHR.Services
                 EnableIDV(accountId, envelopeTemplate, "New Hire");
             }
 
-            var listTemplates = _docuSignApiProvider.TemplatesApi.ListTemplates(accountId);   
+            var listTemplates = _docuSignApiProvider.TemplatesApi.ListTemplates(accountId);
             EnvelopeTemplate template = listTemplates?.EnvelopeTemplates?.FirstOrDefault(x => x.Name == templateHandler.TemplateName);
 
             if (template != null)
@@ -71,7 +71,7 @@ namespace DocuSign.MyHR.Services
             if (type != DocumentType.I9)
             {
                 ViewUrl recipientView = _docuSignApiProvider.EnvelopApi.CreateRecipientView(
-                    accountId, 
+                    accountId,
                     envelopeSummary.EnvelopeId,
                     BuildRecipientViewRequest(
                         userDetails.Email,
@@ -106,7 +106,7 @@ namespace DocuSign.MyHR.Services
             var workflowId = idvResponse.IdentityVerification.FirstOrDefault()?.WorkflowId;
             if (workflowId == null)
             {
-                throw new IDVException("IdentityVerification workflow is not found. Check that IDV is enabled in DocuSign account.");
+                throw new IDVException("IdentityVerification workflow is not found. Check that IDV is enabled in Docusign account.");
             }
             foreach (Signer recipient in envelopeTemplate.Recipients.Signers.Where(x => x.RoleName == roleName))
             {
