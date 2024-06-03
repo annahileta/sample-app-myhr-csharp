@@ -134,7 +134,7 @@ namespace DocuSign.MyHR.Services
                     }
                 }
 
-                doc.SaveAs(tempDocPath).Close();
+                doc.Clone(tempDocPath).Dispose();
             }
 
             using var memoryStream = new MemoryStream(File.ReadAllBytes(tempDocPath));

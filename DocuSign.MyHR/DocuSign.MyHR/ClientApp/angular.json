@@ -17,7 +17,7 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/assets"],
             "styles": [
@@ -53,25 +53,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "DocuSign.MyHR:build"
+            "buildTarget": "DocuSign.MyHR:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "DocuSign.MyHR:build:production"
+              "buildTarget": "DocuSign.MyHR:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "DocuSign.MyHR:build"
+            "buildTarget": "DocuSign.MyHR:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": ["./src/styles/scss/main.scss"],
