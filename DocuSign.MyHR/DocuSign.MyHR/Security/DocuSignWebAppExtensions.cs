@@ -60,7 +60,7 @@ namespace DocuSign.MyHR.Security
                 options.AuthorizationEndpoint = configuration["DocuSign:AuthorizationEndpoint"];
                 options.TokenEndpoint = configuration["DocuSign:TokenEndpoint"];
                 options.UserInformationEndpoint = configuration["DocuSign:UserInformationEndpoint"];
-    
+
                 options.Scope.Add("signature");
                 options.Scope.Add("click.manage");
                 options.SaveTokens = true;
@@ -122,7 +122,7 @@ namespace DocuSign.MyHR.Security
             {
                 config.Cookie.Name = "UserLoginCookie";
                 config.Cookie.HttpOnly = true;
-                config.Cookie.SameSite = SameSiteMode.Lax; 
+                config.Cookie.SameSite = SameSiteMode.Lax;
                 config.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 config.LoginPath = "/Account/Login";
                 config.SlidingExpiration = true;
@@ -131,7 +131,7 @@ namespace DocuSign.MyHR.Security
                 {
                     OnRedirectToLogin = context =>
                    {
-                       // Return 401 HttpCode for api calls instead of redirecting to login page 
+                       // Return 401 HttpCode for api calls instead of redirecting to login page
                        if (context.Request.Path.StartsWithSegments("/api"))
                        {
                            context.Response.Headers["Location"] = context.RedirectUri;
@@ -221,7 +221,7 @@ namespace DocuSign.MyHR.Security
                     {
                         if (contextFeature.Error is ApiException apiError)
                         {
-                            logger.LogError($"Error occured during DocuSign api call: {contextFeature.Error}");
+                            logger.LogError($"Error occured during Docusign api call: {contextFeature.Error}");
 
                             if (apiError.ErrorCode == (int)HttpStatusCode.Unauthorized)
                             {
@@ -266,4 +266,3 @@ namespace DocuSign.MyHR.Security
         }
     }
 }
-

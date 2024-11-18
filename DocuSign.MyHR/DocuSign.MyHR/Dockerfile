@@ -6,7 +6,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 RUN npm i -g @angular/cli
 RUN npm update
@@ -28,7 +28,7 @@ COPY . .
 RUN dotnet build "DocuSign.MyHR/DocuSign.MyHR/DocuSign.MyHR.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 RUN npm i -g @angular/cli
 RUN npm update
