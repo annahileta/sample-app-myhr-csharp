@@ -120,7 +120,7 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange           
             _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
-            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
+            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId, new AccountsApi.GetAccountIdentityVerificationOptions())).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>
@@ -150,7 +150,7 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange  
             _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
-            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId)).Returns(() =>
+            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId, new AccountsApi.GetAccountIdentityVerificationOptions())).Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
                         IdentityVerification = new List<AccountIdentityVerificationWorkflow>
@@ -180,7 +180,7 @@ namespace DocuSign.MyHR.UnitTests
         {
             //Arrange
             _userService.Setup(x => x.GetUserDetails(_accountId, _userId, _loginType)).Returns(userInformation);
-            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId))
+            _accountsApi.Setup(x => x.GetAccountIdentityVerification(_accountId, new AccountsApi.GetAccountIdentityVerificationOptions()))
                 .Returns(() =>
                     new AccountIdentityVerificationResponse
                     {
